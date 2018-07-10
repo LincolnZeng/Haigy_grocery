@@ -1,4 +1,6 @@
+website: http://haigy2016.pigrider.com:3000/
 This is a grocery platform, which we are serving the San Francisco east bay area. Customers can shop most daily food and fruit on this platform and we will deliver the purchase to their home. 
+
 1.Developed an online grocery website for a friend’s startup company. (JavaScript, HTML, CSS, Ruby on Rails, MySQL, React, Redux, Backbone).
 
 2.All websites are React based single page websites.
