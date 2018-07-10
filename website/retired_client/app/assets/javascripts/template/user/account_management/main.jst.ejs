@@ -1,0 +1,90 @@
+<h2 class="ui header">Account management</h2>
+<br>
+
+
+<% var allColors = ["red", "orange", "yellow", "olive", "green", "teal", "blue", "violet", "purple", "pink"] %>
+<% var colorCount = allColors.length %>
+<% var color = null %>
+
+<div class="ui centered grid"><div class="twelve wide column">
+
+	<div class="ui two stackable cards">
+
+		<% color = allColors[Math.floor((Math.random() * colorCount))] %>
+		<div class="<%= color %> card">
+			<div class="content">
+	      <div class="header"><i class="<%= color %> mail icon"></i> Email</div>
+	      <div class="description"><i>
+	        <%= user.email %>
+	      </i></div>
+	    </div>
+	    <div class="extra content">
+	      <button id="user-am-edit-email" class="ui circular right floated icon button"><i class="edit icon"></i></button>
+	    </div>
+		</div>
+
+		<% color = allColors[Math.floor((Math.random() * colorCount))] %>
+		<div class="<%= color %> card">
+			<div class="content">
+	      <div class="header"><i class="<%= color %> privacy icon"></i> Password</div>
+	    </div>
+	    <div class="extra content">
+	      <button id="user-am-edit-password" class="ui circular right floated icon button"><i class="edit icon"></i></button>
+	    </div>
+		</div>
+
+		<% color = allColors[Math.floor((Math.random() * colorCount))] %>
+		<div class="<%= color %> card">
+			<div class="content">
+	      <div class="header"><i class="<%= color %> phone icon"></i> Phone</div>
+	      <div class="description"><i>
+	      	<% var phone = user.phone %>
+	      	<% if (phone && phone.trim().length > 0) { %>
+	        	<%= phone %>
+	        <% } else { %>
+	        	Not set yet
+	      	<% } %>
+	      </i></div>
+	    </div>
+	    <div class="extra content">
+	      <button id="user-am-edit-phone" class="ui circular right floated icon button"><i class="edit icon"></i></button>
+	    </div>
+		</div>
+
+		<% color = allColors[Math.floor((Math.random() * colorCount))] %>
+		<div class="<%= color %> card">
+			<div class="content">
+	      <div class="header"><i class="<%= color %> trophy icon"></i> Nickname</div>
+	      <div class="description"><i>
+	      	<% var nickname = user.nickname %>
+	        <% if (nickname && nickname.trim().length > 0) { %>
+	        	<%= nickname %>
+	        <% } else { %>
+	        	Not set yet
+	      	<% } %>
+	      </i></div>
+	    </div>
+	    <div class="extra content">
+	      <button id="user-am-edit-nickname" class="ui circular right floated icon button"><i class="edit icon"></i></button>
+	    </div>
+		</div>
+
+
+		<% color = allColors[Math.floor((Math.random() * colorCount))] %>
+		<div id="user-am-address-container" class="<%= color %> card" data-color="<%= color %>"></div>
+
+
+		<% color = allColors[Math.floor((Math.random() * colorCount))] %>
+		<div class="<%= color %> card">
+			<div class="content">
+	      <div class="header"><i class="<%= color %> settings icon"></i> Others</div>
+	      <div class="description haigy-text-align-center"><i>
+	      	<div class="haigy-padding-b-5px"><a href="<%= navigator.orderIndexHash %>">My order history</a></div>
+	      	<div><a id="user-am-sign-out" href="#">Sign out</a></div>
+	      </i></div>
+	    </div>
+		</div>
+
+	</div>
+
+</div></div>

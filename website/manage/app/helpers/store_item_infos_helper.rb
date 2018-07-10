@@ -1,0 +1,2 @@
+module StoreItemInfosHelper
+end

@@ -1,0 +1,17 @@
+New <%= @feedback.content_type %> Comes!
+===============================================
+
+
+Server Time: <%= @feedback.created_at %>
+User ID: <%= @feedback.user_id.present? ? @feedback.user_id : "not detected" %>
+User IP Address: <%= @feedback.user_ip_address %>
+User Local Time: <%= @feedback.user_local_time %>
+User Email: <%= @feedback.user_email.present? ? @feedback.user_email : "not provided" %>
+User Phone: <%= @feedback.user_phone.present? ? @feedback.user_phone : "not provided" %>
+
+
+Content:
+<%= @feedback.content %>
+
+
+<%= currentDateInPacificTime %>

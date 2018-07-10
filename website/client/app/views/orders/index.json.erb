@@ -1,0 +1,8 @@
+[
+  <% @orders.each_with_index do |order, index| %>
+    <% if index != 0 %>,<% end %>
+    {
+      <%= render partial: "order_attributes", locals: {order: order} %>
+    }
+  <% end %>
+]

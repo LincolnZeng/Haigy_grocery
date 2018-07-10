@@ -1,0 +1,24 @@
+<h2 class="ui header">My Order History</h2>
+<br>
+
+<div class="ui centered grid"><div class="twelve wide column">
+  <table class="ui single line table">
+    <thead>
+      <tr>
+        <th>Order Time</th>
+        <th>Order ID</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% allOrders.each(function(order) { %>
+        <% var orderTime = new Date(parseInt(order.get("created_at")) * 1000) %>
+        <tr>
+          <td><%= orderTime.toLocaleDateString() %> <%= orderTime.toLocaleTimeString() %></td>
+          <td><a href="<%= navigator.orderShowHash(order.id) %>"><%= order.id %></a></td>
+          <td><a href="<%= navigator.orderShowHash(order.id) %>"><%= utility.getOrderStatus(order.get("status")) %></a></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div></div>

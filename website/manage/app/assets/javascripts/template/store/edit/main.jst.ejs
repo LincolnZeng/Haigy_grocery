@@ -1,0 +1,130 @@
+<% if (storeNew || store.id) { %>
+
+  <% var storeServiceAreaId = "" %>
+
+  <% if (storeNew) { %>
+
+    <h3>Add A New Store</h3>
+    <div>For Company: <%= company.get("name") %></div>
+    <br>
+    <div><img src="<%= pathToUrlTool(company.get('logo_path')) %>" alt="<%= company.get('name') %> Logo"></div>
+
+  <% } else { %>
+    <% storeServiceAreaId = store.get("service_area_id") || "" %>
+    <% var storeServiceArea = allServiceAreas.get(storeServiceAreaId) %>
+
+    <h3>Edit The Store:</h3>
+    <div>Company: <%= store.get("company_name") %></div>
+    <div>Store Name: <%= store.get("store_name") %></div>
+    <div>Store Address: <%= store.get("formatted_address") %></div>
+    <div>Service Area: <%= storeServiceArea ? storeServiceArea.get("name") : "Unknown" %></div>
+    <br>
+    <div><img src="<%= pathToUrlTool(store.get('company_logo_path')) %>" alt="<%= store.get('company_name') %> Logo"></div>
+
+  <% } %>
+
+
+  <br><br>
+
+  <form class="ui form">
+    <div class="required field">
+      <label for="store-edit-service-area">Service Area:</label>
+      <select id="store-edit-service-area" data-validator="alwaysGood" data-submit=#store-edit-submit">
+        <% allServiceAreas.each(function(serviceArea) { %>
+          <% if (storeServiceAreaId.toString() === serviceArea.id.toString()) { %>
+            <option value="<%= serviceArea.id %>" selected><%= serviceArea.get("name") %></option>
+          <% } else { %>
+            <option value="<%= serviceArea.id %>"><%= serviceArea.get("name") %></option>
+          <% } %>
+        <% }) %>
+      </select>
+    </div>
+
+    <div class="required field">
+      <label for="store-edit-store-name">Store Name:</label>
+      <input
+        id="store-edit-store-name"
+        type="text"
+        placeholder="store name"
+        data-validator="notEmpty"
+        data-invalid-info="#store-edit-store-name-invalid"
+        data-submit="#store-edit-submit"
+        value="<%= store.get('store_name') %>"
+      >
+      <span id="store-edit-store-name-invalid" class="haigy-display-none">(required)</span>
+    </div>
+
+    <div class="required field">
+      <label for="store-edit-street-address">Address Line 1:</label>
+      <input
+        id="store-edit-street-address"
+        type="text"
+        placeholder="street address, suite #, etc."
+        data-validator="notEmpty"
+        data-invalid-info="#store-edit-street-address-invalid"
+        data-submit="#store-edit-submit"
+        value="<%= store.get('street_address') %>"
+      >
+      <span id="store-edit-street-address-invalid" class="haigy-display-none">(required)</span>
+    </div>
+
+    <div class="required field">
+      <label for="store-edit-zip-code">ZIP/Postal Code:</label>
+      <input
+        id="store-edit-zip-code"
+        type="text"
+        placeholder="94705"
+        data-validator="notEmpty"
+        data-invalid-info="#store-edit-zip-code-invalid"
+        data-submit="#store-edit-submit"
+        value="<%= store.get('zip_code') %>"
+      >
+      <span id="store-edit-zip-code-invalid" class="haigy-display-none">(required)</span>
+    </div>
+
+    <div>
+      <label for="store-edit-city">City:</label>
+      <input
+        id="store-edit-city"
+        type="text"
+        placeholder="Berkeley"
+        data-validator="alwaysGood"
+        data-submit="#store-edit-submit"
+        value="<%= store.get('city') %>"
+      >
+    </div>
+
+    <div>
+      <label for="store-edit-state">State:</label>
+      <input
+        id="store-edit-state"
+        type="text"
+        placeholder="CA"
+        data-validator="alwaysGood"
+        data-submit="#store-edit-submit"
+        value="<%= store.get('state') %>"
+      >
+    </div>
+  </form>
+  <br><br>
+
+  <div>
+    <button class="ui button" id="store-edit-submit" data-self-selector="#store-edit-submit" disabled>Submit</button>
+    <span>(* fields are required)</span>
+  </div>
+
+  <br><br><br><br>
+
+
+  <% if (!storeNew) { %>
+
+    <div><a id="store-edit-delete" href="#">Delete This Store</a></div>
+
+  <% } %>
+
+
+<% } else { %>
+
+  <div>Sorry, cannot find the store ...</div>
+
+<% } %>

@@ -1,0 +1,74 @@
+<div class="ui piled segment haigy-text-align-center"><i>
+  <div class="haigy-padding-tb-2px">Haigy just begins beta testing</div>
+  <div class="haigy-padding-tb-2px haigy-font-color-purple">Free delivery &#160; &#149; &#160; 10% off of all fruits and veggies &#160; &#149; &#160; Rewards for feedbacks</div>
+</i></div>
+
+
+<% categoryPath = allItem.categoryPath; %>
+<% categoryPathLength = categoryPath.length; %>
+
+
+<% if (categoryPathLength > 0) { %>
+
+
+  <% if (categoryPathLength > 1) { %>
+
+    <div class="haigy-padding-b-30px">
+      <%= categoryPathT({categoryPath: categoryPath, navigateHash: navigator.briefinfoitemBrowseHash, itemAppended: null, linkLastCategory: false}) %>
+    </div>
+
+    <% if (allItem.length > 0) { %>
+      <div id="biitem-cbc-all-item-container" class="ui centered cards">
+        <%= itemDisplayT({allItem: allItem.models, itemCartOperationT: itemCartOperationT, imagePathToUrlTool: imagePathToUrlTool, constant: constant, precompiledAsset: precompiledAsset, navigator: navigator, cartHelper: cartHelper}) %>
+      </div>
+
+      <br><br>
+      <div id="biitem-cbc-special-request" class="haigy-display-none haigy-width-100-percent haigy-text-align-center">
+        <div>
+          Can't find something?
+          <a href="<%= navigator.cartSpecialrequestHash(JSON.stringify({cancelUrl: navigator.current()})) %>">Add a special request</a>
+        </div>
+        <br>
+      </div>
+
+      <div id="biitem-cbc-show-more-button-container" class="haigy-display-none"><div class="ui centered one column grid"><div class="twelve wide column">
+        <br><button id="biitem-cbc-show-more-button" class="ui large fluid basic button"><strong><i class="plus icon"></i> <%= loadMoreButtonText %></strong></button><br>
+      </div></div></div>
+    <% } else { %>
+      <div>No Category Or Item Is Found Here ...</div>
+    <% } %>
+
+  <% } else { %>
+    <% var allhaigyItems = [] %>
+    <% var allWholeFoodsItems = [] %>
+    <% allItem.each(function(item) { %>
+      <% var storeItemInfo = item.get("store_item_info") %>
+      <% if (storeItemInfo.store_is_haigy_base === true) { %>
+        <% allhaigyItems.push(item) %>
+      <% } else { %>
+        <% allWholeFoodsItems.push(item) %>
+      <% } %>
+    <% }) %>
+
+    <div>
+      <h3 class="haigy-text-align-center"><i>Best quality Haigy fruits & vegetables, fresh guaranteed!</i></h3>
+      <div class="ui centered cards">
+        <%= itemDisplayT({allItem: allhaigyItems, itemCartOperationT: itemCartOperationT, imagePathToUrlTool: imagePathToUrlTool, constant: constant, precompiledAsset: precompiledAsset, navigator: navigator, cartHelper: cartHelper}) %>
+      </div>
+    </div>
+
+    <div>
+      <br><br>
+      <h3 class="haigy-text-align-center"><i>For your convenience, we could also buy other groceries from <span class="haigy-font-color-wholefoods-green">Whole Foods Market</span> for you.</i></h3>
+      <div class="ui centered cards">
+        <%= itemDisplayT({allItem: allWholeFoodsItems, itemCartOperationT: itemCartOperationT, imagePathToUrlTool: imagePathToUrlTool, constant: constant, precompiledAsset: precompiledAsset, navigator: navigator, cartHelper: cartHelper}) %>
+      </div>
+    </div>
+
+  <% } %>
+
+<% } else { %>
+
+  <div>Oops, nothing is found here ...</div>
+
+<% } %>

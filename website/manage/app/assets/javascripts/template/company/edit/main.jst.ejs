@@ -1,0 +1,85 @@
+<% if (companyNew || company.id) { %>
+
+
+  <% if (companyNew) { %>
+
+    <h3>Add A New Company</h3>
+
+  <% } else { %>
+
+    <h3>Edit The Company: <%= company.get("name") %></h3>
+
+  <% } %>
+
+  <br>
+
+  <form class="ui form">
+    <div class="required field">
+      <label for="company-edit-name">Company Name:</label>
+      <input
+        id="company-edit-name"
+        type="text"
+        placeholder="company name"
+        data-validator="notEmpty"
+        data-invalid-info="#company-edit-name-invalid"
+        data-submit="#company-edit-submit"
+        value="<%= company.get('name') %>"
+      >
+      <span id="company-edit-name-invalid" class="haigy-display-none">(required)</span>
+    </div>
+
+    <% if (companyNew) { %>
+
+      <div class="required field">
+        <label for="company-edit-logo">Choose An Image For Company Logo:</label>
+        <input
+          id="company-edit-logo"
+          type="file"
+          accept="image/*"
+          data-validator="notEmpty"
+          data-invalid-info="#company-edit-logo-invalid"
+          data-submit="#company-edit-submit"
+        >
+        <span id="company-edit-logo-invalid" class="haigy-display-none">(required)</span>
+      </div>
+
+    <% } else { %>
+
+      <div>
+        <label for="company-edit-logo">
+          Current Company Logo:
+          <br><img src="<%= pathToUrlTool(company.get('logo_path')) %>" alt="<%= company.get('name') %> Logo"><br>
+          Choose Another Image:
+        </label>
+        <input
+          id="company-edit-logo"
+          type="file"
+          accept="image/*"
+          data-validator="alwaysGood"
+          data-submit="#company-edit-submit"
+        >
+      </div>
+
+    <% } %>
+
+  </form>
+
+  <br><br>
+
+  <div>
+    <button class="ui button" id="company-edit-submit" data-self-selector="#company-edit-submit" disabled>Submit</button>
+    <span>(* fields are required)</span>
+  </div>
+
+  <% if (!companyNew) { %>
+
+    <br><br><br>
+    <div><a id="company-edit-delete" href="#">delete this company</a></div>
+
+  <% } %>
+
+<% } else { %>
+
+  <div>Sorry, cannot find the company ...</div>
+
+<% } %>

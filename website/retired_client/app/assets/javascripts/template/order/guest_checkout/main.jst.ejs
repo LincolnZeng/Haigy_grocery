@@ -1,0 +1,90 @@
+<div class="ui grid"><div class="two column stackable row">
+
+
+  <div class="five wide column">
+    <h4 class="ui dividing header">Delivery Address:</h4>
+    <div id="order-gcheckout-address-container">
+      <%= addressTemplate({address: address}) %>
+    </div>
+
+    <br>
+    <div id="order-gcheckout-address-error" class="ui hidden negative message">
+      Please Add A Delivery Address.
+    </div>
+    <br>
+
+    <h4 class="ui dividing header">Payment Method:</h4>
+    <div id="order-gcheckout-payment" class="haigy-padding-lr-30px" data-ready="yes">
+      We temporarily only accept <b class="haigy-font-color-blue">cash or check</b>. We will support more payment methods in the future.
+    </div>
+
+    <br>
+    <div id="order-gcheckout-payment-error" class="ui hidden negative message">
+      Please Set A Payment Method.
+    </div>
+    <br>
+
+    <h4 class="ui dividing header">Delivery Time:</h4>
+    <div id="order-gcheckout-delivery-date" class="haigy-padding-lr-30px" data-ready="no">
+    </div>
+
+    <br>
+    <div id="order-gcheckout-delivery-date-error" class="ui hidden negative message">
+      Please Choose A Delivery Time.
+    </div>
+    <br>
+
+  </div>
+
+
+  <div class="eleven wide column">
+
+    <h4 class="ui dividing header">Order Summary:</h4>
+    <%= orderSummaryTableT({totalValueInCart: totalValueInCart, deliveryFee: constant.business.DELIVERY_FEE}) %>
+
+    <br>
+
+    <h4 class="ui dividing header">Contact Method:</h4>
+    <form id="order-gcheckout-form" class="ui form">
+      <div class="fields">
+        <div class="eight wide field">
+          <div class="required field">
+            <label>Email</label>
+            <input type="email" name="email" placeholder="Email">
+          </div>
+
+          <div class="field">
+            <div class="ui toggle checkbox">
+              <input type="checkbox" name="subscribe_news" tabindex="0" class="hidden">
+              <label>Subscribe to newsletter</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="required eight wide field">
+          <label>Phone</label>
+          <input type="tel" name="phone" placeholder="Phone">
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="ui error message"></div>
+      </div>
+
+      <div class="fields">
+        <div class="eleven wide field">
+          <button id="order-gcheckout-submit" class="ui fluid primary button" type="submit">Continue & Review Order</button>
+        </div>
+        <div class="five wide field">
+          <a href="<%= navigator.cartManageHash %>" class="ui fluid button">Cancel</a>
+        </div>
+      </div>
+    </form>
+
+  </div>
+
+
+</div></div>
+
+
+<br><br><br>

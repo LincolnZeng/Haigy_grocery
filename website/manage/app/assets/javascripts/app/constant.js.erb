@@ -1,0 +1,113 @@
+// To pick up new changes in Rails code, please run "rake tmp:clear" first.
+
+
+// ruby code
+<% def getDomain
+  require "yaml"
+  setting = YAML.load_file(Rails.root.join("config", "haigy_manage.yml"))
+  domain = setting["domain"] || ""
+  return domain.chomp("/")
+end %>
+
+
+// constants for this project
+modulejs.define("app/constant", ["window"], function(window) {
+  "use strict";
+
+
+  var constants = {
+    DOMAIN: "<%= getDomain %>",
+
+
+    IN_CORDOVA: !!(window.cordova),   // check if it's in Cordova (PhoneGap)
+
+    APP_LAYOUT_NOTICE_CONTAINER_HTML_ID: "main-layout-notice-container",
+
+    MAX_URL_LENGTH: 2000,
+
+
+    UNKNOWN_BARCODE_TYPE: "UNKNOWN",
+    BARCODE_MAXIMUM_LENGTH: 255,
+
+
+    errorCode: {
+      NOT_ALLOWED: <%= HaigyManageConstant::Error::NOT_ALLOWED[:code] %>,
+      INVALID_TOKEN: <%= HaigyManageConstant::Error::INVALID_TOKEN[:code] %>
+    },
+
+
+    item: {
+      DEFAULT_PARENT_CATEGORY_ITEM_ID: <%= HaigyManageConstant::Item::DEFAULT_PARENT_CATEGORY_ITEM_ID %>,
+      ROOT_PARENT_CATEGORY_ITEM_ID: <%= HaigyManageConstant::Item::ROOT_PARENT_CATEGORY_ITEM_ID %>,
+
+      QUANTITY_UNIT_DISPLAY: {
+        <% HaigyClientConstant::Item::PURCHASE_UNIT.each do |unit, unitSettings| %>
+          "<%= unit %>": "<%= unitSettings[:quantity_unit_display] %>",
+        <% end %>
+      }
+    },
+
+
+    employee: {
+      PERMISSION_ID: JSON.parse('<%= HaigyManageConstant::Employee::PERMISSION_ID.to_json %>'),
+      PERMISSION_DETAIL: JSON.parse('<%= HaigyManageConstant::Employee::PERMISSION_DETAIL.to_json %>'),
+      POSITION_ID: JSON.parse('<%= HaigyManageConstant::Employee::POSITION_ID.to_json %>'),
+      POSITION_DETAIL: JSON.parse('<%= HaigyManageConstant::Employee::POSITION_DETAIL.to_json %>')
+    },
+
+    order: {
+      STATUS: JSON.parse('<%= HaigyManageConstant::Order::STATUS.to_json %>'),
+
+      PLACED: <%= HaigyManageConstant::Order::STATUS[:placed] %>,
+      PREPARING: <%= HaigyManageConstant::Order::STATUS[:preparing] %>,
+      DELIVERING: <%= HaigyManageConstant::Order::STATUS[:delivering] %>,
+      DELIVERED: <%= HaigyManageConstant::Order::STATUS[:delivered] %>,
+    },
+
+    fee: {
+      SHOPPING_HANDLING: 0.07,
+      CARD_PROCESS: 0.029,
+      DELIVERY: 3.99,
+      OPERATION: 2.00
+    },
+
+
+    cookie: {
+      cacheKey: {
+        SELECT_STORE_ID: "HaigyManage-SelectStoreId",
+        SESSION: "HaigyManage-Session",
+        TOKEN: "HaigyManage-Token"
+      }
+    },
+
+
+    session: {
+      LIFETIME_IN_MINUTE: <%= HaigyManageConstant::Session::LIFETIME_IN_SECOND * 0.9 / 60 %>,
+      REQUEST_HEADER_TOKEN_ATTRIBUTE: "<%= HaigyManageConstant::Session::REQUEST_HEADER_TOKEN_ATTRIBUTE %>",
+      RESPONSE_HEADER_TOKEN_ATTRIBUTE: "<%= HaigyManageConstant::Session::RESPONSE_HEADER_TOKEN_ATTRIBUTE %>"
+    },
+
+
+    feed: {
+      DATA_FRESH_PERIOD_IN_SECOND: 43200   // 12 hours
+    },
+
+
+    semanticUi: {
+      // Semantic UI may have some bugs when mixing simple rule like "empty" and a customized rule {rules: [{type: "empty"}]} together.
+      // So, make all rules here are customized rules.
+      validateRule: {
+        EMPTY: {rules: [{type: "empty"}]},
+        ZIP_CODE: {
+          rules: [{
+            type: "regExp[/^[0-9]{5}$/]",
+            prompt: "Please enter a 5 digits zip code."
+          }]
+        }
+      }
+    },
+  };
+
+
+  return constants;
+});

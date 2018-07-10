@@ -1,0 +1,6 @@
+[
+  <% feedCollection.each_with_index do |feed, index| %>
+    <% if index != 0 %>,<% end %>
+    <%= render partial: "template_member", locals: {feed: feed} %>
+  <% end %>
+]

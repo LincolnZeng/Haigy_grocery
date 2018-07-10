@@ -1,0 +1,52 @@
+<% if (company.id) { %>
+
+	<h3><a href="<%= navigator.companyShowHash(company.id) %>">Company: <%= company.get("name") %></a></h3>
+	<div>
+    <a href="<%= navigator.companyShowHash(company.id) %>">
+      <img src="<%= pathToUrlTool(company.get('logo_path')) %>" alt="<%= company.get('name') %> Logo">
+    </a>
+  </div>
+
+  <br><br>
+
+
+  <% if (allStore.length === 0) { %>
+
+    <h3>No Store Is Found For This Company</h3>
+    <br>
+    <div><a href="<%= navigator.storeNewHash(company.id) %>">Add A New Store</a></div>
+
+  <% } else { %>
+
+  	<h3>All Stores For This Company:</h3>
+    <table class="ui striped table">
+      <thead>
+        <tr>
+          <th>Location</th>
+          <th></th>
+          <th></th>
+
+        </tr>
+      </thead>
+
+      <tbody>
+        <% allStore.each(function(store) { %>
+          <tr>
+            <td><%= store.get("formatted_address") %></td>
+            <td><a href="<%= navigator.storeEditHash(store.id) %>">Edit</a></td>
+            <td><a href="<%= navigator.storeShowHash(store.id) %>">View Details</a></td>
+          </tr>
+
+        <% }); %>
+      </tbody>
+    </table>
+    <br><br>
+
+  <% } %>
+
+
+<% } else { %>
+
+  <div>Sorry, cannot find the company ...</div>
+
+<% } %>

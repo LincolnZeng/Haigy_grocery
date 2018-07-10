@@ -1,0 +1,23 @@
+{
+  "created_at": <%= raw(order.created_at.to_i.to_json) %>,
+  "id": <%= raw(order.secured_id.to_json) %>,
+  "status": <%= raw(order.status.to_json) %>,
+  "cart_id": <%= raw(order.cart.id.to_json) %>,
+  "street_address": <%= raw(order.street_address.to_json) %>,
+  "city": <%= raw(order.city.to_json) %>,
+  "state": <%= raw(order.state.to_json) %>,
+  "zip_code": <%= raw(order.zip_code.to_json) %>,
+  "note": <%= raw(order.note.to_json) %>,
+  "is_business_address": <%= raw(order.is_business_address.to_json) %>,
+  "business_name": <%= raw(order.business_name.to_json) %>,
+  "delivery_date": <%= raw(order.delivery_date.to_json) %>,
+  "delivery_time_slot_start_time": <%= raw(order.delivery_time_slot_start_time.to_json) %>,
+  "delivery_time_slot_end_time": <%= raw(order.delivery_time_slot_end_time.to_json) %>,
+  "delivery_fee": <%= order.delivery_fee %>,
+  "phone": <%= raw(order.phone.to_json) %>,
+  "email": <%= raw(order.email.to_json) %>,
+  "is_paid": <%= order.is_paid %>,
+  "total_amount_paid": <%= order.total_amount_paid %>,
+  "is_stripe_payment": <%= order.is_stripe_payment %>,
+  "stripe_charge_id": <%= raw(order.stripe_charge_id.to_json) %>
+}

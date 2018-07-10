@@ -1,0 +1,174 @@
+// To pick up new changes in Rails code, please run "rake tmp:clear" first.
+
+
+// ruby code
+<% def getDomain
+  require "yaml"
+  setting = YAML.load_file(Rails.root.join("config", "haigy.yml"))
+  domain = setting["domain"] || ""
+  return domain.chomp("/")
+end %>
+
+<% def getImageServer
+  require "yaml"
+  setting = YAML.load_file(Rails.root.join("config", "haigy.yml"))
+  imageServer = setting["image_server"] || ""
+  return imageServer.chomp("/")
+end %>
+
+
+// constants for this project
+modulejs.define("app/constant", ["window"], function(window) {
+  "use strict";
+
+
+  var constant = {
+    DOMAIN: "<%= getDomain %>",
+    IMAGE_SERVER: "<%= getImageServer %>",
+
+
+    IN_CORDOVA: !!(window.cordova),   // check if it's in Cordova (PhoneGap)
+
+
+    MAX_URL_LENGTH: 2000,
+
+    DEFAULT_ZIP_CODE: 94705,
+
+
+    analytics: {
+      SECRET: "<%= HaigyClientConstant::Analytics::SECRET %>"
+    },
+
+
+    errorCode: {
+      INVALID_EMAIL: <%= HaigyManageConstant::Error::INVALID_EMAIL[:code] %>,
+      EMAIL_REGISTERED: <%= HaigyManageConstant::Error::EMAIL_REGISTERED[:code] %>,
+      INVALID_PASSWORD: <%= HaigyManageConstant::Error::INVALID_PASSWORD[:code] %>,
+      AUTHENTICATION_FAILED: <%= HaigyManageConstant::Error::AUTHENTICATION_FAILED[:code] %>,
+      ITEM_INFO_OUTDATED: <%= HaigyManageConstant::Error::ITEM_INFO_OUTDATED[:code] %>,
+      RECORD_NOT_FOUND: <%= HaigyManageConstant::Error::RECORD_NOT_FOUND[:code] %>,
+      NOT_ALLOWED: <%= HaigyManageConstant::Error::NOT_ALLOWED[:code] %>,
+      PARAMETERS_NOT_CORRECT: <%= HaigyManageConstant::Error::PARAMETERS_NOT_CORRECT[:code] %>
+    },
+
+
+    business: {
+      DELIVERY_FEE: <%= HaigyManageConstant::Business::DELIVERY_FEE %>,
+      NON_HAIGY_ITEM_HANDLING_FEE_RATIO: <%= HaigyManageConstant::Business::NON_HAIGY_ITEM_HANDLING_FEE_RATIO %>
+    },
+
+
+    item: {
+      DEFAULT_PARENT_CATEGORY_ITEM_ID: <%= HaigyManageConstant::Item::DEFAULT_PARENT_CATEGORY_ITEM_ID %>,
+      ROOT_PARENT_CATEGORY_ITEM_ID: <%= HaigyManageConstant::Item::ROOT_PARENT_CATEGORY_ITEM_ID %>,
+
+      PRICE_CEILING: 1000000000.0,
+      CACHED_PRICE_LIFETIME_IN_MINUTE: 240,   // four hours
+
+      DEFAULT_QUANTITY_PER_CHANGE: 1,
+      UNIT_PER_LB: "<%= HaigyClientConstant::Item::UNIT_PER_LB %>",
+
+      QUANTITY_PER_CHANGE: {
+        <% HaigyClientConstant::Item::PURCHASE_UNIT.each do |unit, unitSettings| %>
+          "<%= unit %>": <%= unitSettings[:quantity_per_change] %>,
+        <% end %>
+      },
+
+      QUANTITY_UNIT_DISPLAY: {
+        <% HaigyClientConstant::Item::PURCHASE_UNIT.each do |unit, unitSettings| %>
+          "<%= unit %>": "<%= unitSettings[:quantity_unit_display] %>",
+        <% end %>
+      }
+    },
+
+
+    cookie: {
+      VERSION: "2016-04-11",
+
+      key: {
+        COOKIE_VERSION: "Haigy-CookieVersion",
+        COOKIE_TIMESTAMP: "Haigy-CookieTimestamp",
+        TOKEN: "Haigy-Token",
+        CART: "Haigy-Cart",
+        CART_ID: "Haigy-Cart-Id",
+        CART_UPDATE_TIME: "Haigy-CartUpdateTime",
+        CART_ENTRY_PREFIX: "Haigy-CartEntry-",
+        CART_SPECIAL_REQUESTS: "Haigy-CartSpecialRequests",
+        USER_SERVICE_AREA_ID: "Haigy-ServiceAreaId",
+        USER_ZIP_CODE: "Haigy-User-ZipCode",
+        USER_ADDRESS: "Haigy-User-Address",
+        USER_SESSION: "Haigy-User-Session"
+      }
+    },
+
+
+    session: {
+      LIFETIME_IN_MINUTE: <%= HaigyClientConstant::Session::LIFETIME_IN_SECOND * 0.9 / 60 %>,
+      REQUEST_HEADER_TOKEN_ATTRIBUTE: "<%= HaigyClientConstant::Session::REQUEST_HEADER_TOKEN_ATTRIBUTE %>",
+      RESPONSE_HEADER_TOKEN_ATTRIBUTE: "<%= HaigyClientConstant::Session::RESPONSE_HEADER_TOKEN_ATTRIBUTE %>",
+      GUEST_TOKEN: "new-haigy-user",
+      GUEST_NICKNAME: "New Haigy User"
+    },
+
+
+    demo: {
+      SERVICE_AREA_ID: <%= HaigyClientConstant::Demo::SERVICE_AREA_ID %>
+    },
+
+
+    cart: {
+      MAX_ACTIVE_IDLE_TIME_IN_MILLISECOND: 3600000,   // one hour
+      MAX_SPECIAL_REQUESTS: 10
+    },
+
+
+    order: {
+      GUEST_ORDER_VIEWABLE_LIFETIME_SINCE_DELIVERED_IN_DAYS: <%= HaigyManageConstant::Order::GUEST_ORDER_VIEWABLE_LIFETIME_SINCE_DELIVERED_IN_DAYS %>,
+      STATUS: JSON.parse('<%= HaigyManageConstant::Order::STATUS.to_json %>')
+    },
+
+
+    semanticUi: {
+      dimmer: {
+        OPACITY: 0.4
+      },
+
+      // Semantic UI may have some bugs when mixing simple rule like "empty" and a customized rule {rules: [{type: "empty"}]} together.
+      // So, make all rules here are customized rules.
+      validateRule: {
+        EMPTY: {rules: [{type: "empty"}]},
+        EMAIL: {rules: [{type: "email", prompt: "Please enter a valid email address."}]},
+        NICKNAME: {rules: [{type: "maxLength[50]"}]},
+        PASSWORD: {rules: [{type: "minLength[8]"}, {type: "maxLength[50]"}]},
+        PHONE_REQUIRED: {
+          rules: [{
+              type: "regExp[/^[\+\ \(\)\-]*([0-9][\+\ \(\)\-]*){10,11}$/]",
+              prompt: "Please enter a valid phone number."
+          }]
+        },
+        PHONE_OPTIONAL: {
+          rules: [{
+              type: "regExp[/^(\s*|[\+\ \(\)\-]*([0-9][\+\ \(\)\-]*){10,11})$/]",
+              prompt: "Please enter a valid phone number."
+          }]
+        },
+
+        ZIP_CODE: {
+          rules: [{
+            type: "regExp[/^[0-9]{5}$/]",
+            prompt: "Please enter a 5 digits zip code."
+          }]
+        },
+        STREET_ADDRESS: {rules: [{type: "empty"}]}
+      }
+    },
+
+
+    text: {
+      NO_SERVICE_WARNING: "Sorry, we may not offer delivery service in your zip code now. However we may expand to your area soon! We hope you enjoy browsing through our website."
+    }
+  };
+
+
+  return constant;
+});

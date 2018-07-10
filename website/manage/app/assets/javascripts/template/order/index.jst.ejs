@@ -1,0 +1,47 @@
+<h2>All orders</h2>
+
+<% if (allOrder.length === 0) { %>
+
+  <h3>No order</h3>
+
+
+<% } else { %>
+
+  <table class="ui celled unstackable table">
+    <thead>
+      <tr>
+        <th>Order Time</th>
+        <th>Order ID</th>
+        <th>Total Amount Paid</th>
+        <th>Paid</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% allOrder.each(function(order) { %>
+        <% var orderTime = new Date(parseInt(order.get("created_at")) * 1000) %>
+        <tr>
+          <td><%= orderTime.toLocaleDateString() %> <%= orderTime.toLocaleTimeString() %></td>
+          <td><a href="<%= navigator.orderShowHash(order.id) %>"><%= order.id %></a></td>
+          <td><%= (order.get("total_amount_paid") || 0.0).toFixed(2) %></td>
+          <td>
+            <% if (order.get("is_paid")) { %>
+              <% if (order.get("is_stripe_payment")) { %>
+                Yes (Stripe, <%= order.get("stripe_charge_id") %>)
+              <% } else { %>
+                Yes (Offline)
+              <% } %>
+            <% } else { %>
+              No
+            <% } %>
+          </td>
+          <td><%= utility.getOrderStatus(order.get("status")) %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+
+
+<% } %>
+
+

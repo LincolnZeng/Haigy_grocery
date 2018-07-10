@@ -1,0 +1,23 @@
+{
+  "id": <%= raw(@cart.secured_id.to_json) %>,
+
+  "user": {
+    <%= render partial: "users/user_attribute", locals: {user: @user} %>,
+
+    <% if @defaultAddress.present? %>
+      "default_address": {
+        <%= render partial: "user_addresses/address_attribute", locals: {address: @defaultAddress} %>
+      },
+    <% end %>
+
+    "shopping_zip_code": <%= raw(@shoppingZipCode.to_json) %>
+  },
+
+  "checked_out": <%= @cart.checked_out %>,
+
+  <% if @cart.checked_out %>
+    "order_id": <%= raw(@order.secured_id.to_json) %>
+  <% else %>
+    "cart_entry": <%= render partial: "cart_entries/template_collection", locals: {cartEntryCollection: @cartEntries, cartItemStoreInfoHash: @itemStoreInfoHash, storeHash: @storeHash} %>
+  <% end %>
+}

@@ -1,0 +1,10 @@
+{
+  "id": <%= @user.id.to_json %>,
+  "nickname": <%= raw(@user.nickname.to_json) %>,
+  "default_zip_code": <%= raw(@user.default_zip_code.to_json) %>,
+
+  "cart": {
+    "cart_id": <%= @cart.id.to_json %>,
+    "cart_entry": <%= render partial: "cart_entries/template_collection", locals: {cartEntryCollection: @cartEntries, cartItemStoreInfoHash: @itemStoreInfoHash, storeHash: @storeHash} %>
+  }
+}

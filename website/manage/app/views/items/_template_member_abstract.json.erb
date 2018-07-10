@@ -1,0 +1,30 @@
+{
+  "id": <%= raw(item.id.to_json) %>,
+  "name": <%= raw(item.name.to_json) %>,
+  "display_sequence": <%= raw(item.display_sequence.to_json) %>,
+  "cover_image_path": <%= raw(item.cover_image.url(:medium).to_json) %>,
+  "temporary_cover_image": <%= raw(item.temporary_cover_image.to_json) %>,
+  "is_category": <%= raw(item.is_category.to_json) %>,
+  "parent_category_item_id": <%= raw(item.parent_category_item_id.to_json) %>,
+  "unit": <%= raw(item.unit.to_json) %>,
+  "has_fixed_item_size": <%= item.has_fixed_item_size %>,
+  "item_size": <%= raw(item.item_size.to_json) %>
+
+  <% if hasStoreItemInfo %>
+    ,
+    "store_item_infos": {
+      <% item.store_item_infos.each_with_index do |info, infoIndex| %>
+        <% if infoIndex != 0 %>,<% end %>
+        "<%= info.store_id %>": {
+          "id": <%= info.id.to_json %>,
+          "in_stock": <%= info.in_stock %>,
+          "on_sale": <%= info.on_sale %>,
+          "price": <%= info.price %>,
+          "sale_price": <%= info.sale_price %>,
+          "last_updated_at": <%= info.updated_at.to_i %>,
+          "feed_mappings": <%= render partial: "feed_mappings/template_collection", locals: {feedMappingCollection: info.feed_mappings} %>
+        }
+      <% end %>
+    }
+  <% end %>
+}

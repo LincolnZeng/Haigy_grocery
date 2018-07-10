@@ -1,0 +1,13 @@
+{
+  "category_path": [
+    <% @categoryPath.each_with_index do |category, index| %>
+      <% if index != 0 %>,<% end %>
+      {
+        "id": <%= raw(category[:id].to_json) %>,
+        "name": <%= raw(category[:name].to_json) %>
+      }
+    <% end %>
+  ],
+
+  "item": <%= render partial: "template_collection_abstract", locals: {itemCollection: @items, hasStoreItemInfo: true} %>
+}

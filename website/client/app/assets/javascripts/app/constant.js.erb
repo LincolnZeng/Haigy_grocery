@@ -1,0 +1,153 @@
+// To pick up new changes in Rails code, please run "rake tmp:clear" first.
+
+
+// ruby code
+<% def getDomain
+  require "yaml"
+  setting = YAML.load_file(Rails.root.join("config", "haigy_client.yml"))
+  domain = setting["domain"] || ""
+  return domain.chomp("/")
+end %>
+
+<% def getImageServer
+  require "yaml"
+  setting = YAML.load_file(Rails.root.join("config", "haigy_client.yml"))
+  imageServer = setting["image_server"] || ""
+  return imageServer.chomp("/")
+end %>
+
+
+// constants for this project
+modulejs.define("app/constant", ["window"], function(window) {
+  "use strict";
+
+
+  var constant = {
+    DOMAIN: "<%= getDomain %>",
+    IMAGE_SERVER: "<%= getImageServer %>",
+
+
+    IN_CORDOVA: !!(window.cordova),   // check if it's in Cordova (PhoneGap)
+
+
+    APP_LAYOUT_NOTICE_CONTAINER_HTML_ID: "main-layout-notice-container",
+
+
+    analytics: {
+      SECRET: "<%= HaigyClientConstant::Analytics::SECRET %>"
+    },
+
+
+    errorCode: {
+      AUTHENTICATION_FAILED: <%= HaigyManageConstant::Error::AUTHENTICATION_FAILED[:code] %>,
+      EMAIL_REGISTERED: <%= HaigyManageConstant::Error::EMAIL_REGISTERED[:code] %>,
+      ITEM_INFO_OUTDATED: <%= HaigyManageConstant::Error::ITEM_INFO_OUTDATED[:code] %>,
+      INVALID_EMAIL: <%= HaigyManageConstant::Error::INVALID_EMAIL[:code] %>,
+      INVALID_PASSWORD: <%= HaigyManageConstant::Error::INVALID_PASSWORD[:code] %>,
+      INVALID_TOKEN: <%= HaigyManageConstant::Error::INVALID_TOKEN[:code] %>,
+      PERMISSION_REQUIRED: <%= HaigyManageConstant::Error::PERMISSION_REQUIRED[:code] %>,
+      RECORD_NOT_FOUND: <%= HaigyManageConstant::Error::RECORD_NOT_FOUND[:code] %>,
+      SIGN_IN_REQUIRED: <%= HaigyManageConstant::Error::SIGN_IN_REQUIRED[:code] %>
+    },
+
+
+    business: {
+      BASIC_DELIVERY_FEE: <%= HaigyManageConstant::Business::BASIC_DELIVERY_FEE %>,
+      DELUXE_DELIVERY_FEE: <%= HaigyManageConstant::Business::DELUXE_DELIVERY_FEE %>,
+      DEFAULT_SHOPPING_ZIP_CODE: <%= HaigyFulfillConstant::DefaultZipCode::ZIP_CODE %>,
+    },
+
+
+    Stripe: {
+      PUBLISHABLE_KEY: "<%= HaigyManageConstant::Stripe::PUBLISHABLE_KEY %>"
+    },
+
+
+    item: {
+      ROOT_PARENT_CATEGORY_ITEM_ID: <%= HaigyManageConstant::Item::ROOT_PARENT_CATEGORY_ITEM_ID %>,
+
+      CACHED_PRICE_LIFETIME_IN_MINUTE: 240,   // four hours
+
+      DEFAULT_QUANTITY_PER_CHANGE: 1,
+      UNIT_PER_LB: "<%= HaigyClientConstant::Item::UNIT_PER_LB %>",
+
+      QUANTITY_PER_CHANGE: {
+        <% HaigyClientConstant::Item::PURCHASE_UNIT.each do |unit, unitSettings| %>
+          "<%= unit %>": <%= unitSettings[:quantity_per_change] %>,
+        <% end %>
+      },
+
+      QUANTITY_UNIT_DISPLAY: {
+        <% HaigyClientConstant::Item::PURCHASE_UNIT.each do |unit, unitSettings| %>
+          "<%= unit %>": "<%= unitSettings[:quantity_unit_display] %>",
+        <% end %>
+      },
+
+      ITEM_CARD_COLORS: ["red", "orange", "yellow", "olive", "green", "teal", "blue", "violet", "purple", "pink"]
+    },
+
+
+    cookie: {
+      VERSION: "2016-11-16",
+
+      key: {
+        COOKIE_VERSION: "HaigyClient-CookieVersion",
+        COOKIE_TIMESTAMP: "HaigyClient-CookieTimestamp",
+        TOKEN: "HaigyClient-Token",
+        CART_ID: "HaigyClient-Cart-Id",
+        CART_ENTRY_PREFIX: "HaigyClient-Cart-Entry-",
+        USER_ID: "HaigyClient-User-Id",
+        USER_IS_TEMPORARY: "HaigyClient-User-IsTemporary",
+        USER_DELIVERY_ZIP_CODE: "HaigyClient-User-DeliveryZipCode",
+        USER_SHOPPING_ZIP_CODE: "HaigyClient-User-ShoppingZipCode",
+        USER_EMAIL: "HaigyClient-User-Email",
+        USER_PHONE: "HaigyClient-User-Phone",
+        USER_NICKNAME: "HaigyClient-User-Nickname",
+        USER_ADDRESS: "HaigyClient-User-Address"
+      }
+    },
+
+
+    session: {
+      LIFETIME_IN_MINUTE: <%= HaigyClientConstant::Session::LIFETIME_IN_SECOND * 0.9 / 60 %>,
+      REQUEST_HEADER_TOKEN_ATTRIBUTE: "<%= HaigyClientConstant::Session::REQUEST_HEADER_TOKEN_ATTRIBUTE %>",
+      RESPONSE_HEADER_TOKEN_ATTRIBUTE: "<%= HaigyClientConstant::Session::RESPONSE_HEADER_TOKEN_ATTRIBUTE %>",
+      GUEST_TOKEN: "<%= HaigyClientConstant::Session::GUEST_TOKEN %>"
+    },
+
+
+    cart: {
+      GUEST_CART_ID: "guest"
+    },
+
+
+    order: {
+      CACHED_CHECKOUT_DATA_LIFETIME_IN_MINUTE: 60,
+      STATUS: JSON.parse('<%= HaigyManageConstant::Order::STATUS.to_json %>')
+    },
+
+
+    text: {
+      NO_SERVICE_WARNING: "Sorry, Haigy does not have the delivery service in your zip code now. However, we grow fast and may expand to your area soon!",
+      UNKNOWN_ERROR: "Unknown error. It might be caused by an incorrect formatted JSON response. Please refresh the page to try it again."
+    },
+
+
+    specialComponentName: {
+      CART_SHOW: "CART_SHOW"
+    },
+
+
+    materialUi: {
+      DIALOG_STYLE: {
+        bottom: "0px",
+        height: "auto",
+        overflowY: "auto",
+        paddingBottom: "100px"
+      }
+    }
+  };
+
+
+  return constant;
+});

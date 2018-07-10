@@ -1,0 +1,40 @@
+<% if (address) { %>
+  <h4 class="ui dividing header">Delivery Address:</h4>
+
+  <div id="order-ucheckout-address" class="haigy-padding-lr-30px" data-ready="yes">
+
+    <% if (address.isBusinessAddress) { %>
+      <div><%= address.businessName %></div>
+    <% } %>
+
+    <div><%= address.streetAddress %></div>
+    <div><%= address.city %>, <%= address.state %> <%= address.zipCode %></div>
+
+    <% if (address.note && address.note.trim().length > 0) { %>
+      <br>
+      <div><i>Note: <%= address.note %></i></div>
+    <% } %>
+    <br>
+    <div>
+      <button id="order-ucheckout-change-address" class="ui animated fade green button">
+        <div class="hidden content">Change</div>
+        <div class="visible content haigy-padding-lr-25px">
+          <i class="large edit icon haigy-icon-no-right-margin"></i>
+        </div>
+      </button>
+    </div>
+  </div>
+<% } else { %>
+  <h4 class="ui dividing header">Delivery To Zip Code:</h4>
+
+  <div id="order-ucheckout-address" class="haigy-padding-lr-30px" data-ready="no">
+    <div><%= zipCode %></div>
+    <br>
+    <button id="order-ucheckout-new-address" class="ui animated fade green button">
+      <div class="hidden content">Add Address</div>
+      <div class="visible content haigy-padding-lr-25px">
+        <i class="large plus icon haigy-icon-no-right-margin"></i>
+      </div>
+    </button>
+  </div>
+<% } %>

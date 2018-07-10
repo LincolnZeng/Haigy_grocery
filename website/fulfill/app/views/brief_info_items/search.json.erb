@@ -1,0 +1,5 @@
+{
+  "category_path": <%= render partial: "detailed_info_items/category_path", locals: {categoryPath: @categoryPath} %>,
+  "item": <%= render partial: "template_collection", locals: {itemCollection: @items} %>,
+  "has_more_to_load": <%= @hasMoreToLoad %>
+}

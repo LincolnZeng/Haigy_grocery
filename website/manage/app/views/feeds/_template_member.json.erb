@@ -1,0 +1,9 @@
+{
+  "id": <%= feed.id.to_json %>,
+  "name": <%= raw(feed.name.to_json) %>,
+  "source": <%= raw(feed.source.to_json) %>,
+  "latest_feed_time": <%= feed.latest_feed_time.to_i %>,
+  "is_processing": <%= feed.is_processing %>,
+  "has_process_error": <%= feed.has_process_error %>,
+  "process_error_message": <%= raw(feed.process_error_message.to_json) %>
+}

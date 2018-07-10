@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h3>New <%= @feedback.content_type %> Comes!</h3>
+    <p>===============================================</p>
+    <br />
+    <p>Server Time: <%= @feedback.created_at %></p>
+    <p>User ID: <%= @feedback.user_id.present? ? @feedback.user_id : "not detected" %></p>
+    <p>User IP Address: <%= @feedback.user_ip_address %></p>
+    <p>User Local Time: <%= @feedback.user_local_time %></p>
+    <p>User Email: <%= @feedback.user_email.present? ? @feedback.user_email : "not provided" %></p>
+    <p>User Phone: <%= @feedback.user_phone.present? ? @feedback.user_phone : "not provided" %></p>
+    <br />
+    <p>Content:</p>
+    <pre style="white-space: pre-wrap;"><%= @feedback.content %></pre>
+    <br />
+    <p><%= currentDateInPacificTime %></p>
+  </body>
+</html>

@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 
+  service_area_id: 
+  shopping_stores: MyString
+  checked_out: false
+  checkout_time: 2015-09-26 13:19:01
+
+two:
+  user_id: 
+  service_area_id: 
+  shopping_stores: MyString
+  checked_out: false
+  checkout_time: 2015-09-26 13:19:01

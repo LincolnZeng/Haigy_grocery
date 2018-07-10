@@ -1,0 +1,60 @@
+<div class="ui two column centered stackable grid">
+
+  <div class="column">
+
+    <h2 class="ui header">Make A Special Request</h2>
+    <div>Describe the item in detail and we will try to find it for you.</div>
+
+    <br><br>
+
+    <form id="cart-specialrequest-form" class="ui form">
+      <% if (specialRequest.id) { %>
+        <input type="hidden" name="id" value="<%= specialRequest.id %>">
+      <% } %>
+
+      <div class="required field">
+        <label>Summary of your request or the item</label>
+        <input type="text" name="summary" placeholder="Summary" value="<%= specialRequest.summary %>">
+      </div>
+      <br>
+
+      <div class="required field">
+        <label>Quantity (3 bottles, 2 lbs, etc.)</label>
+        <input type="text" name="quantity" placeholder="Quantity" value="<%= specialRequest.quantity %>">
+      </div>
+      <br>
+
+      <div class="field">
+        <label>More details about the item</label>
+        <textarea name="details" placeholder="More details about the item. Category of the item, website links of the item, etc."><%= specialRequest.details %></textarea>
+      </div>
+      <br>
+
+      <div class="fields">
+        <% if (specialRequest.id) { %>
+          <div class="six wide field">
+            <button class="ui primary fluid button" type="submit">Save</button>
+          </div>
+          <div class="five wide field">
+            <button id="cart-specialrequest-delete" class="ui purple fluid button" type="button" data-special-request-id="<%= specialRequest.id %>">Delete</button>
+          </div>
+        <% } else { %>
+          <div class="eleven wide field">
+            <button class="ui primary fluid button" type="submit">Save</button>
+          </div>
+        <% } %>
+        <div class="five wide field">
+          <button id="cart-specialrequest-cancel" class="ui basic fluid button" type="button">Cancel</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="ui error message"></div>
+      </div>
+    </form>
+
+  </div>
+
+</div>
+
+<br><br>

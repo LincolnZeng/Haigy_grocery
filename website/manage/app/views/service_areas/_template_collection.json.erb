@@ -1,0 +1,6 @@
+[
+  <% serviceAreaCollection.each_with_index do |serviceArea, index| %>
+    <% if index != 0 %>,<% end %>
+    <%= render partial: "template_member", locals: {serviceArea: serviceArea} %>
+  <% end %>
+]

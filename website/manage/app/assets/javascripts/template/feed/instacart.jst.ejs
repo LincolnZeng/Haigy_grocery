@@ -1,0 +1,148 @@
+<h3>All Instacart Feeds</h3>
+<div class="haigy-padding-lr-30px">
+  <div>Instructions:</div>
+  <div><ol>
+    <li>Use Chrome browser.</li>
+    <li>Go to the feed related Instacart web page. (may need to sign in Instacart first)</li>
+    <li>Open Chrome Developer Tools for this page, and switch to the "Network" tab.</li>
+    <li>Refresh the Instacart page and scroll down for several loadings.</li>
+    <li>Look for the collection query URL in the Chrome Developer Tools "Network" tab.</li>
+    <li>Modify the URL (for example, "page", "per") and save it for the future use.</li>
+    <li>"Start Feeding" for the related feed.</li>
+    <li>Click the saved URL and copy queried content into the feeding form.</li>
+    <li>Submit the feeding form. Also open Chrome Developer Tools for this feeding page, and switch to the "Console" tab to monitor if everything gets well feeded.</li>
+  </ol></div>
+</div>
+<br>
+
+<% if (allFeeds.length > 0) { %>
+  <% dataFreshTime = Date.now() - constant.feed.DATA_FRESH_PERIOD_IN_SECOND * 1000 %>
+
+  <div class="ui relaxed divided list">
+    <% allFeeds.each(function(feed) { %>
+      <% var feedId = feed.id %>
+      <% var hasProcessError = (feed.get("has_process_error") === true) %>
+      <% var isProcessing = (feed.get("is_processing") === true) %>
+      <% var latestFeedTime = new Date() %>
+      <% latestFeedTime.setTime(parseFloat(feed.get("latest_feed_time") || 0) * 1000) %>
+      <% var dataStale = latestFeedTime.getTime() < dataFreshTime %>
+
+      <div class="item">
+        <i class="large paw middle aligned icon
+          <% if (hasProcessError) { %>
+            haigy-font-color-error
+          <% } else if (isProcessing || dataStale) { %>
+            haigy-font-color-warning
+          <% } else { %>
+            haigy-font-color-success
+          <% } %>
+        "></i>
+
+        <div class="content haigy-width-100-percent"><div class="haigy-padding-lr-30px">
+          <div id="feed-instacart-feed-<%= feedId %>-show-container" class="haigy-padding-tb-10px">
+            <h3 class="header"><a class="feed-instacart-feed-edit" href="#" data-feed-id="<%= feedId %>"><%= feed.get("name") %></a></h3>
+
+            <div class="description">
+              <div class="haigy-padding-tb-5px">
+                Source: <a href="<%= feed.get("source") %>" target="_blank"><%= feed.get("source") %></a>
+              </div>
+
+              <% if (hasProcessError) { %>
+                <div class="haigy-padding-b-5px haigy-font-color-error">
+                  Last Process Failed. <%= feed.get("process_error_message") %>
+                </div>
+              <% } %>
+
+              <% if (isProcessing) { %>
+                <div><i><span class="haigy-font-color-warning">Processing Data ...</span> <a class="haigy-padding-l-30px feed-instacart-refresh-page" href="">Refresh</a></i></div>
+              <% } else { %>
+                <div id="feed-instacart-feed-<%= feedId %>-start-feeding-button">
+                  <span <% if (dataStale) { %>class="haigy-font-color-warning"<% } %>>Last Successful Feeding: <%= latestFeedTime.toDateString() %></span>
+                  <i class="haigy-padding-l-30px"><a class="feed-instacart-start-feeding" href="#" data-feed-id="<%= feedId %>">Start Feeding</a></i>
+                </div>
+
+                <div id="feed-instacart-feed-<%= feedId %>-feeding-form-container" class="haigy-display-none">
+                  <form class="ui form feed-instacart-feeding-form">
+                    <input type="hidden" name="id" value="<%= feedId %>">
+                    <div class="required field">
+                      <textarea name="feeding_data" placeholder="Feeding Data"></textarea>
+                    </div>
+                    <div>
+                      <span class="haigy-display-inline-block haigy-padding-b-5px">
+                        <button class="ui primary button" type="submit">Send Feeding Data</button>
+                      </span>
+                      <span class="haigy-display-inline-block haigy-padding-b-5px">
+                        <button class="ui button feed-instacart-cancel-feeding" type="button" data-feed-id="<%= feedId %>">Cancel</button>
+                      </span>
+                    </div>
+                    <div class="ui error message"></div>
+                  </form>
+                </div>
+              <% } %>
+
+            </div>
+          </div>
+
+          <div id="feed-instacart-feed-<%= feedId %>-edit-container" class="haigy-display-none haigy-padding-tb-20px haigy-width-max-500px">
+            <form id="feed-instacart-feed-<%= feedId %>-edit-form" class="ui form feed-instacart-feed-edit-form">
+              <input type="hidden" name="id" value="<%= feedId %>">
+              <div class="required field">
+                <label>Feed Name</label>
+                <input type="text" name="name" placeholder="Feed Name" value="<%= feed.get('name') %>">
+              </div>
+              <div class="required field">
+                <label>Feed Source</label>
+                <input type="text" name="source" placeholder="Feed Source" value="<%= feed.get('source') %>">
+              </div>
+              <div>
+                <span class="haigy-display-inline-block haigy-padding-r-30px haigy-padding-b-5px">
+                  <button class="ui red button feed-instacart-feed-delete" type="button" data-feed-id="<%= feedId %>">Delete Feed</button>
+                </span>
+                <span class="haigy-display-inline-block haigy-padding-b-5px">
+                  <button class="ui primary button" type="submit">Save Edited Feed</button>
+                </span>
+                <span class="haigy-display-inline-block haigy-padding-b-5px">
+                  <button class="ui button feed-instacart-feed-edit-form-cancel" type="button" data-feed-id="<%= feedId %>">Cancel</button>
+                </span>
+              </div>
+              <div class="ui error message"></div>
+            </form>
+          </div>
+        </div></div>
+
+      </div>
+    <% }) %>
+  </div>
+<% } else { %>
+  <div>No feed is found.</div>
+<% } %>
+
+<br><br>
+
+<div>
+  <a id="feed-instacart-new-feed" class="ui blue basic button" href="#">Create A New Feed</a>
+</div><br>
+
+<div id="feed-instacart-new-feed-form" class="haigy-padding-lr-30px haigy-width-max-500px haigy-display-none">
+  <form class="ui form feed-instacart-feed-edit-form">
+    <div class="required field">
+      <label>New Feed Name</label>
+      <input type="text" name="name" placeholder="New Feed Name">
+    </div>
+    <div class="required field">
+      <label>New Feed Source</label>
+      <input type="text" name="source" placeholder="New Feed Source">
+    </div>
+    <div>
+      <span class="haigy-display-inline-block haigy-padding-b-5px">
+        <button class="ui primary button" type="submit">Save New Feed</button>
+      </span>
+      <span class="haigy-display-inline-block haigy-padding-b-5px">
+        <button id="feed-instacart-new-feed-form-cancel" class="ui button" type="button">Cancel</button>
+      </span>
+    </div>
+    <div class="ui error message"></div>
+  </form>
+</div>
+
+<br><br>

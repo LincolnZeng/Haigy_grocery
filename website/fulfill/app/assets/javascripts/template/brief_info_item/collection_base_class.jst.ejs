@@ -1,0 +1,36 @@
+<% categoryPath = allItem.categoryPath; %>
+<% categoryPathLength = categoryPath.length; %>
+
+
+<% if (categoryPathLength > 0) { %>
+
+  <% if (categoryPathLength > 1) { %>
+
+    <div class="haigy-padding-b-30px">
+      <%= categoryPathT({categoryPath: categoryPath, navigateHash: navigator.briefinfoitemBrowseHash, itemAppended: null, linkLastCategory: false}) %>
+    </div>
+
+  <% } %>
+
+  <% if (allItem.length > 0) { %>
+    <div id="biitem-cbc-all-item-container" class="ui centered cards">
+      <%= itemDisplayT({allItem: allItem.models, itemCartOperationT: itemCartOperationT, imagePathToUrlTool: imagePathToUrlTool, constant: constant, precompiledAsset: precompiledAsset, navigator: navigator, cartHelper: cartHelper}) %>
+    </div>
+
+    <br><br>
+
+    <div id="biitem-cbc-show-more-button-container" class="haigy-display-none"><div class="ui centered one column grid"><div class="twelve wide column">
+      <br><button id="biitem-cbc-show-more-button" class="ui large fluid basic button"><strong><i class="plus icon"></i> <%= loadMoreButtonText %></strong></button><br>
+    </div></div></div>
+
+  <% } else { %>
+
+    <div>Oops, nothing is found here ...</div>
+
+  <% } %>
+
+<% } else { %>
+
+  <div>Oops, nothing is found here ...</div>
+
+<% } %>

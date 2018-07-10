@@ -1,0 +1,96 @@
+@import 'haigy/theme';
+
+
+$top-nav-border-top-size: 2px;
+$top-nav-info-line-height: 35px;
+$top-nav-buttons-bottom-offset: -8px;
+
+$top-nav-z-index: 800;
+$content-z-index: 600;
+
+
+#main-layout-container {
+  min-width: $haigy-min-width;
+  width: 100%;
+}
+
+
+#main-layout-top-nav {
+  background-color: $haigy-color-lightgray;
+  border-top: $top-nav-border-top-size solid $haigy-color-purple;
+  color: $haigy-color-gray;
+  font-size: .9em;
+  min-width: $haigy-min-width * 0.9;
+  position: fixed;
+  width: 100%;
+  z-index: $top-nav-z-index;
+}
+
+
+#main-layout-top-nav-info {
+  line-height: $top-nav-info-line-height;
+}
+
+
+#main-layout-top-nav-info-content {
+  display: inline-block;
+  height: 100%;
+}
+
+
+#main-layout-small-screen-top-nav-buttons {
+  bottom: $top-nav-buttons-bottom-offset;
+  position: absolute;
+  right: 0;
+  text-align: right;
+}
+
+
+#main-layout-wide-screen-top-menus {
+  line-height: $top-nav-info-line-height;
+  position: absolute;
+  right: 0;
+  text-align: right;
+  top: 0;
+}
+
+
+#main-layout-wide-screen-slogan {
+  color: $haigy-color-gray;
+  margin-top: -10px;
+  padding-bottom: 40px;
+}
+
+
+#main-layout-small-screen-slogan {
+  color: $haigy-color-gray;
+  margin-top: -10px;
+  padding-bottom: 25px;
+}
+
+
+#main-layout-wide-screen-search {
+  position: absolute;
+  right: 0;
+  top: 2px;
+}
+
+
+#main-layout-content {
+  padding-top: $top-nav-border-top-size + $top-nav-info-line-height;
+  z-index: $content-z-index;
+}
+
+
+@media only screen and (max-width: 680px) {
+  .main-layout-small-screen-hidden {
+    display: none !important;
+  }
+}
+
+
+@media only screen and (min-width: 680px) {
+  .main-layout-wide-screen-hidden {
+    display: none !important;
+  }
+}

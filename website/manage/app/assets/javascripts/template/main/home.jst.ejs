@@ -1,0 +1,57 @@
+<div class="ui vertical menu">
+  <div class="item">
+    <div class="header">
+      <a href="<%= navigator.itemSearchHash('{}') %>">Search Item</a>
+    </div>
+  </div>
+  <div class="item">
+    <div class="header">Manage Item</div>
+    <div class="menu">
+      <a class="item" href="<%= navigator.storeSelectHash('self') %>">choose a store to manage</a>
+      <a class="item" href="<%= navigator.itemManageHash(constant.item.ROOT_PARENT_CATEGORY_ITEM_ID) %>">manage items and categories</a>
+    </div>
+  </div>
+  <div class="item">
+    <div class="header">Company</div>
+    <div class="menu">
+      <a class="item" href="<%= navigator.companyIndexHash %>">view all</a>
+      <a class="item" href="<%= navigator.companyNewHash %>">add a new company</a>
+    </div>
+  </div>
+  <div class="item">
+    <div class="header">Store</div>
+    <div class="menu">
+      <a class="item" href="<%= navigator.storeIndexHash %>">view all</a>
+      <a class="item" href="<%= navigator.companySelectHash %>">add a new store</a>
+    </div>
+  </div>
+  <div class="item">
+    <div class="header">Employee</div>
+    <div class="menu">
+      <a class="item" href="<%= navigator.employeeIndexHash %>">view all</a>
+      <a class="item" href="<%= navigator.employeeNewHash %>">add a new employee</a>
+    </div>
+  </div>
+  <div class="item">
+    <div class="header">Order</div>
+    <div class="menu">
+      <a class="item" href="<%= navigator.orderIndexHash %>">view all</a>
+    </div>
+  </div>
+  <div class="item">
+    <div class="header">Feed</div>
+    <div class="menu">
+      <a class="item" href="<%= navigator.feedInstacartHash %>">Instacart</a>
+    </div>
+  </div>
+  <div class="item">
+    <div class="header">Other</div>
+    <div class="menu">
+      <a class="item" href="<%= navigator.servablezipcodeIndexHash %>">zip code management</a>
+      <a class="item" href="<%= navigator.feedbackIndexHash(0, 3) %>">feedbacks</a>
+      <a class="item" href="<%= navigator.analyticalentryIndexHash(0, 3) %>">analytical data</a>
+    </div>
+  </div>
+</div>
+
+<br><br>

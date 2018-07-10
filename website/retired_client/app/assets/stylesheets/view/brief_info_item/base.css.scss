@@ -1,0 +1,23 @@
+@import 'haigy/theme';
+
+
+@media only screen and (max-width: 570px) {
+  .biitem-small-screen-card-width  {
+    width: 45% !important;
+  }
+}
+
+
+@media only screen and (min-width: 571px) {
+  .biitem-wide-screen-card-width {
+    width: 250px !important;
+  }
+}
+
+
+.biitem-on-sale-price {
+  color: $haigy-color-red;
+  font-size: 140%;
+  font-style: italic;
+  font-weight: bold;
+}

@@ -1,0 +1,14 @@
+{
+  "id": <%= raw(store.id.to_json) %>,
+  "store_name": <%= raw(store.store_name.to_json) %>,
+  "is_haigy_base": <%= raw(store.is_haigy_base.to_json) %>,
+  "formatted_address": <%= raw(store.formatted_address.to_json) %>,
+  "street_address": <%= raw(store.street_address.to_json) %>,
+  "city": <%= raw(store.city.to_json) %>,
+  "state": <%= raw(store.state_code.to_json) %>,
+  "zip_code": <%= raw(store.postal_code.to_json) %>,
+  "company_id": <%= raw(company.id.to_json) %>,
+  "company_name": <%= raw(company.name.to_json) %>,
+  "company_logo_path": <%= raw(company.logo.url(:medium).to_json) %>,
+  "service_area_id": <%= raw(store.service_area_id.to_json) %>
+}

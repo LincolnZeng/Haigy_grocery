@@ -1,0 +1,106 @@
+<% if (searchType) { %>
+  <h4>Search By Item Barcode:</h4>
+
+  <div>
+    <div class="ui search">
+      <div class="ui icon input">
+        <input class="prompt" id="item-search-bc-input" type="text" placeholder="Barcode" data-validator="notEmpty"
+        data-submit="#item-search-bc-submit">
+        <i class="search icon"></i>
+      </div>
+    </div>
+
+    <% if (inCordova) { %>
+      <button id="item-search-bc-scan-start">Start Item Barcode Scan</button><br>
+    <% } %>
+
+    <br>
+    <button class="ui button"id="item-search-bc-submit" data-self-selector="#item-search-bc-submit" disabled>Submit</button>
+  </div>
+
+
+  <br><br>
+
+
+  <h4>Search By Item Name:</h4>
+
+  <div>
+    <div class="ui search">
+      <div class="ui icon input">
+        <input class="prompt" id="item-search-name-input" type="text" placeholder="Name" data-validator="notEmpty"
+        data-submit="#item-search-name-submit">
+        <i class="search icon"></i>
+      </div>
+    </div>
+
+    <br>
+    <button class="ui button" id="item-search-name-submit" data-self-selector="#item-search-name-submit" disabled>Submit</button>
+  </div>
+
+
+  <% if (searchType !== "new") { %>
+    <br><hr>
+
+    <% if (searchType === "barcode") { %>
+
+      <h3>Search Result For Item Barcode: <%= searchOptions.barcode %></h3>
+
+    <% } else if (searchType === "name") { %>
+
+      <h3>Search Result For Item Name: <%= searchOptions.name %></h3>
+
+    <% } %>
+
+    <div class="ui button"><a href="<%= navigator.itemNewitemHash(newItemCategory) %>">Add A New Item If You Cannot Find One</a></div>
+    <br><br>
+
+
+    <% if (searchedItems.length > 0) { %>
+
+      <div class="ui four cards">
+        <% searchedItems.each(function(item) { %>
+          <div class="card">
+            <a class="image" href="<%= navigator.storeiteminfoLookupHash(item.id) %>">
+              <img src="<%= pathToUrlTool(item.get('cover_image_path')) %>" alt="<%= item.get('name') %> Cover Image">
+            </a>
+            <div class="content">
+              <div><a href="<%= navigator.storeiteminfoLookupHash(item.id) %>"><%= item.get("name") %></a></div>
+              <br>
+              <div>Purchase Unit: <%= item.get("unit") %></div>
+              <div>Item Size: <%= item.get("item_size") %></div>
+              <div><a href="<%= navigator.itemShowHash(item.id) %>">View</a></div>
+            </div>
+          </div>
+        <% }) %>
+
+      </div>
+
+    <% } else { %>
+
+
+      <% if (searchType === "barcode") { %>
+
+        <div>No Item Is Found For This Barcode. You May Try To Search Item Name To See If You Could Find Anything.</div>
+
+      <% } else if (searchType === "name") { %>
+
+        <div>No Item Is Found For This Name. You May Try To Search Item Barcode To See If You Could Find Anything.</div>
+
+      <% } else { %>
+        <div>No Item Is Found ...</div>
+      <% } %>
+
+
+    <% } %>
+
+
+  <% } %>
+
+
+<% } else { %>
+
+
+  <div>Sorry, <%= errorMessage %> ...</div>
+
+
+<% } %>

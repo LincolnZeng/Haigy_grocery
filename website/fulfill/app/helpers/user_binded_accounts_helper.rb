@@ -1,0 +1,2 @@
+module UserBindedAccountsHelper
+end

@@ -1,0 +1,10 @@
+{
+  "id": <%= raw(cartEntry.id.to_json) %>,
+  "quantity": <%= raw(cartEntry.quantity.to_json) %>,
+  "unit_price": <%= raw(cartEntry.unit_price.to_json) %>,
+  "item_id": <%= raw(item.id.to_json) %>,
+  "item_name": <%= raw(item.name.to_json) %>,
+  "item_unit": <%= raw(item.unit.to_json) %>,
+  "item_cover_image_path": <%= raw(item.cover_image.url(:thumb).to_json) %>,
+  "item_parent_category_id": <%= raw(item.parent_category_item_id.to_json) %>
+}

@@ -1,0 +1,8 @@
+[
+  <% @userAddresses.each_with_index do |address, index| %>
+    <% if index != 0 %>,<% end %>
+    {
+      <%= render partial: "address_attribute", locals: {address: address} %>
+    }
+  <% end %>
+]

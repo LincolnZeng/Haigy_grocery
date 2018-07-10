@@ -1,0 +1,74 @@
+<div class="ui centered cards">
+
+<% var colors = ["red", "orange", "yellow", "olive", "green", "teal", "blue", "violet", "purple", "pink"] %>
+<% var colorCount = colors.length %>
+
+<% allItems.each(function(item) { %>
+
+  <div class="<%= colors[Math.floor((Math.random() * colorCount))] %> card biitem-small-screen-card-width biitem-wide-screen-card-width">
+
+    <% var storeItemInfo = item.get("store_item_info") %>
+
+    <% var inStock = storeItemInfo.in_stock === true %>
+    <% var onSale = storeItemInfo.on_sale === true %>
+    <% var itemUnit= item.get("unit") %>
+
+    <a class="image haigy-position-relative main-welcome-see-item-details" href="#" data-item-id="<%= item.id %>" data-zip-code="<%= zipCode %>">
+      <img class="haigy-image-overlay" src="<%= utility.imagePathToUrl(item.get('cover_image_path')) %>" alt="Item image">
+      <img class="haigy-image-loader" src="<%= precompiledAsset.image.IMAGE_LOADER %>" alt="Loading ...">
+    </a>
+
+    <div class="content">
+      <% var currentPrice = 0.0 %>
+      <% if (inStock) { %>
+        <div class="description">
+          <% if (onSale) { %>
+            <% currentPrice = parseFloat(storeItemInfo.sale_price) %>
+          <% } else { %>
+            <% currentPrice = parseFloat(storeItemInfo.price) %>
+          <% } %>
+
+          <% if (currentPrice > 0.0) { %>
+            <% if (onSale) { %>
+              <span class="biitem-on-sale-price haigy-padding-r-5px">$<%= currentPrice.toFixed(2) %></span>
+              <del>$<%= parseFloat(storeItemInfo.price).toFixed(2) %></del>
+            <% } else { %>
+              $<%= currentPrice.toFixed(2) %>
+            <% } %>
+            <%= itemUnit %>
+          <% } else { %>
+            <div class="description">Out Of Stock</div>
+          <% } %>
+        </div>
+      <% } else { %>
+        <div class="description">Out Of Stock</div>
+      <% } %>
+
+      <div class="meta"><i>
+        <% if (item.get("has_fixed_item_size") ===  true) { %>
+          <%= item.get("item_size") %>
+        <% } else if (storeItemInfo.estimated_weight) { %>
+          <% var estimatedWeight = parseFloat(storeItemInfo.estimated_weight) %>
+          estimate <%= estimatedWeight.toFixed(2) %> lb each
+          <% if (inStock && estimatedWeight > 0.0 && currentPrice > 0.0 && itemUnit !== constant.item.UNIT_PER_LB) { %>
+            <br>$<%= (currentPrice / estimatedWeight).toFixed(2) %> per lb
+          <% } %>
+        <% } %>
+      </i></div>
+
+      <div class="description">
+        <a class="main-welcome-see-item-details" href="#" data-item-id="<%= item.id %>" data-zip-code="<%= zipCode %>"><%= item.get("name") %></a>
+      </div>
+    </div>
+
+  </div>
+
+<% }) %>
+
+</div>
+
+<br><br><br>
+
+<div class="ui centered one column grid"><div class="twelve wide column">
+  <button id="main-welcome-view-more-items" class="ui large fluid basic button" data-zip-code="<%= zipCode %>"><strong><i class="shop icon"></i> Click to Start Shopping</strong></button><br>
+</div></div>

@@ -1,0 +1,6 @@
+[
+  <% @userAddresses.each_with_index do |address, index| %>
+    <% if index != 0 %>,<% end %>
+    <%= render partial: "template_member", locals: {address: address} %>
+  <% end %>
+]

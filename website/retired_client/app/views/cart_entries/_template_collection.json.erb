@@ -1,0 +1,6 @@
+[
+  <% cartEntryCollection.each_with_index do |cartEntry, index| %>
+    <% if index != 0 %>,<% end %>
+    <%= render partial: "cart_entries/template_member", locals: {cartEntry: cartEntry, item: cartEntry.item, storeItemInfo: (cartItemStoreInfoHash.present? ? cartItemStoreInfoHash[cartEntry.item_id] : nil), storeHash: storeHash} %>
+  <% end %>
+]

@@ -1,0 +1,15 @@
+[
+  <% @analyticalEntries.each_with_index do |entry, index| %>
+    <% if index != 0 %>,<% end %>
+    {
+      "id": <%= entry.id.to_json %>,
+      "source": <%= raw(entry.source.to_json) %>,
+      "keyword": <%= raw(entry.keyword.to_json) %>,
+      "user_id": <%= raw(entry.user_id.to_json) %>,
+      "user_ip_address": <%= raw(entry.user_ip_address.to_json) %>,
+      "user_local_time": <%= raw(entry.user_local_time.to_json) %>,
+      "details": <%= raw(entry.details.to_json) %>,
+      "created_at": <%= raw(entry.created_at.to_formatted_s(:rfc822).to_json) %>
+    }
+  <% end %>
+]

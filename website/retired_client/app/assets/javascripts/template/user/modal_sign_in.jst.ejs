@@ -1,0 +1,63 @@
+<% if (closable) { %>
+  <i class="close icon"></i>
+<% } %>
+
+<div class="header">Sign In</div>
+
+<div class="content">
+
+  <div class="ui centered grid"><div class="fourteen wide column"><div class="haigy-text-align-center"><span class="haigy-display-inline-block haigy-width-100-percent haigy-width-max-500px">
+
+
+    <form id="user-m-confirm-signin-form" class="ui form">
+      <div class="field">
+        <label>Email</label>
+        <input type="email" name="email" placeholder="Email">
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <input type="password" name="password" placeholder="Password">
+      </div>
+      <div class="field haigy-padding-t-10px">
+        <button id="user-m-confirm-signin-submit" class="ui fluid primary button" type="submit">Sign In</button>
+      </div>
+      <div class="ui error message"></div>
+    </form>
+
+    <div><a href="<%= navigator.userRecoverpasswordHash %>">Forgot your password?</a></div>
+
+
+    <% if (showSignUp) { %>
+      <br>
+      <div class="ui horizontal divider">OR</div>
+      <br>
+
+      <div>
+        <button id="user-m-confirm-sign-up" class="ui fluid green button">Click here to sign up!</button>
+      </div>
+    <% } %>
+
+
+    <% if (showZipCodeForm) { %>
+      <br>
+      <div class="ui horizontal divider">OR</div>
+      <br>
+
+      <form id="user-m-confirm-zip-code-form" class="ui form">
+        <div class="field">
+          <label>Let us know your delivery zip code:</label>
+          <input name="zip_code" type="text" placeholder="Zip Code">
+        </div>
+        <div class="field haigy-padding-t-10px">
+          <button id="user-m-confirm-start-shop" class="ui fluid purple button" type="submit">Start Shopping!</button>
+        </div>
+        <div class="ui error message"></div>
+      </form>
+    <% } %>
+
+
+  </span></div></div></div>
+
+</div>
+
+<br>

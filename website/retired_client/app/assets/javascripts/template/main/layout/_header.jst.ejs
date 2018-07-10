@@ -1,0 +1,28 @@
+<div class="main-layout-small-screen-hidden haigy-padding-t-30px"><div class="haigy-position-relative">
+  <h1 class="ui header"><a href="<%= navigator.mainHomeHash %>"><span class="haigy-font-color-purple">Haigy</span> <span class="haigy-font-color-gray">Fruits & Veggies</span></a></h1>
+  <div id="main-layout-wide-screen-slogan"><i><small>Top quality & Fresh guranteed & Unbeatable produce delivery service</small></i></div>
+
+  <% if (zipCode) { %>
+    <div id="main-layout-wide-screen-search" class="haigy-text-align-right">
+      <div class="haigy-display-inline-block">
+        <a class="circular ui icon button main-layout-shopping-cart-icon-link" href="<%= navigator.cartManageHash %>" title="Shopping Cart">
+          <i class="shop icon"></i>
+        </a>
+      </div>
+
+      <div class="haigy-display-inline-block haigy-padding-l-30px">
+        <div class="ui icon input">
+          <input id="main-layout-search-input" type="text" placeholder="Search ...">
+          <i id="main-layout-search-input-start-search" class="search link icon"></i>
+        </div>
+      </div>
+    </div>
+  <% } %>
+</div></div>
+
+<div class="main-layout-wide-screen-hidden haigy-padding-t-25px">
+  <h2 class="ui header haigy-text-align-center">
+    <a href="<%= navigator.mainHomeHash %>"><span class="haigy-font-color-purple">Haigy</span> <span class="haigy-font-color-gray">Fruits & Veggies</span></a>
+  </h2>
+  <div id="main-layout-small-screen-slogan" class="haigy-text-align-center"><i><small><small>Top quality & Fresh guranteed & Unbeatable produce delivery service</small></small></i></div>
+</div>

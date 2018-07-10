@@ -1,0 +1,37 @@
+<h3>All Companies</h3>
+
+<div>
+  <a class="ui blue basic button" href="<%= navigator.companyNewHash %>">Add A New Company</a>
+  <br><br>
+</div>
+
+<% if (allCompany.length === 0) { %>
+
+  <h3>No Company Is Found</h3>
+  <br>
+  <div><a href="<%= navigator.companyNewHash %>">Add A New Company</a></div>
+
+<% } else { %>
+
+  <div class="ui three stackable doubling cards">
+
+    <% allCompany.each(function(company) { %>
+      <div class="card">
+
+        <a class="image" href="<%= navigator.companyShowHash(company.id) %>">
+          <img src="<%= pathToUrlTool(company.get('logo_path')) %>" alt="<%= company.get('name') %> Logo">
+        </a>
+
+        <div class="content">
+          <h4><%= company.get("name") %></h4>
+          <a href="<%= navigator.companyShowHash(company.id) %>">View Details</a> |
+          <a href="<%= navigator.storeForcompanyHash(company.id) %>">Show All Stores</a> |
+          <a href="<%= navigator.companyEditHash(company.id) %>">Edit</a>
+        </div>
+      </div>
+    <% }) %>
+
+  </div>
+
+
+<% } %>

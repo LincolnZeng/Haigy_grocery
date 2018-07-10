@@ -1,0 +1,48 @@
+<i><div class="ui breadcrumb">
+
+
+  <% categoryPathLength = categoryPath.length; %>
+
+  <% if (categoryPathLength > 0) { %>
+
+    <% var lastCategoryIndex = categoryPathLength - 1; %>
+    <% var lastCategoryId = categoryPath[lastCategoryIndex].id; %>
+    <% var lastCategoryName = categoryPath[lastCategoryIndex].name; %>
+
+    <% if (itemAppended) { %>
+
+      <% lastCategoryId = itemAppended.id; %>
+      <% lastCategoryName = itemAppended.get("name"); %>
+
+      <a href="<%= navigateHash(categoryPath[0].id) %>"><%= categoryPath[0].name %></a>
+
+      <% for (var index = 1; index < categoryPathLength; ++index) { %>
+        <i class="right chevron icon divider"></i>
+        <a href="<%= navigateHash(categoryPath[index].id) %>"><%= categoryPath[index].name %></a>
+      <% } %>
+
+      <i class="right chevron icon divider"></i>
+
+    <% } else { %>
+
+      <% for (var index = 0; index < lastCategoryIndex; ++index) { %>
+        <a href="<%= navigateHash(categoryPath[index].id) %>"><%= categoryPath[index].name %></a>
+        <i class="right chevron icon divider"></i>
+      <% } %>
+
+    <% } %>
+
+    <% if (linkLastCategory) { %>
+      <a href="<%= navigateHash(lastCategoryId) %>"><%= lastCategoryName %></a>
+    <% } else { %>
+      <%= lastCategoryName %>
+    <% } %>
+
+  <% } else { %>
+
+    Uncategorized Item
+
+  <% } %>
+
+
+</div></i>

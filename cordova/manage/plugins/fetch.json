@@ -1,0 +1,18 @@
+{
+    "cordova-plugin-whitelist": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-whitelist@1"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "com.mirasense.scanditsdk.plugin": {
+        "source": {
+            "type": "local",
+            "path": "D:\\Downloads\\scandit-barcodescanner-community-phonegap_4.7.0"
+        },
+        "is_top_level": true,
+        "variables": {}
+    }
+}

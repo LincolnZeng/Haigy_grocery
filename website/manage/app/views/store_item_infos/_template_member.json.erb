@@ -1,0 +1,31 @@
+{
+  "id": <%= raw(info.id.to_json) %>,
+  "is_category_item": <%= raw(info.is_category_item.to_json) %>,
+  "price": <%= raw(info.price.to_json) %>,
+  "sale_price": <%= raw(info.sale_price.to_json) %>,
+  "on_sale": <%= raw(info.on_sale.to_json) %>,
+  "estimated_weight": <%= info.estimated_weight_of_each_in_lb.to_json %>,
+  "quantity": <%= raw(info.quantity.to_json) %>,
+  "in_stock": <%= raw(info.in_stock.to_json) %>,
+  "note": <%= raw(info.note.to_json) %>,
+
+  "store_id": <%= raw(info.store.id.to_json) %>,
+  "store_is_haigy_base": <%= raw(info.store.is_haigy_base.to_json) %>,
+  "store_name": <%= raw(info.store.company.name.to_json) %>,
+  "store_address": <%= raw(info.store.formatted_address.to_json) %>,
+
+  "item_id": <%= raw(info.item.id.to_json) %>,
+  "item_name": <%= raw(info.item.name.to_json) %>,
+  "item_cover_image_path": <%= raw(info.item.cover_image.url(:medium).to_json) %>,
+  "item_unit": <%= raw(info.item.unit.to_json) %>,
+  "item_has_fixed_size": <%= info.item.has_fixed_item_size %>,
+  "item_size": <%= raw(info.item.item_size.to_json) %>,
+  "item_brand": <%= raw(info.item.brand.to_json) %>,
+  "item_manufacturer": <%= raw(info.item.manufacturer.to_json) %>
+
+  <% if hasFeedMappingInfo %>
+    ,
+    "feed_mappings":
+    <%= render partial: "feed_mappings/template_collection", locals: {feedMappingCollection: info.feed_mappings} %>
+  <% end %>
+}

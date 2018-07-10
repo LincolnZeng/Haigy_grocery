@@ -1,0 +1,6 @@
+[
+  <% feedMappingCollection.each_with_index do |feedMapping, index| %>
+    <% if index != 0 %>,<% end %>
+    <%= render partial: "feed_mappings/template_member", locals: {feedMapping: feedMapping} %>
+  <% end %>
+]

@@ -1,0 +1,16 @@
+Auto Confirmation from Haigy
+===============================================
+
+<% if @order.is_guest_order %>
+Dear Guest Customer,
+<% else %>
+Hello <%= @order.user.nickname %>,
+<% end %>
+
+Thank you very much for shopping with us. Your order (<%= @order.secured_id %>) has been successfully placed.
+You could see your order details and status from the webpage:
+https://haigy.com/#/order/<%= @order.secured_id %>/show
+
+We hope to see you again soon.
+Haigy.com
+<%= currentDateInPacificTime %>

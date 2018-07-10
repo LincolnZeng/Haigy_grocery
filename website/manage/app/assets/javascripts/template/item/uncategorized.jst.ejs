@@ -1,0 +1,47 @@
+<% if (allUncategorizedItem.length > 0) { %>
+
+  <h3>All Uncategorized Items</h3>
+  <br>
+
+  <% allUncategorizedItem.each(function(item) { %>
+
+    <div>
+
+      <% if (item.get("is_category")) { %>
+
+        <div><strong>Category</strong></div>
+        <div><a href="<%= navigator.itemManageHash(item.id) %>"><%= item.get("name") %></a></div>
+        <div><a href="<%= navigator.itemManageHash(item.id) %>">
+          <img src="<%= pathToUrlTool(item.get('cover_image_path')) %>" alt="<%= item.get('name') %> Logo">
+        </a></div>
+        <div><strong>There Must Be An Error Somewhere. It Shouldn't Have Any Uncategorized Category.</strong></div>
+        <div>
+          <a href="<%= navigator.itemMoveHash(item.id, rootCategoryId) %>">Move</a>
+        </div>
+
+      <% } else { %>
+
+        <div><strong>Item</strong></div>
+        <div><a href="<%= navigator.itemShowHash(item.id) %>"><%= item.get("name") %></a></div>
+        <div><a href="<%= navigator.itemShowHash(item.id) %>">
+          <img src="<%= pathToUrlTool(item.get('cover_image_path')) %>" alt="<%= item.get('name') %> Cover Image">
+        </a></div>
+        <div>Purchase Unit: <%= item.get("unit") %></div>
+        <div>Item Size: <%= item.get("item_size") %></div>
+        <div>
+          <a href="<%= navigator.itemMoveHash(item.id, rootCategoryId) %>">Move</a>
+        </div>
+
+      <% } %>
+
+    </div>
+
+    <br><br>
+
+  <% }); %>
+
+<% } else { %>
+
+  <h3>Great! No Uncategorized Item Is Found.</h3>
+
+<% } %>

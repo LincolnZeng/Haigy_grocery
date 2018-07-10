@@ -1,0 +1,18 @@
+# require "rake tmp:clear" and restarting the server to pick up the change.
+domain: "http://exampleDomain.haigy.com"
+
+
+cordova_app_path: "/Example/Cordova/App/Path"   # absolute path
+cordova_app_title: "Example App Title"
+
+
+produce_price_markup_ratio: 0.2
+wynn_scene_item_price_markup_ratio: 0.15
+
+delivery_fee: 6.99
+non_haigy_item_handling_fee_ratio: 0.1
+tax_ratio: 0.1
+
+# Stripe Payment
+stripe_secret_key: "sk_test_1OhmWCz2TtsWRvHkT9TpYBK5"
+stripe_publishable_key: "pk_test_Xr1Pjd9qNVoZHnpQVx8F2bIG"

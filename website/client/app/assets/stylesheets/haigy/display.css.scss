@@ -1,0 +1,22 @@
+.haigy-display-none {
+  display: none;
+}
+
+
+.haigy-display-inline-block {
+  display: inline-block;
+}
+
+
+@media only screen and (max-width: 680px) {
+  .haigy-display-only-wide-screen {
+    display: none !important;
+  }
+}
+
+
+@media only screen and (min-width: 680px) {
+  .haigy-display-only-small-screen {
+    display: none !important;
+  }
+}

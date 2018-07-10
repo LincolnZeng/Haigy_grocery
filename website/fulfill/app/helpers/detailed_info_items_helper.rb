@@ -1,0 +1,2 @@
+module DetailedInfoItemsHelper
+end

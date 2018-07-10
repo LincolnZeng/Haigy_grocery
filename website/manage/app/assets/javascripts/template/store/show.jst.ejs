@@ -1,0 +1,30 @@
+<% if (store.id) { %>
+
+	<div>Company: <%= store.get("company_name") %></div>
+  <div>Store Name: <%= store.get("store_name") %></div>
+
+  <% var storeServiceAreaId = store.get("service_area_id") || "" %>
+  <% var storeServiceArea = allServiceAreas.get(storeServiceAreaId) %>
+  <div>Service Area: <%= storeServiceArea ? storeServiceArea.get("name") : "Unknown" %></div>
+
+	<div><img src="<%= pathToUrlTool(store.get('company_logo_path')) %>" alt="<%= store.get('company_name') %> Logo"></div>
+  <br>
+  <h3>Store Address:</h3>
+  <% if (store.get("street_address")) { %>
+    <div><%= store.get("street_address") %></div>
+    <div><%= store.get("city") %>, <%= store.get("state") %> <%= store.get("zip_code") %></div>
+  <% } else { %>
+    <div>N/A</div>
+  <% } %>
+
+  <br><br>
+  <div>
+    <a href="<%= navigator.storeIndexHash %>">View All Stores</a> |
+    <a href="<%= navigator.storeEditHash(store.id) %>">Edit</a>
+  </div>
+
+<% } else { %>
+
+  <div>Sorry, cannot find the store ...</div>
+
+<% } %>

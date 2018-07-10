@@ -1,0 +1,16 @@
+<div class="ui grid">
+	<div class="column">
+		<h3 class="ui dividing header">Your order has been successfully placed!</h3>
+		<br>
+
+		<div>Thank you very much for shopping with Haigy! A confirm email will send to you shortly.</div>
+		<br>
+
+		<div>You could click <a href="<%= navigator.orderShowHash(order.id) %>">here</a> to see your order details.</div>
+		<br>
+
+		<% if (isGuestOrder) { %>
+			<div>For protecting your privacy, your order can only be viewed in <%= constant.order.GUEST_ORDER_VIEWABLE_LIFETIME_SINCE_DELIVERED_IN_DAYS %> days since delievered.</div>
+		<% } %>
+	</div>
+</div>

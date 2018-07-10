@@ -1,0 +1,7 @@
+{
+  "id": <%= servableZipCode.id.to_json %>,
+  "service_area_id": <%= servableZipCode.service_area_id.to_json %>,
+  "zip_code": <%= raw(servableZipCode.zip_code.to_json) %>,
+  "city": <%= raw(servableZipCode.city.to_json) %>,
+  "state": <%= raw(servableZipCode.state.to_json) %>
+}

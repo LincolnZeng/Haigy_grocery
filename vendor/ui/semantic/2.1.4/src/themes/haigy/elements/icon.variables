@@ -1,0 +1,6 @@
+/*******************************
+             Icon
+*******************************/
+
+@fontPath: "/assets/fonts";
+@fontName: "semantic_icons_20160306_modified";

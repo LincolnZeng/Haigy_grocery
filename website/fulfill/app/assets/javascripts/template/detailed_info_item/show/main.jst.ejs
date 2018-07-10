@@ -1,0 +1,147 @@
+<% if (item.id && !item.get("is_category")) { %>
+
+
+  <div class="haigy-padding-b-30px">
+    <%= categoryPathT({categoryPath: item.get("category_path"), navigateHash: navigator.briefinfoitemBrowseHash, itemAppended: item, linkLastCategory: false}) %>
+  </div>
+
+
+  <% otherImages = item.get("item_image") %>
+  <% otherImagesCount = otherImages.length %>
+
+
+  <div class="ui stackable grid">
+
+    <div class="mobile only row">
+      <div class="column">
+        <h2 class="ui header"><%= item.get("name") %></h2>
+      </div>
+    </div>
+
+    <div class="six wide column">
+      <div class="haigy-position-relative">
+        <div id="diitem-show-large-image-container" class="haigy-image-overlay">
+          <img class="ui image haigy-image-max-fluid diitem-show-large-image" src="<%= imagePathToUrlTool(item.get('large_cover_image_path')) %>" alt="item image">
+        </div>
+        <div class="haigy-image-loader">
+          <img class="ui image haigy-image-max-fluid" src="<%= precompiledAsset.image.IMAGE_LOADER %>" alt="Loading ...">
+        </div>
+      </div>
+
+      <% if (otherImagesCount > 0) { %>
+        <div class="ui piled segment"><div class="ui tiny images haigy-text-align-center">
+          <img class="ui image diitem-show-thumb-image" src="<%= imagePathToUrlTool(item.get('cover_image_path')) %>" alt="item image" data-large-url="<%= imagePathToUrlTool(item.get('large_cover_image_path')) %>">
+          <% for (var index = 0; index < otherImagesCount; ++index) { %>
+            <img class="ui image diitem-show-thumb-image" src="<%= imagePathToUrlTool(otherImages[index].thumb_path) %>" alt="item image" data-large-url="<%= imagePathToUrlTool(otherImages[index].medium_path) %>">
+          <% } %>
+        </div></div>
+      <% } %>
+
+      <% if (item.get("is_produce")) { %>
+        <div>
+          <span class="haigy-font-color-notice">* Produce pictures are only for reference. The produce you get might look slightly different.</span>
+        </div>
+      <% } %>
+    </div>
+
+
+    <div class="tablet computer only one wide column"></div>
+
+
+    <div class="nine wide column">
+
+      <div class="ui grid">
+        <div class="tablet computer only column">
+          <h2 class="ui header"><%= item.get("name") %></h2>
+        </div>
+      </div>
+
+      <% var storeItemInfo = item.get("store_item_info") %>
+      <% var itemUnit= item.get("unit") %>
+      <% var inStock = storeItemInfo.in_stock === true %>
+      <% var onSale = storeItemInfo.on_sale === true %>
+
+      <% var currentPrice = 0.0 %>
+      <% if (inStock) { %>
+        <% if (onSale) { %>
+          <% currentPrice = parseFloat(storeItemInfo.sale_price) %>
+        <% } else { %>
+          <% currentPrice = parseFloat(storeItemInfo.price) %>
+        <% } %>
+      <% } %>
+
+      <div class="haigy-padding-t-15px haigy-font-color-gray"><i>
+        <% if (item.get("has_fixed_item_size") ===  true) { %>
+          <%= item.get("item_size") %>
+        <% } else if (itemUnit !== constant.item.UNIT_PER_LB && storeItemInfo.estimated_weight) { %>
+          <% var estimatedWeight = parseFloat(storeItemInfo.estimated_weight) %>
+          <div>estimate <%= estimatedWeight.toFixed(2) %> lb each</div>
+          <% if (inStock && estimatedWeight > 0.0 && currentPrice > 0.0) { %>
+            <div>~ $<%= (currentPrice / estimatedWeight).toFixed(2) %> per lb</div>
+          <% } %>
+        <% } %>
+      </i></div>
+
+      <div class="haigy-padding-t-15px">
+        <% if (inStock) { %>
+          <% if (currentPrice > 0.0) { %>
+            <% if (onSale) { %>
+              <span class="biitem-on-sale-price haigy-padding-r-5px">$<%= parseFloat(storeItemInfo.sale_price).toFixed(2) %></span>
+              <del>$<%= parseFloat(storeItemInfo.price).toFixed(2) %></del>
+            <% } else { %>
+              $<%= parseFloat(storeItemInfo.price).toFixed(2) %>
+            <% } %>
+            <%= itemUnit %>
+            <% if (storeItemInfo.store_is_haigy_base !== true) { %>
+              <div class="haigy-padding-t-15px haigy-font-color-gray">
+                <i>We will buy this item from <strong class="haigy-font-color-wholefoods-green"><%= storeItemInfo.store_name %></strong>.</i>
+              </div>
+            <% } %>
+          <% } else { %>
+            Out of Stock
+          <% } %>
+        <% } else { %>
+          Out of Stock
+        <% } %>
+      </div>
+      <br>
+
+      <div id="diitem-show-cart-operation" data-item-unit="<%= itemUnit %>" data-in-stock="<%= inStock ? "yes" : "no" %>"></div>
+
+      <% var itemWarnings = item.get("warnings") %>
+      <% if (itemWarnings && itemWarnings.trim().length > 0) { %>
+        <h4 class="ui dividing header">Warnings</h4>
+        <div><%= itemWarnings %></div>
+        <br>
+      <% } %>
+
+      <% var itemDirections = item.get("directions") %>
+      <% if (itemDirections && itemDirections.trim().length > 0) { %>
+        <h4 class="ui dividing header">Directions</h4>
+        <div><%= itemDirections %></div>
+        <br>
+      <% } %>
+
+      <% var itemIngredients = item.get("ingredients") %>
+      <% if (itemIngredients && itemIngredients.trim().length > 0) { %>
+        <h4 class="ui dividing header">Ingredients</h4>
+        <div><%= itemIngredients %></div>
+        <br>
+      <% } %>
+
+      <% var itemDetails = item.get("details") %>
+      <% if (itemDetails && itemDetails.trim().length > 0) { %>
+        <h4 class="ui dividing header">Details</h4>
+        <div><%= itemDetails %></div>
+        <br>
+      <% } %>
+
+    </div>
+
+  </div>
+
+<% } else { %>
+
+  <div>Sorry, cannot find the item ...</div>
+
+<% } %>

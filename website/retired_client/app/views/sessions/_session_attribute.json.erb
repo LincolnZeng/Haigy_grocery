@@ -1,0 +1,19 @@
+"id": 1,
+
+"service_area_id": <%= @service_area_id %>,
+
+<% if @defaultAddress.present? %>
+  "address": {
+    <%= render partial: "user_addresses/address_attribute", locals: {address: @defaultAddress} %>
+  },
+<% end %>
+
+"user": {
+  <%= render partial: "users/user_attribute", locals: {user: @user} %>
+},
+
+"cart": {
+  "cart_id": <%= @cartId %>,
+  "special_requests": <%= raw(@specialRequests.to_json) %>,
+  "cart_entry": <%= render partial: "cart_entries/template_collection", locals: {cartEntryCollection: @cartEntries, cartItemStoreInfoHash: @itemStoreInfoHash, storeHash: @storeHash} %>
+}

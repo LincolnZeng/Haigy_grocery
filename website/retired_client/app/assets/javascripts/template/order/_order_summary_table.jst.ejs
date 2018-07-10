@@ -1,0 +1,20 @@
+<table class="ui unstackable pink table">
+  <tbody>
+    <tr>
+      <td>Items in cart:</td>
+      <td class="right aligned">$<%= totalValueInCart.toFixed(2) %></td>
+    </tr>
+    <tr>
+      <td data-content="there might be some delivery fee in the future" data-position="right center">Delivery Fee:</td>
+      <td class="right aligned" data-content="there might be some delivery fee in the future" data-position="left center">$<%= deliveryFee.toFixed(2) %></td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <th><strong>Order total:</strong></th>
+      <th class="right aligned"><strong>
+        $<%= (totalValueInCart + deliveryFee).toFixed(2) %>
+      </strong></th>
+    </tr>
+  </tfoot>
+</table>

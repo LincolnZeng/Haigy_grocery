@@ -1,0 +1,25 @@
+<div class="content">
+  <% if (address) { %>
+    <div class="header"><i class="<%= color %> home icon"></i> Delivery Address</div>
+    <div class="description"><i>
+      <% if (address.isBusinessAddress) { %>
+        <div><%= address.businessName %></div>
+      <% } %>
+
+      <div><%= address.streetAddress %></div>
+      <div><%= address.city %>, <%= address.state %> <%= address.zipCode %></div>
+      <% if (address.note && address.note.trim().length > 0) { %>
+        <br>
+        <div><i>Note: <%= address.note %></i></div>
+      <% } %>
+    </i></div>
+  <% } else if (zipCode) { %>
+    <div class="header"><i class="<%= color %> home icon"></i> Delivery zip code</div>
+    <div class="description"><i>
+      <%= zipCode %>
+    </i></div>
+  <% } %>
+</div>
+<div class="extra content">
+  <button id="user-am-manage-address" class="ui circular right floated icon button"><i class="edit icon"></i> Manage all addresses</button>
+</div>

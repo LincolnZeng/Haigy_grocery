@@ -1,0 +1,35 @@
+<% if (address) { %>
+  <div id="order-gcheckout-address" class="haigy-padding-lr-30px" data-ready="yes">
+
+    <% if (address.is_business_address) { %>
+      <div><%= address.business_name %></div>
+    <% } %>
+
+    <div><%= address.street_address %></div>
+    <div><%= address.city %>, <%= address.state %> <%= address.zip_code %></div>
+
+    <% if (address.note && address.note.trim().length > 0) { %>
+      <br>
+      <div><i>Note: <%= address.note %></i></div>
+    <% } %>
+    <br>
+    <div>
+      <button href="#" class="order-gcheckout-remove-address circular ui icon button">
+        <i class="large trash icon"></i>
+      </button>
+      <button class="order-gcheckout-change-address circular ui icon button">
+        <i class="large edit icon"></i>
+      </button>
+    </div>
+  </div>
+<% } else { %>
+  <div id="order-gcheckout-address" class="haigy-padding-lr-30px" data-ready="no">
+    <button id="order-gcheckout-new-address" class="ui animated fade green button">
+      <div class="hidden content">Add</div>
+      <div class="visible content">
+        <i class="large plus icon"></i>
+        <i class="large home icon"></i>
+      </div>
+    </button>
+  </div>
+<% } %>

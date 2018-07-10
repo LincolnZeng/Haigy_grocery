@@ -1,0 +1,9 @@
+[
+  <% categoryPath.each_with_index do |category, index| %>
+    <% if index != 0 %>,<% end %>
+    {
+      "id": <%= raw(category[:id].to_json) %>,
+      "name": <%= raw(category[:name].to_json) %>
+    }
+  <% end %>
+]

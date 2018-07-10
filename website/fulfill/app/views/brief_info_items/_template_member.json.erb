@@ -1,0 +1,18 @@
+{
+  "id": <%= item.id.to_json %>,
+  "name": <%= raw(item.name.to_json) %>,
+  "cover_image_path": <%= raw(item.cover_image.url(:thumb).to_json) %>,
+  "parent_category_item_id": <%= item.parent_category_item_id %>,
+  "is_category": <%= item.is_category %>,
+
+  <% unless item.is_category %>
+    "is_produce": <%= item.is_produce %>,
+    "is_seasonal": <%= item.is_seasonal %>,
+    "unit": <%= raw(item.unit.to_json) %>,
+    "has_fixed_item_size": <%= item.has_fixed_item_size %>,
+    "item_size": <%= raw(item.item_size.to_json) %>,
+    "substitute_lookup": <%= raw(item.substitute_lookup.to_json) %>,
+  <% end %>
+
+  "store_item_info": <%= render partial: "store_item_infos/template_member", locals: {storeItemInfo: storeItemInfo, storeHash: @storeHash} %>
+}

@@ -1,0 +1,102 @@
+<i class="close icon"></i>
+
+<div class="header">New Address</div>
+
+<div class="content">
+  <form id="user-m-editaddress-form" class="ui form">
+    <div class="ui centered grid">
+      <div class="stretched row">
+        <div class="right aligned four wide column field">
+          <label>Type of Location</label>
+        </div>
+        <div class="ten wide column">
+          <div class="inline fields">
+            <div class="field">
+              <div class="ui radio checkbox user-m-editaddress-type">
+                <input type="radio" name="address_type" value="residential" checked="checked" tabindex="0" class="hidden">
+                <label>Residential</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox user-m-editaddress-type">
+                <input type="radio" name="address_type" value="business" tabindex="0" class="hidden">
+                <label>Business</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="user-m-editaddress-business-name" class="stretched row">
+        <div class="right aligned four wide column field">
+          <label>Business Name</label>
+        </div>
+        <div class="ten wide column field">
+          <input type="text" name="business_name" placeholder="Business Name">
+        </div>
+      </div>
+
+      <div class="stretched row">
+        <div class="right aligned four wide column required field">
+          <label>Street Address</label>
+        </div>
+        <div class="ten wide column required field">
+          <input type="text" name="input_street_address" placeholder="Street Address">
+        </div>
+      </div>
+
+      <div class="stretched row">
+        <div class="right aligned four wide column field">
+          <label>Apt Number</label>
+        </div>
+        <div class="ten wide column field">
+          <input type="text" name="input_apt_number" placeholder="Apt #">
+        </div>
+      </div>
+
+      <div class="stretched row">
+        <div class="right aligned four wide column required field">
+          <label>Zip Code</label>
+        </div>
+        <div class="ten wide column required field">
+          <% if (zipCode) { %>
+            <span>
+              <%= zipCode %>
+              <% if (zipCodeChangeUrl) { %>
+                <i class="haigy-padding-lr-20px"><a id="user-m-editaddress-change-zip-code" href="#">Change</a></i>
+              <% } %>
+            </span>
+          <% } else { %>
+            <input type="text" name="input_zip_code" placeholder="Zip Code">
+          <% } %>
+        </div>
+      </div>
+
+      <div class="stretched row">
+        <div class="right aligned four wide column field">
+          <label>Note</label>
+        </div>
+        <div class="ten wide column field">
+          <textarea type="text" name="note" placeholder="e.g. your door code" rows="2"></textarea>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="fourteen wide column">
+          <div class="ui error message"></div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="actions">
+  <div class="ui horizontally padded grid">
+    <div class="eight wide column">
+      <button id="user-m-editaddress-cancel" class="ui negative button">Cancel</button>
+    </div>
+    <div class="eight wide column">
+      <button id="user-m-editaddress-form-submit" class="ui positive fluid button">Submit</button>
+    </div>
+  </div>
+</div>

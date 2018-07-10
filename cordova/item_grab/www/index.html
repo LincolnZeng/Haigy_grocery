@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
+
+    <title>Haigy Item Grab</title>
+
+    <link href="assets/main.css" media="all" rel="stylesheet">
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="assets/vendor/underscore-1.8.3.js"></script>
+    <script type="text/javascript" src="assets/vendor/jquery-2.1.4.js"></script>
+    <script type="text/javascript" src="assets/main.js"></script>
+  </head>
+
+  <body>
+    <div class="haigy-container">
+      <br>
+      <h3>Haigy Item Grab</h3>
+      <br>
+
+      <div>
+        <button id="haigy-item-grab-start" class="haigy-large-button">Scan Item Barcode</button>
+        <br>
+      </div>
+
+      <div id="haigy-item-grab-picture-container" class="haigy-hide">
+        <div>For item: <span id="haigy-item-grab-barcode"></span></div>
+        <br>
+        <button id="haigy-item-grab-take-picture" class="haigy-large-button">Take Picture</button>
+        <br>
+        <div id="haigy-item-grab-picture-display"></div>
+        <br>
+        <button id="haigy-item-done" class="haigy-large-button">Done For This Item</button>
+      </div>
+    </div>
+  </body>
+</html>

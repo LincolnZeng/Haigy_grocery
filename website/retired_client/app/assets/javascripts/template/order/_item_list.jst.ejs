@@ -1,0 +1,85 @@
+<% var specialRequestCount = specialRequestArray.length %>
+<% var cartEntryCount = cart.length %>
+
+<% if (cartEntryCount > 0 || specialRequestCount > 0) { %>
+
+  <div class="ui divided items">
+    <% for (var specialRequestIndex = specialRequestCount - 1; specialRequestIndex >= 0; --specialRequestIndex) { %>
+      <% var specialRequest = specialRequestArray[specialRequestIndex] %>
+      <div class="item cart-manage-item-container">
+        <div class="ui small image">
+          <img src="<%= utility.pathToUrl(precompiledAsset.image.SPECIAL_REQUEST) %>" alt="Special Request">
+        </div>
+        <div class="content">
+          <div class="header haigy-width-100-percent">
+            <span class="haigy-other-wordwrap-breakword"><%= specialRequest.summary %></span>
+          </div>
+          <div class="description">
+            Quantity: <span class="haigy-other-wordwrap-breakword"><%= specialRequest.quantity %></span>
+          </div>
+          <div class="meta">
+            <span class="haigy-other-wordwrap-breakword"><%= specialRequest.details %></span>
+          </div>
+        </div>
+      </div>
+    <% } %>
+
+
+    <% for (var cartEntryIndex = 0; cartEntryIndex < cartEntryCount; ++cartEntryIndex) { %>
+
+      <% var cartEntry = cart[cartEntryIndex] %>
+      <% if (cartEntry.inStock === true) { %>
+
+        <% var itemId = cartEntry.itemId %>
+
+        <div class="item order-item-list-item-container" data-item-id="<%= itemId %>" data-quantity="<%= cartEntry.quantity %>">
+          <a class="ui small image" href="<%= navigator.detailedinfoitemShowHash(itemId) %>">
+            <img src="<%= utility.imagePathToUrl(cartEntry.itemCoverImagePath) %>" alt="Item image">
+          </a>
+          <div class="content">
+            <a href="<%= navigator.detailedinfoitemShowHash(itemId) %>" class="header">
+              <%= cartEntry.itemName %>
+            </a>
+            <% var unitPrice = cartEntry.unitPrice %>
+            <div class="meta">
+              <span class="cinema">
+                Price:
+                <% if (unitPrice) { %>
+                  $<%= parseFloat(unitPrice).toFixed(2) %>
+                  <%= cartEntry.itemUnit %>
+                <% } else { %>
+                  Unknown
+                <% } %>
+              </span>
+            </div>
+            <div class="description">
+              <div>
+                Quantity: <%= cartEntry.quantity %>
+                <%= constant.item.QUANTITY_UNIT_DISPLAY[cartEntry.itemUnit] %>
+              </div>
+              <div>
+                Total:
+                <% var total = (parseFloat(unitPrice || 0.0) * parseFloat(cartEntry.quantity)).toFixed(2) %>
+                <% if (unitPrice) { %>
+                  <%= ["$", total].join("") %>
+                <% } else { %>
+                  Unknown
+                <% } %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      <% } %>
+
+    <% } %>
+
+  </div>
+
+<% } else { %>
+
+  <div class="ui negative message order-review-error">
+    Oops, something wrong here!
+  </div>
+
+<% } %>

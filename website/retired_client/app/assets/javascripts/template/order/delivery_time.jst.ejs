@@ -1,0 +1,13 @@
+<div>We temporarily only have one delivery time slot: <b class="haigy-font-color-blue">7:00pm - 9:00pm</b>. We'll support more delivery time in the future.</div>
+<br>
+<select id="order-delivery-time-select" class="ui fluid dropdown">
+  <option value="">Choose A Date</option>
+  <% var date = new Date() %>
+  <% if (date.getHours() < 16) { %>
+    <% date.setDate(date.getDate() - 1) %>
+  <% } %>
+  <% for (var dateIndex = 0; dateIndex < 3; ++dateIndex) { %>
+    <% date.setDate(date.getDate() + 1) %>
+    <option value="<%= utility.dateToString(date, '#{yyyy}#{mm}#{dd}') %>"><%= date.toDateString() %></option>
+  <% } %>
+</select>

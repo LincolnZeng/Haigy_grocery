@@ -1,0 +1,158 @@
+<% if (categoryNew || category.id) { %>
+
+
+  <% if (categoryNew) { %>
+
+
+    <% if (parentCategory) { %>
+
+      <h3>Add A Category Under:</h3>
+
+      <div>
+        <%= categoryPathTemplate({categoryPath: parentCategory.get("category_path"), navigateHash: navigator.itemManageHash, itemAppended: parentCategory, linkLastCategory: true}) %>
+      </div>
+
+      <br>
+
+      <div><img src="<%= pathToUrlTool(parentCategory.get('cover_image_path')) %>" alt="Category <%= parentCategory.get('name') %> Image"></div>
+
+      <br><hr><br>
+
+      <div><strong>New Category:</strong></div>
+
+      <br>
+
+    <% } else { %>
+
+      <h3>Add A Root Category</h3>
+      <br><br>
+
+    <% } %>
+
+
+  <% } else { %>
+
+    <h3>Edit The Category:</h3>
+    <div>
+      <%= categoryPathTemplate({categoryPath: category.get("category_path"), navigateHash: navigator.itemManageHash, itemAppended: category, linkLastCategory: true}) %>
+    </div>
+
+    <br><hr><br>
+
+  <% } %>
+
+  <form class="ui form">
+    <div class="required field">
+      <label for="item-editcategory-name">Category Name:</label>
+      <input
+        id="item-editcategory-name"
+        type="text"
+        placeholder="category name"
+        data-validator="notEmpty"
+        data-invalid-info="#item-editcategory-name-invalid"
+        data-submit="#item-editcategory-submit"
+        value="<%= category.get('name') %>"
+      >
+      <span id="item-editcategory-name-invalid" class="haigy-display-none">(required)</span>
+    </div>
+
+    <div class="required field">
+      <label for="item-editcategory-keywords">Category Keywords:</label>
+      <input
+        id="item-editcategory-keywords"
+        type="text"
+        placeholder="category keywords"
+        data-validator="notEmpty"
+        data-invalid-info="#item-editcategory-keywords-invalid"
+        data-submit="#item-editcategory-submit"
+        value="<%= category.get('item_keywords') %>"
+      >
+      <span id="item-editcategory-keywords-invalid" class="haigy-display-none">(required)</span>
+    </div>
+
+    <div class="field">
+      <label for="item-editcategory-display-sequence">Display Sequence:</label>
+      <input
+        id="item-editcategory-display-sequence"
+        type="number"
+        data-validator="alwaysGood"
+        data-submit="#item-editcategory-submit"
+        value="<%= category.get('display_sequence') %>"
+      >
+    </div>
+
+    <br>
+
+
+    <% if (categoryNew) { %>
+
+      <div class="required field">
+        <label for="item-editcategory-cover-image">Choose A Cover Image For The Category:</label>
+        <input
+          id="item-editcategory-cover-image"
+          type="file"
+          accept="image/*"
+          data-validator="notEmpty"
+          data-invalid-info="#item-editcategory-cover-image-invalid"
+          data-submit="#item-editcategory-submit"
+        >
+        <span id="item-editcategory-cover-image-invalid" class="haigy-display-none">(required)</span>
+      </div>
+
+    <% } else { %>
+
+      <div>
+        <label for="item-editcategory-cover-image">
+          Change Cover Image:
+          <input
+            id="item-editcategory-cover-image"
+            type="file"
+            accept="image/*"
+            data-validator="alwaysGood"
+            data-submit="#item-editcategory-submit"
+          >
+          <br><br><img src="<%= pathToUrlTool(category.get('cover_image_path')) %>" alt="Category <%= category.get('name') %> Image"><br>
+        </label>
+
+      </div>
+
+    <% } %>
+
+    <div>
+      <input
+        id="item-editcategory-temporary-cover"
+        type="checkbox"
+        data-validator="alwaysGood"
+        data-submit="#item-editcategory-submit"
+        <% if (category.get("temporary_cover_image") === true || categoryNew) { %>checked<% } %>
+      >
+      <label for="item-edititem-temporary-cover">Is A Temporary Cover Image</label>
+    </div>
+    <br>
+
+  </form>
+
+  <br><br>
+
+  <div>
+    <button class="ui button" id="item-editcategory-submit" data-self-selector="#item-editcategory-submit" disabled>Submit</button>
+    <span>(* fields are required)</span>
+  </div>
+
+
+  <% if (!categoryNew) { %>
+
+    <br><br>
+    <div><a id="item-editcategory-delete" href="#">delete this category</a></div>
+    <br>
+
+  <% } %>
+
+
+<% } else { %>
+
+  <div>Sorry, cannot find the category ...</div>
+
+<% } %>
+
+<br>

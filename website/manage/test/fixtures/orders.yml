@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  deliver_tips: 1.5
+  shopper_tips: 1.5
+  is_guest_order: false
+  status: 1
+  view_password_hash: MyString
+  secured_id: MyString
+
+two:
+  deliver_tips: 1.5
+  shopper_tips: 1.5
+  is_guest_order: false
+  status: 1
+  view_password_hash: MyString
+  secured_id: MyString

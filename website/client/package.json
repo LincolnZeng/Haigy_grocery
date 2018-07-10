@@ -1,0 +1,22 @@
+{
+  "name": "haigy_client",
+  "author": "Dingyu Zhou",
+  "version": "1.0.0",
+
+  "dependencies" : {
+    "browserify": "13.0.x",
+    "browserify-incremental": "3.1.x",
+
+    "react": "^15.0.0",
+    "react-dom": "^15.0.0",
+    "react-tap-event-plugin": "^1.0.0",
+    "material-ui": "0.15.2",
+
+    "redux": "3.5.x",
+    "react-redux": "4.4.x"
+  },
+
+  "engines": {
+    "node": ">= 0.10"
+  }
+}

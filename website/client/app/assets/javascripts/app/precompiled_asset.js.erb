@@ -1,0 +1,31 @@
+<% def resourceImagePath(imageName)
+  return Rails.root.join("resource", "image", imageName)
+end %>
+
+
+<% def base64EncodedMediaSrc(mediaPath, mediaType)
+  require "base64"
+  media = File.open(mediaPath, "rb")
+  base64EncodedData = Base64.encode64(media.read).gsub("\n", '')
+  media.close
+  return "data:#{mediaType};base64,#{base64EncodedData}"
+end %>
+
+
+modulejs.define("app/precompiled_asset", function() {
+  "use strict";
+
+
+  var precompiledAsset = {
+    image: {
+      HAIGY_BEAR: "<%= base64EncodedMediaSrc(resourceImagePath("Haigy_bear.jpg"), "image/jpeg") %>",
+      IMAGE_LOADER: "<%= base64EncodedMediaSrc(resourceImagePath("image_loader.png"), "image/png") %>",
+      HOW_HAIGY_WORKS_STEP_1: "<%= image_path("how_haigy_works_step_1.jpg") %>",
+      HOW_HAIGY_WORKS_STEP_2: "<%= image_path("how_haigy_works_step_2.jpg") %>",
+      HOW_HAIGY_WORKS_STEP_3: "<%= image_path("how_haigy_works_step_3.jpg") %>"
+    }
+  };
+
+
+  return precompiledAsset;
+});

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
+
+    <title>Haigy Barcode Collector</title>
+
+    <link href="assets/main.css" media="all" rel="stylesheet">
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="assets/vendor/underscore-1.8.3.js"></script>
+    <script type="text/javascript" src="assets/vendor/jquery-2.1.4.js"></script>
+    <script type="text/javascript" src="assets/main.js"></script>
+  </head>
+
+  <body>
+    <div class="haigy-container">
+      <br>
+      <h3>Haigy Barcode Collector</h3>
+      <br>
+      <button id="haigy-barcode-collector-start" class="haigy-large-button">Start Barcode Scan</button>
+
+      <div id="haigy-barcode-today-data-container">
+        <br><br>
+        <div id="haigy-barcode-show-today-data-link-wrapper"><a id="haigy-barcode-show-today-data-link" href="#">Show All Today's Barcodes</a></div>
+        <div id="haigy-barcode-today-data"></div>
+      </div>
+    </div>
+
+    <div id="haigy-barcode-collector-result" class="haigy-hide haigy-container">
+      <br><br>
+
+      <div>Barcode: <span id="haigy-barcode-collector-barcode"></span></div>
+      <div>Barcode Type: <span id="haigy-barcode-collector-barcode-type"></span></div>
+
+      <br><br>
+
+      <div>Saving ...</div>
+
+      <!--
+      <button id="haigy-barcode-collector-ignore" class="haigy-large-button haigy-background-error">Ignore Scanned Barcode</button>
+
+      <br>
+
+      <button id="haigy-barcode-collector-save-with-attention" class="haigy-large-button haigy-background-warning">Save Scanned Barcode (Need Further Attention)</button>
+
+      <br>
+
+      <button id="haigy-barcode-collector-save" class="haigy-large-button haigy-background-success">Save Scanned Barcode</button>
+      -->
+
+      <br><br>
+    </div>
+  </body>
+</html>

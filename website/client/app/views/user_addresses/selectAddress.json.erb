@@ -1,0 +1,4 @@
+{
+  "shopping_zip_code": <%= raw(@shoppingZipCode.to_json) %>,
+  "selected_address": <%= render partial: "template_member", locals: {address: @userAddress} %>
+}

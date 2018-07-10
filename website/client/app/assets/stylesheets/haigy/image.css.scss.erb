@@ -1,0 +1,40 @@
+<% def resourceImagePath(imageName)
+  return Rails.root.join("resource", "image", imageName)
+end %>
+
+
+<% def base64EncodedMediaSrc(mediaPath, mediaType)
+  require "base64"
+  media = File.open(mediaPath, "rb")
+  base64EncodedData = Base64.encode64(media.read).gsub("\n", '')
+  media.close
+  return "data:#{mediaType};base64,#{base64EncodedData}"
+end %>
+
+
+.haigy-image-loading-background {
+  background-image: url(<%= base64EncodedMediaSrc(resourceImagePath("image_loader.png"), "image/png") %>);
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+
+.haigy-image-loader {
+  width: 100%;
+  z-index: -100;
+}
+
+
+.haigy-image-overlay {
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+}
+
+
+.haigy-image-max-fluid {
+  height: auto;
+  width: 100%;
+}

@@ -1,0 +1,18 @@
+<% if (company.id) { %>
+
+  <div>Company Name: <%= company.get("name") %></div>
+  <div>Company Logo: <br><img src="<%= pathToUrlTool(company.get('logo_path')) %>" alt="<%= company.get('name') %> Logo"></div>
+  <br>
+
+  <div>
+    <a class="item" href="<%= navigator.companyIndexHash %>">View All Companies</a> |
+    <a href="<%= navigator.companyEditHash(company.id) %>">Edit</a> |
+    <a href="<%= navigator.storeNewHash(company.id) %>">Add A Store</a> |
+    <a href="<%= navigator.storeForcompanyHash(company.id) %>">Show All Stores For This Company</a>
+  </div>
+
+<% } else { %>
+
+  <div>Sorry, cannot find the company ...</div>
+
+<% } %>

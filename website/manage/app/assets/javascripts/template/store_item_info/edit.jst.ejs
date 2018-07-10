@@ -1,0 +1,167 @@
+<% if (storeItemInfo) { %>
+
+
+  <% if (storeItemInfo.get("store_id") && storeItemInfo.get("item_id")) { %>
+
+
+    <div><h4>You are managing store: <%= storeItemInfo.get("store_name") %></h4></div>
+    <div>Address: <%= storeItemInfo.get("store_address") %></div>
+
+
+    <div class="ui card">
+      <div class="content">
+        <h4><%= storeItemInfo.get("item_name") %><h4>
+      </div>
+      <a class="image">
+        <img src="<%= pathToUrlTool(storeItemInfo.get("item_cover_image_path")) %>" alt="<%= storeItemInfo.get('item_name') %> Cover Image">
+      </a>
+      <div class="content">
+        <div>Unit: <%= storeItemInfo.get("item_unit") %></div>
+        <% if (storeItemInfo.get("item_has_fixed_size") ===  true) { %>
+          <div>Size: <%= storeItemInfo.get("item_size") %></div>
+        <% } else { %>
+          <div>Estimated Weight: <%= storeItemInfo.get("estimated_weight") %> lb</div>
+        <% } %>
+        <div>Brand: <%= storeItemInfo.get("item_brand") %></div>
+        <div>Manufacturer: <%= storeItemInfo.get("item_manufacturer") %></div>
+      </div>
+    </div>
+
+
+    <% if (!storeItemInfo.id) { %>
+      <h4>Add Item to Current selected Store</h4>
+    <% } %>
+
+    <form class="ui form">
+      <div class="required field">
+        <label for="storeiteminfo-edit-price">Price: $</label>
+        <input
+          id="storeiteminfo-edit-price"
+          type="text"
+          placeholder="price"
+          data-validator="floatNumber"
+          data-invalid-info="#storeiteminfo-edit-price-invalid"
+          data-submit="#storeiteminfo-edit-submit"
+          value="<%= storeItemInfo.get('price') %>"
+        >
+        <span id="storeiteminfo-edit-price-invalid" class="haigy-display-none">(required a float number)</span>
+      </div>
+
+      <div>
+        <label for="storeiteminfo-edit-sale-price">Sale Price: $</label>
+        <input
+          id="storeiteminfo-edit-sale-price"
+          type="text"
+          placeholder="sale price"
+          data-validator="emptyOrFloatNumber"
+          data-invalid-info="#storeiteminfo-edit-sale-price-invalid"
+          data-submit="#storeiteminfo-edit-submit"
+          <% if (storeItemInfo.get("on_sale")) { %>
+            value="<%= storeItemInfo.get('sale_price') %>"
+          <% } %>
+        >
+        <span id="storeiteminfo-edit-sale-price-invalid" class="haigy-display-none">(should be a float number)</span>
+      </div>
+      <br>
+
+      <% if (storeItemInfo.get('store_is_haigy_base')) { %>
+        <div>
+          <label for="storeiteminfo-edit-quantity">Quantity: </label>
+          <input
+            id="storeiteminfo-edit-quantity"
+            type="text"
+            placeholder="quantity"
+            data-validator="emptyOrFloatNumber"
+            data-invalid-info="#storeiteminfo-edit-quantity-invalid"
+            data-submit="#storeiteminfo-edit-submit"
+            <% if (storeItemInfo.get('in_stock') === true) { %>
+              value="<%= storeItemInfo.get('quantity') %>"
+            <% } else { %>
+              disabled
+            <% } %>
+          >
+          <span id="storeiteminfo-edit-quantity-invalid" class="haigy-display-none">(should be a float number)</span>
+        </div>
+        <br>
+      <% } %>
+
+      <% if (storeItemInfo.get("item_has_fixed_size") !==  true) { %>
+          <div>
+            <label for="storeiteminfo-edit-estimated-weight">Estimated Weight:</label>
+            <input
+            id="storeiteminfo-edit-estimated-weight"
+            type="text"
+            placeholder="estimated weight"
+            data-validator="floatNumber"
+            data-invalid-info="#storeiteminfo-edit-estimated-weight-invalid"
+            data-submit="#storeiteminfo-edit-submit"
+            value="<%= storeItemInfo.get('estimated_weight') %>"
+            >
+            <span id="storeiteminfo-edit-estimated-weight-invalid" class="haigy-display-none">(required a float number)</span>
+          </div>
+          <br>
+      <% } %>
+
+      <div>
+        <input
+          id="storeiteminfo-edit-out-of-stock"
+          type="checkbox"
+          data-validator="alwaysGood"
+          data-submit="#storeiteminfo-edit-submit"
+          <% if (!storeItemInfo.get('in_stock')) { %> Checked <% } %>
+        >
+        <label for="storeiteminfo-edit-out-of-stock">Out Of Stock</label>
+      </div>
+      <br>
+
+      <div>
+        <label for="storeiteminfo-edit-note">Note: </label>
+        <textarea
+          id="storeiteminfo-edit-note"
+          placeholder="some notes"
+          data-validator="alwaysGood"
+          data-submit="#storeiteminfo-edit-submit"
+        ><%= storeItemInfo.get("note") %></textarea>
+      </div>
+    </form>
+    <br>
+
+    <div>
+      <button class="ui button" id="storeiteminfo-edit-submit" data-self-selector="#storeiteminfo-edit-submit" disabled>Save</button>
+      <span>(* fields are required)</span>
+    </div>
+
+
+    <% if (storeItemInfo.id) { %>
+      <br><br>
+      <div><a class="storeiteminfo-edit-delete" href="#" data-info-id="<%= storeItemInfo.id %>">Delete Item From The Store.</a></div>
+    <% } %>
+
+
+    <br>
+
+  <% } else { %>
+
+
+    <div>Sorry, cannot find this record...</div>
+
+
+  <% } %>
+
+
+<% } else { %>
+
+
+  <div><a href="<%= navigator.itemShowHash(itemId) %>">Show Detailed Information For This Item</a></div>
+  <br>
+
+  <div>Or</div>
+  <br>
+
+  <div><a href="<%= navigator.storeSelectHash(navigator.storeiteminfoLookupHash(itemId)) %>">Select A Store To Manage This Item In That Store</a></div>
+
+
+<% } %>
+
+
+<br>

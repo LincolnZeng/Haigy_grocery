@@ -1,0 +1,13 @@
+[
+  <% timeThresholdToDisplayOutOfStockItem = (Date.today - HaigyClientConstant::Item::NUMBER_OF_DAYS_DISPLAY_OUT_OF_STOCK_ITEM).to_time %>
+  <% itemIndex = 0 %>
+
+  <% itemCollection.each do |item| %>
+    <% storeItemInfo = item.store_item_infos.first %>
+    <% if storeItemInfo.in_stock || storeItemInfo.out_of_stock_since > timeThresholdToDisplayOutOfStockItem %>
+      <% if itemIndex != 0 %>,<% end %>
+      <%= render partial: "template_member", locals: {item: item, storeItemInfo: storeItemInfo} %>
+      <% itemIndex += 1 %>
+    <% end %>
+  <% end %>
+]

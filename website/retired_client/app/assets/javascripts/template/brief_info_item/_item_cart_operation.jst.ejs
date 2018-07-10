@@ -1,0 +1,10 @@
+<% var itemQuantity = cartHelper.getItemQuantityInCart(itemId) %>
+<% if (itemQuantity > 0) { %>
+  <div style="text-align: center; height: 35px; line-height: 35px; width: 100%;">
+    <button class="biitem-cbc-removefromcart circular left floated ui icon button" data-item-id="<%= itemId %>" data-item-unit="<%= itemUnit %>"><i class="minus icon"></i></button>
+    <%= itemQuantity %> <%= constant.item.QUANTITY_UNIT_DISPLAY[itemUnit] %>
+    <button class="biitem-cbc-addtocart circular right floated ui icon button" data-item-id="<%= itemId %>" data-item-unit="<%= itemUnit %>"><i class="plus icon"></i></button>
+  </div>
+<% } else { %>
+  <button class="biitem-cbc-addtocart circular right floated ui icon button" data-item-id="<%= itemId %>" data-item-unit="<%= itemUnit %>"><i class="add to cart icon"></i></button>
+<% } %>

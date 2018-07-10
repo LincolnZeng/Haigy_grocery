@@ -1,0 +1,35 @@
+<% if (allCompany.length > 0) { %>
+
+  <div>
+    <label for="company-select-id">Choose A Retail Company:</label>
+    <select id="company-select-id">
+      <% allCompany.each(function(company) { %>
+      <option value="<%= company.id %>"><%= company.get("name") %></option>
+      <%  }); %>
+    </select>
+  </div>
+
+
+  <br><br>
+
+  <div>
+    <a href="<%= navigator.companyNewHash %>">Or, Add A New Company If You Cannot Find One Above</a>
+  </div>
+
+  <br><br>
+
+  <button class="ui basic button"id="company-select-submit">Submit</button>
+
+<% } else { %>
+
+  <div>
+    <div>No Company Is Found</div>
+
+    <br>
+
+    <div>
+      <a href="<%= navigator.companyNewHash %>">Add A Company First</a>
+    </div>
+  </div>
+
+<% } %>

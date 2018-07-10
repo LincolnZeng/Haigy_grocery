@@ -1,0 +1,147 @@
+<% categoryPath = allItem.categoryPath; %>
+<% categoryPathLength = categoryPath.length; %>
+
+<% if (categoryPathLength > 0) { %>
+
+	<div>
+		<%= categoryPathTemplate({categoryPath: categoryPath, navigateHash: navigator.itemManageHash, itemAppended: null, linkLastCategory: false}) %>
+	</div>
+
+	<br>
+
+	<div>
+
+		<% if (categoryPathLength > 1) { %>
+
+			<a href="<%= navigator.itemManageHash(categoryPath[categoryPathLength - 2].id) %>" class="ui blue basic button">Upper level</a>
+
+			<a href="<%= navigator.itemNewitemHash(parentCategoryItemId) %>" class="ui blue basic button">Add An Item Here</a>
+
+		<% } %>
+
+		<a href="<%= navigator.itemNewcategoryHash(parentCategoryItemId) %>" class="ui blue basic button">Add A Category here</a>
+
+		<a href="<%= navigator.itemUncategorizedHash %>" class="ui blue basic button">Show All Uncategorized</a>
+
+		<a class="ui blue basic button" href="<%= navigator.itemFedbutstarvingHash %>">Show Fed But Starving Items</a>
+
+	</div>
+
+	<br>
+
+	<% if (allItem.length > 0) { %>
+
+		<div class="ui four stackable doubling cards">
+			<% dataFreshTime = Date.now() / 1000 - constant.feed.DATA_FRESH_PERIOD_IN_SECOND %>
+
+			<% allItem.each(function(item) { %>
+
+				<div class="card">
+
+					<% if (item.get("is_category")) { %>
+
+						<a class="image" href="<%= navigator.itemManageHash(item.id) %>">
+							<img src="<%= pathToUrlTool(item.get('cover_image_path')) %>" alt="<%= item.get('name') %> Logo">
+						</a>
+
+						<div class="content">
+							<div><a href="<%= navigator.itemManageHash(item.id) %>"><%= item.get("name") %></a></div>
+							<div class="meta">Display Sequence: <%= item.get("display_sequence") %></div>
+							<br>
+							<div>
+								<a href="<%= navigator.itemEditcategoryHash(item.id) %>">Edit</a> |
+								<a href="<%= navigator.itemMoveHash(item.id, item.get('parent_category_item_id')) %>">Move</a> |
+								<a href="<%= navigator.itemManageHash(item.id) %>">View</a>
+							</div>
+						</div>
+
+					<% } else { %>
+
+						<a class="image" href="<%= navigator.itemShowHash(item.id) %>">
+							<img src="<%= pathToUrlTool(item.get('cover_image_path')) %>" alt="<%= item.get('name') %> Cover Image">
+						</a>
+
+						<div class="content">
+							<div><a href="<%= navigator.itemShowHash(item.id) %>"><%= item.get("name") %></a></div>
+							<div class="meta">Display Sequence: <%= item.get("display_sequence") %></div>
+							<br>
+							<div>Purchase Unit: <%= item.get("unit") %></div>
+
+							<div>Item Size:
+								<% if (item.get("has_fixed_item_size")) { %>
+								 	<%= item.get("item_size") %>
+								<% } else { %>
+									varies
+								<% } %>
+							</div>
+
+							<br>
+
+							<% if (selectedStoreId) { %>
+								<% var selectedStoreItemInfo = (item.get("store_item_infos") || {})[selectedStoreId.toString()] %>
+								<% if (selectedStoreItemInfo) { %><div>
+
+									<% var feedMappings = selectedStoreItemInfo.feed_mappings %>
+									<% if (feedMappings) { %>
+										<% var mappingCount = feedMappings.length %>
+										<% if (mappingCount > 0) { %>
+    									<% var dataStale = parseFloat(selectedStoreItemInfo.last_updated_at || 0) < dataFreshTime %>
+											<div>Feed Mappings:</div>
+											<div class="<% if (dataStale) { %>haigy-font-color-warning<% } else { %>haigy-font-color-success<% } %>">
+												<% for (var mappingIndex = 0; mappingIndex < mappingCount; ++mappingIndex) { %>
+													<div>Instacart ID:
+														<% var instacartId = feedMappings[mappingIndex].instacart_id %>
+														<i class="haigy-padding-l-5px">
+															<a href="<%= utility.getInstacartItemUrl(instacartId) %>" target="_blank"><%= instacartId %></a>
+														</i>
+													</div>
+												<% } %>
+											</div>
+										<% } else { %>
+											<div>Feed Mappings Not Set</div>
+										<% } %>
+
+										<br>
+										<% if (selectedStoreItemInfo.in_stock === true) { %>
+											<% var price = parseFloat(selectedStoreItemInfo.price || 0.0).toFixed(2) %>
+											<% if (selectedStoreItemInfo.on_sale === true) { %>
+												<div>Sale Price: $<%= parseFloat(selectedStoreItemInfo.sale_price || 0.0).toFixed(2) %></div>
+												<div>Regular Price: $<%= price %></div>
+											<% } else { %>
+												<div>Price: $<%= price %></div>
+											<% } %>
+										<% } else { %>
+											<div>Out of Stock</div>
+										<% } %>
+									<% } %>
+
+								</div><br><% } %>
+							<% } %>
+
+							<div>
+								<a href="<%= navigator.itemMoveHash(item.id, item.get('parent_category_item_id')) %>">Move</a> |
+								<a href="<%= navigator.itemShowHash(item.id) %>">View</a>
+							</div>
+						</div>
+
+					<% } %>
+
+				</div>
+
+				<br><br>
+
+			<% }); %>
+
+		</div>
+
+	<% } else { %>
+
+		<div>No Category Or Item Is Found Here ...</div>
+
+	<% } %>
+
+<% } else { %>
+
+	<div>Sorry, cannot find the category ...</div>
+
+<% } %>

@@ -1,0 +1,33 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  input_address: MyString
+  formatted_address: MyString
+  street_address: MyString
+  city: MyString
+  state: MyString
+  state_code: MyString
+  postal_code: MyString
+  country: MyString
+  country_code: MyString
+  google_place_id: MyString
+  latitude: 1.5
+  longitude: 1.5
+  geocoding_status: false
+
+two:
+  name: MyString
+  input_address: MyString
+  formatted_address: MyString
+  street_address: MyString
+  city: MyString
+  state: MyString
+  state_code: MyString
+  postal_code: MyString
+  country: MyString
+  country_code: MyString
+  google_place_id: MyString
+  latitude: 1.5
+  longitude: 1.5
+  geocoding_status: false

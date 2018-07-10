@@ -1,0 +1,106 @@
+<h3>All Zip Codes</h3>
+<br>
+
+<% if (allZipCodes.length > 0) { %>
+
+  <div class="ui relaxed divided list">
+    <% allZipCodes.each(function(zipCode) { %>
+      <% var zipCodeId = zipCode.id %>
+
+      <div class="item">
+        <i class="large middle aligned flag outline icon"></i>
+
+        <div class="content haigy-width-100-percent"><div class="haigy-padding-lr-30px">
+          <div id="szc-index-zipcode-<%= zipCodeId %>-show-container" class="haigy-padding-tb-10px">
+            <h3 class="header">
+              <a class="szc-index-zipcode-edit" href="#" data-zip-code-id="<%= zipCodeId %>">
+                Zip Code: <%= zipCode.get("zip_code") %>
+              </a>
+            </h3>
+
+            <div class="description">
+              <div class="haigy-padding-tb-5px">
+                <div>City: <i class="haigy-font-color-magenta"><%= zipCode.get("city") %></i>, State: <i class="haigy-font-color-magenta"><%= zipCode.get("state") %></i></div>
+                <% var serviceArea = allServiceAreas.get(zipCode.get("service_area_id")) %>
+                <div>Service Area: <i class="haigy-font-color-magenta"><%= serviceArea ? serviceArea.get("name") : "Unknown" %></i></div>
+              </div>
+            </div>
+          </div>
+
+          <div id="szc-index-zipcode-<%= zipCodeId %>-edit-container" class="haigy-display-none haigy-padding-tb-20px haigy-width-max-500px">
+            <form id="szc-index-zipcode-<%= zipCodeId %>-edit-form" class="ui form szc-index-zipcode-edit-form">
+              <input type="hidden" name="id" value="<%= zipCodeId %>">
+              <h3 class="header">Zip Code: <%= zipCode.get("zip_code") %></h3>
+              <br>
+              <div class="required field">
+                <label>City</label>
+                <input type="text" name="city" placeholder="City" value="<%= zipCode.get('city') %>">
+              </div>
+              <div class="required field">
+                <label>State</label>
+                <input type="text" name="state" placeholder="State" value="<%= zipCode.get('state') %>">
+              </div>
+              <div>
+                <span class="haigy-display-inline-block haigy-padding-r-30px haigy-padding-b-5px">
+                  <button class="ui red button szc-index-zipcode-delete" type="button" data-zip-code-id="<%= zipCodeId %>">Delete</button>
+                </span>
+                <span class="haigy-display-inline-block haigy-padding-b-5px">
+                  <button class="ui primary button" type="submit">Save</button>
+                </span>
+                <span class="haigy-display-inline-block haigy-padding-b-5px">
+                  <button class="ui button szc-index-zipcode-edit-form-cancel" type="button" data-zip-code-id="<%= zipCodeId %>">Cancel</button>
+                </span>
+              </div>
+              <div class="ui error message"></div>
+            </form>
+          </div>
+        </div></div>
+
+      </div>
+    <% }) %>
+  </div>
+<% } else { %>
+  <div>No zip code is found.</div>
+<% } %>
+
+<br><br>
+
+<div>
+  <a id="szc-index-new-zipcode" class="ui blue basic button" href="#">Add A New Zip Code</a>
+</div><br>
+
+<div id="szc-index-new-zipcode-form-container" class="haigy-padding-lr-30px haigy-width-max-500px haigy-display-none">
+  <form class="ui form szc-index-zipcode-edit-form">
+    <div class="required field">
+      <label>Zip Code</label>
+      <input type="number" name="zip_code" placeholder="Zip Code">
+    </div>
+    <div class="field">
+      <label>Service Area</label>
+      <select name="service_area_id">
+        <% allServiceAreas.each(function(serviceArea) { %>
+          <option value="<%= serviceArea.id %>"><%= serviceArea.get("name") %></option>
+        <% }) %>
+      </select>
+    </div>
+    <div class="required field">
+      <label>City</label>
+      <input type="text" name="city" placeholder="City">
+    </div>
+    <div class="required field">
+      <label>State</label>
+      <input type="text" name="state" placeholder="State">
+    </div>
+    <div>
+      <span class="haigy-display-inline-block haigy-padding-b-5px">
+        <button class="ui primary button" type="submit">Save</button>
+      </span>
+      <span class="haigy-display-inline-block haigy-padding-b-5px">
+        <button id="szc-index-new-zipcode-form-cancel" class="ui button" type="button">Cancel</button>
+      </span>
+    </div>
+    <div class="ui error message"></div>
+  </form>
+</div>
+
+<br><br>

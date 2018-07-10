@@ -1,0 +1,445 @@
+<% if (itemNew || item.id) { %>
+
+
+  <% if (itemNew) { %>
+
+
+    <% if (parentCategory) { %>
+
+      <h3>Add An Item Under:</h3>
+
+      <div>
+        <%= categoryPathTemplate({categoryPath: parentCategory.get("category_path"), navigateHash: navigator.itemManageHash, itemAppended: parentCategory, linkLastCategory: true}) %>
+      </div>
+
+      <div><img src="<%= pathToUrlTool(parentCategory.get('cover_image_path')) %>" alt="Category <%= parentCategory.get('name') %> Image"></div>
+
+      <br><hr><br>
+
+      <div><strong>New Item:</strong></div>
+
+      <br>
+
+    <% } else { %>
+
+      <h3>Add An Uncategorized Item</h3>
+      <br><br>
+
+    <% } %>
+
+
+  <% } else { %>
+
+    <h3>Edit The Item:</h3>
+    <div>
+      <%= categoryPathTemplate({categoryPath: item.get("category_path"), navigateHash: navigator.itemManageHash, itemAppended: item, linkLastCategory: false}) %>
+    </div>
+
+    <br><hr><br>
+
+  <% } %>
+
+  <form class="ui form">
+
+    <div class="required field">
+      <label for="item-edititem-name">Item Name:</label>
+      <input
+        id="item-edititem-name"
+        type="text"
+        placeholder="item name"
+        data-validator="notEmpty"
+        data-invalid-info="#item-edititem-name-invalid"
+        data-submit="#item-edititem-submit"
+        value="<%= item.get('name') %>"
+      >
+      <span id="item-edititem-name-invalid" class="haigy-display-none">(required)</span>
+    </div>
+
+    <div class="field">
+      <label for="item-edititem-keywords">Item Keywords:</label>
+      <input
+        id="item-edititem-keywords"
+        type="text"
+        placeholder="item keywords"
+        data-validator="alwaysGood"
+        data-submit="#item-edititem-submit"
+        value="<%= item.get("item_keywords") %>"
+      >
+    </div>
+
+    <div class="field">
+      <label for="item-edititem-display-sequence">Display Sequence:</label>
+      <input
+        id="item-edititem-display-sequence"
+        type="number"
+        data-validator="alwaysGood"
+        data-submit="#item-edititem-submit"
+        value="<%= item.get('display_sequence') %>"
+      >
+    </div>
+    <br>
+
+
+    <% if (!itemNew) { %>
+
+      <% var barcodes = item.get("barcode"); %>
+      <% var barcodesCount = barcodes.length; %>
+
+      <% if (barcodesCount > 0) { %>
+        <div>All Barcodes For The Item:</div>
+
+        <table class="ui celled unstackable collapsing table">
+          <thead>
+            <tr>
+              <th colspan="3">
+                All Barcodes For The Item
+              </th>
+            <tr>
+            <th>Barcode</th>
+            <th>Barcode Type</th>
+            <th></th>
+          </tr></thead>
+          <tbody>
+            <% for (var index = 0; index < barcodesCount; ++index) { %>
+              <tr>
+                <td><i><%= barcodes[index].code %></i></td>
+                <td><i><%= barcodes[index].type || "N/A" %></i></td>
+                <td><i><a class="item-edititem-delete-barcode" href="#" data-barcode-id="<%= barcodes[index].id %>" data-delete="no">Delete</a></i></td>
+              </tr>
+            <% } %>
+          </tbody>
+        </table>
+
+        <br>
+        <div>Add One More Barcode:</div>
+      <% } %>
+
+    <% } %>
+
+
+    <div>
+      <label for="item-edititem-barcode">Barcode:</label>
+      <input
+        id="item-edititem-barcode"
+        type="text"
+        placeholder="barcode"
+        data-validator="alwaysGood"
+        data-submit="#item-edititem-submit"
+      >
+    </div>
+
+    <div>
+      <label for="item-edititem-barcode-type">Barcode Type:</label>
+      <input
+        id="item-edititem-barcode-type"
+        type="text"
+        placeholder="barcode"
+        data-validator="alwaysGood"
+        data-submit="#item-edititem-submit"
+      >
+    </div>
+
+    <% if (inCordova) { %>
+      <div><button id="item-edititem-barcode-scan">Scan Item Barcode</button></div>
+    <% } %>
+    <br>
+
+
+    <% if (itemNew) { %>
+
+      <div class="required field">
+        <label for="item-edititem-cover-image">Choose A Cover Image For The Item:</label>
+        <input
+          id="item-edititem-cover-image"
+          type="file"
+          accept="image/*"
+          data-validator="notEmpty"
+          data-invalid-info="#item-edititem-cover-image-invalid"
+          data-submit="#item-edititem-submit"
+        >
+        <span id="item-edititem-cover-image-invalid" class="haigy-display-none">(required)</span>
+      </div>
+
+    <% } else { %>
+
+      <div>
+        <label for="item-edititem-cover-image">
+          Current Item Cover Image:
+          <br><img src="<%= pathToUrlTool(item.get('cover_image_path')) %>" alt="Category <%= item.get('name') %> Image"><br>
+          Choose Another Image:
+        </label>
+        <input
+          id="item-edititem-cover-image"
+          type="file"
+          accept="image/*"
+          data-validator="alwaysGood"
+          data-submit="#item-edititem-submit"
+        >
+      </div>
+
+    <% } %>
+
+    <div>
+      <input
+        id="item-edititem-temporary-cover"
+        type="checkbox"
+        data-validator="alwaysGood"
+        data-submit="#item-edititem-submit"
+        <% if (item.get("temporary_cover_image") === true || itemNew) { %>checked<% } %>
+      >
+      <label for="item-edititem-temporary-cover">Is A Temporary Cover Image</label>
+    </div>
+    <br>
+
+    <div>
+      <label for="item-edititem-unit">Purchase Unit:</label>
+      <select id="item-edititem-unit" data-validator="alwaysGood" data-submit="#item-edititem-submit">
+        <% for (var unit in constant.item.QUANTITY_UNIT_DISPLAY) { %>
+          <option value="<%= unit %>" <% if (item.get("unit") === "<%= unit %>") { %>selected="selected"<% } %> ><%= unit %></option>
+        <% } %>
+      </select>
+    </div>
+    <br>
+
+
+    <div>
+      <label for="item-edititem-size">Item Size (for example, 16 oz, 1.5 lb, 12 ct ...): </label>
+      <input
+        id="item-edititem-size"
+        type="text"
+        data-validator="alwaysGood"
+        data-submit="#item-edititem-submit"
+        value="<%= item.get('item_size') %>"
+      >
+    </div>
+    <br>
+
+    <div>
+      <input
+        id="item-edititem-is-organic"
+        type="checkbox"
+        data-validator="alwaysGood"
+        data-submit="#item-edititem-submit"
+        <% if (item.get("is_organic") === true) { %>checked<% } %>
+      >
+      <label for="item-edititem-is-organic">Organic</label>
+    </div>
+    <div>
+      <input
+        id="item-edititem-is-kosher"
+        type="checkbox"
+        data-validator="alwaysGood"
+        data-submit="#item-edititem-submit"
+        <% if (item.get("is_kosher") === true) { %>checked<% } %>
+      >
+      <label for="item-edititem-is-kosher">Kosher</label>
+    </div>
+    <div>
+      <input
+        id="item-edititem-is-vegan"
+        type="checkbox"
+        data-validator="alwaysGood"
+        data-submit="#item-edititem-submit"
+        <% if (item.get("is_vegan") === true) { %>checked<% } %>
+      >
+      <label for="item-edititem-is-vegan">Vegan</label>
+    </div>
+    <div>
+      <input
+        id="item-edititem-is-gluten-free"
+        type="checkbox"
+        data-validator="alwaysGood"
+        data-submit="#item-edititem-submit"
+        <% if (item.get("is_gluten_free") === true) { %>checked<% } %>
+      >
+      <label for="item-edititem-is-gluten-free">Gluten Free</label>
+    </div>
+    <div>
+      <input
+        id="item-edititem-is-dairy-free"
+        type="checkbox"
+        data-validator="alwaysGood"
+        data-submit="#item-edititem-submit"
+        <% if (item.get("is_dairy_free") === true) { %>checked<% } %>
+      >
+      <label for="item-edititem-is-dairy-free">Dairy Free</label>
+    </div>
+    <div>
+      <input
+        id="item-edititem-is-egg-free"
+        type="checkbox"
+        data-validator="alwaysGood"
+        data-submit="#item-edititem-submit"
+        <% if (item.get("is_egg_free") === true) { %>checked<% } %>
+      >
+      <label for="item-edititem-is-egg-free">Egg Free</label>
+    </div>
+    <div>
+      <input
+        id="item-edititem-is-lactose-free"
+        type="checkbox"
+        data-validator="alwaysGood"
+        data-submit="#item-edititem-submit"
+        <% if (item.get("is_lactose_free") === true) { %>checked<% } %>
+      >
+      <label for="item-edititem-is-lactose-free">Lactose Free</label>
+    </div>
+    <div>
+      <input
+        id="item-edititem-is-produce"
+        type="checkbox"
+        data-validator="alwaysGood"
+        data-submit="#item-edititem-submit"
+        <% if (item.get("is_produce") === true) { %>checked<% } %>
+      >
+      <label for="item-edititem-is-produce">Produce</label>
+    </div>
+    <div>
+      <input
+        id="item-edititem-is-seasonal"
+        type="checkbox"
+        data-validator="alwaysGood"
+        data-submit="#item-edititem-submit"
+        <% if (item.get("is_seasonal") === true) { %>checked<% } %>
+      >
+      <label for="item-edititem-is-produce">Seasonal</label>
+    </div>
+
+
+    <br>
+
+    <div>
+      <label for="item-edititem-brand">Brand:</label>
+      <input
+        id="item-edititem-brand"
+        type="text"
+        placeholder="brand"
+        data-validator="alwaysGood"
+        data-submit="#item-edititem-submit"
+        value="<%= item.get('brand') %>"
+      >
+    </div>
+    <br>
+
+
+    <div>
+      <label for="item-edititem-manufacturer">Manufacturer:</label>
+      <input
+        id="item-edititem-manufacturer"
+        type="text"
+        placeholder="manufacturer"
+        data-validator="alwaysGood"
+        data-submit="#item-edititem-submit"
+        value="<%= item.get('manufacturer') %>"
+      >
+    </div>
+    <br>
+
+
+    <div>
+      <label for="item-edititem-details">Details:</label>
+      <textarea
+        id="item-edititem-details"
+        placeholder="details"
+        data-validator="alwaysGood"
+        data-submit="#item-edititem-submit"
+      ><%= item.get("details") %></textarea>
+    </div>
+    <br>
+
+
+    <div>
+      <label for="item-edititem-ingredients">Ingredients:</label>
+      <textarea
+        id="item-edititem-ingredients"
+        placeholder="ingredients"
+        data-validator="alwaysGood"
+        data-submit="#item-edititem-submit"
+      ><%= item.get("ingredients") %></textarea>
+    </div>
+    <br>
+
+
+    <div>
+      <label for="item-edititem-warnings">Warnings:</label>
+      <textarea
+        id="item-edititem-warnings"
+        placeholder="warnings"
+        data-validator="alwaysGood"
+        data-submit="#item-edititem-submit"
+      ><%= item.get("warnings") %></textarea>
+    </div>
+    <br>
+
+
+    <div>
+      <label for="item-edititem-directions">Directions:</label>
+      <textarea
+        id="item-edititem-directions"
+        placeholder="directions"
+        data-validator="alwaysGood"
+        data-submit="#item-edititem-submit"
+      ><%= item.get("directions") %></textarea>
+    </div>
+    <br>
+
+
+    <% if (!itemNew) { %>
+
+      <% var otherImages = item.get("item_image"); %>
+      <% var otherImagesCount = otherImages.length; %>
+
+      <% if (otherImagesCount > 0) { %>
+        <div>Other Images For The Item:</div>
+        <br>
+      <% } %>
+
+      <div class="ui four cards">
+        <% for (var index = 0; index < otherImagesCount; ++index) { %>
+          <div class="card">
+            <a class="image">
+              <img src="<%= pathToUrlTool(otherImages[index].path) %>" alt="Item Image <%= index %>">
+            </a>
+            <div class="content">
+              <i><a class="item-edititem-delete-image" href="#" data-image-id="<%= otherImages[index].id %>" data-delete="no">Delete this image</a></i>
+            </div>
+          </div>
+        <% } %>
+      </div>
+    <% } %>
+    <br><br>
+
+    <div>
+      <label for="item-edititem-other-image">More Images For The Item (Could Upload Multiple Images Together):</label>
+      <input
+        id="item-edititem-other-image"
+        type="file"
+        accept="image/*"
+        multiple
+        data-validator="alwaysGood"
+        data-submit="#item-edititem-submit"
+      >
+    </div>
+
+  </form>
+
+  <br><br>
+
+  <div>
+    <button class="ui button" id="item-edititem-submit" data-self-selector="#item-edititem-submit" disabled>Submit</button>
+    <span>(* fields are required)</span>
+
+  </div>
+  <br><br>
+
+  <% if (!itemNew) { %>
+    <div><a id="item-edititem-delete" href="#">delete this item</a></div>
+    <br>
+  <% } %>
+
+
+<% } else { %>
+
+  <div>Sorry, cannot find the item ...</div>
+
+<% } %>

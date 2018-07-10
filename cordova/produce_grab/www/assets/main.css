@@ -1,0 +1,59 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+
+html,
+body {
+  width: 100%;
+}
+
+
+.haigy-hide {
+  display: none;
+}
+
+
+.haigy-large-button {
+  display: block;
+  margin: 10px 0;
+  min-height: 60px;
+  width: 100%;
+}
+
+
+.haigy-container {
+  margin: 0 auto;
+  width: 90%;
+}
+
+
+.haigy-font-green {
+  color: #9fffba;
+}
+
+
+.haigy-font-red {
+  color: #f25950;
+}
+
+
+.haigy-background-error {
+  background-color: #d9534f;
+}
+
+
+.haigy-background-warning {
+  background-color: #f0ad4e;
+}
+
+
+.haigy-background-success {
+  background-color: #5cb85c;
+}
+
+
+.haigy-padding-l-15px {
+  padding-left: 15px;
+}

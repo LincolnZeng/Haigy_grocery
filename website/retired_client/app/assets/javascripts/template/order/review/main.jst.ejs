@@ -1,0 +1,109 @@
+<div class="ui one column grid"><div class="column">
+  <button class="order-review-back ui button"><i class="chevron left icon"></i> Back</button>
+  <button class="order-review-place-order ui primary right floated button">Place the Order <i class="chevron right icon"></i></button>
+</div></div>
+
+
+<br><br>
+
+
+<div class="ui grid"><div class="two column stackable row">
+
+
+  <div class="five wide column">
+    <h4 class="ui dividing header">Delivery Address:</h4>
+    <div class="haigy-padding-lr-30px">
+      <% var address = orderData.address %>
+
+      <% if (address) { %>
+
+        <% if (address.is_business_address) { %>
+          <div><%= address.business_name %></div>
+          <br>
+        <% } %>
+
+        <div><%= address.street_address %></div>
+        <div><%= address.city %>, <%= address.state %> <%= address.zip_code %></div>
+
+        <% if (address.note && address.note.trim().length > 0) { %>
+          <br>
+          <div><i>Note: <%= address.note %></i></div>
+        <% } %>
+
+      <% } else { %>
+
+        <div class="ui negative message order-review-error">
+          Oops, something wrong here!
+        </div>
+
+      <% } %>
+    </div>
+
+    <br><br>
+
+    <h4 class="ui dividing header">Payment Method:</h4>
+    <div class="haigy-padding-lr-30px">
+      Pay by cash or check
+    </div>
+
+    <br><br>
+
+    <h4 class="ui dividing header">Delivery Time:</h4>
+    <div class="haigy-padding-lr-30px">
+      <div><%= utility.getOrderDeliveryDate(orderData.delivery_date) %></div>
+      <div><%= utility.getOrderDeliveryTimeSlotTime(orderData.delivery_time_slot_start_time) %> - <%= utility.getOrderDeliveryTimeSlotTime(orderData.delivery_time_slot_end_time) %></div>
+    </div>
+
+    <br><br>
+
+    <h4 class="ui dividing header">Contact Method:</h4>
+    <div class="haigy-padding-lr-30px">
+      <% if (orderData.email && orderData.phone) { %>
+
+        <div>Email</div>
+        <div><i><%= orderData.email %></i></div>
+        <% if (orderData.subscribe_news === "on") { %>
+          <div><i>Subscribed to newsletter</i></div>
+        <% } %>
+        <br>
+        <div>Phone</div>
+        <div><i><%= orderData.phone %></i></div>
+
+      <% } else { %>
+
+        <div class="ui negative message order-review-error">
+          Oops, something wrong here!
+        </div>
+
+      <% } %>
+    </div>
+
+    <br><br>
+  </div>
+
+
+  <div class="eleven wide column">
+
+    <h4 class="ui dividing header">Order Summary:</h4>
+    <%= orderSummaryTableT({totalValueInCart: totalValueInCart, deliveryFee: constant.business.DELIVERY_FEE}) %>
+
+
+    <br><br>
+
+    <%= itemListT({cart: cart, specialRequestArray: specialRequestArray, precompiledAsset: precompiledAsset, utility: utility, navigator: navigator, constant: constant}) %>
+
+  </div>
+
+
+</div></div>
+
+
+<br><br>
+
+
+<div class="ui one column grid"><div class="column">
+  <button class="order-review-back ui button"><i class="chevron left icon"></i> Back</button>
+  <button class="order-review-place-order ui primary right floated button">Place the Order <i class="chevron right icon"></i></button>
+</div></div>
+
+<br><br><br>

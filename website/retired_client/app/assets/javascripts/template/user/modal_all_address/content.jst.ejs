@@ -1,0 +1,126 @@
+<% if (enableZipCodeChange) { %>
+
+  <form id="user-m-alladdress-zip-code-form" class="ui form">
+    <div class="inline fields">
+      <div class="four wide field">
+        <label>Another Zip Code</label>
+      </div>
+      <div class="eight wide field">
+        <input type="text" name="zip_code" placeholder="Zip Code">
+      </div>
+      <div class="four wide field">
+        <button id="user-m-alladdress-zip-code-submit" type="submit" class="ui teal button">Change</button>
+      </div>
+    </div>
+    <div class="ui error message"></div>
+  </form>
+
+<% } %>
+
+
+<% if (enableZipCodeChange && userId) { %>
+
+  <br>
+  <div class="ui horizontal divider">
+    Or
+  </div>
+
+<% } %>
+
+
+<% if (userId) { %>
+
+  <% var addressCount = addressCollection.length %>
+
+  <div class="ui divided items">
+    <% if (addressCount > 0) { %>
+
+      <% addressCollection.each(function(address) { %>
+
+        <% var defaultAddress = address.get("set_as_default") %>
+
+        <% var zipCode = (address.get("zip_code") || "").toString() %>
+        <div class="item haigy-hover-gray user-m-alladdress-address" data-id="<%= address.id %>" data-zip-code="<%= zipCode %>">
+          <div class="content">
+            <div class="ui stackable grid">
+              <div class="ten wide column">
+
+                <div class="ui grid">
+                  <div class="five wide column">
+                    <% if (address.get("is_business_address")) { %>
+                      <i class="huge <% if (defaultAddress) { %>green<% } else { %>teal<% } %> building outline icon"></i>
+                    <% } else { %>
+                      <i class="huge <% if (defaultAddress) { %>green<% } else { %>teal<% } %> home icon"></i>
+                    <% } %>
+                  </div>
+
+                  <div class="eleven wide column">
+                    <% if (defaultAddress) { %>
+                      <strong><i>
+                    <% } %>
+
+                    <% if (address.get("is_business_address")) { %>
+                      <div><%= address.get("business_name") %></div>
+                    <% } %>
+
+                    <div><%= address.get("street_address") %></div>
+                    <div><%= address.get("city") %>, <%= address.get("state") %> <%= zipCode %></div>
+
+                    <% var addressNote = address.get("note") %>
+                    <% if (addressNote && addressNote.trim().length > 0) { %>
+                      <br>
+                      <div><i>Note: <%= addressNote %></i></div>
+                    <% } %>
+
+                    <% if (defaultAddress) { %>
+                      </i></strong>
+                    <% } %>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="six wide right aligned column">
+                <% if (defaultAddress) { %>
+                  <span class="haigy-padding-r-30px">
+                    <button class="circular ui icon green button user-m-alladdress-info" data-content="Current delivery address">
+                      <i class="large checkmark icon"></i>
+                    </button>
+                  </span>
+                <% } else if (zipCode !== cartZipCode) { %>
+                  <span class="haigy-padding-r-30px">
+                    <button class="circular ui icon yellow button user-m-alladdress-info" data-content="This address has different zip code with the current delivery address. Select this address may cause some items in the shopping cart not available.">
+                      <i class="large warning sign icon"></i>
+                    </button>
+                  </span>
+                <% } %>
+
+                <button href="#" class="circular ui icon button user-m-alladdress-delete" data-id="<%= address.id %>">
+                  <i class="trash icon"></i>
+                </button>
+                <button class="circular ui icon button user-m-alladdress-edit" data-id="<%= address.id %>">
+                  <i class="edit icon"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      <% }) %>
+
+    <% } %>
+
+    <div class="item">
+      <div class="content">
+        <button id="user-m-alladdress-add" class="ui vertical animated green button">
+          <div class="hidden content">New Address</div>
+          <div class="visible content haigy-padding-lr-20px">
+            <i class="large plus icon"></i>
+            <i class="large home icon"></i>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+<% } %>

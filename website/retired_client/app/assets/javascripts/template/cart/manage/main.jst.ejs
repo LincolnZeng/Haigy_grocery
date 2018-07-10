@@ -1,0 +1,199 @@
+<div class="ui stackable grid">
+
+
+  <div class="six wide column">
+    <div id="cart-manage-address-container" class="ui card">
+      <%= addressT({address: address, zipCode: zipCode}) %>
+    </div>
+    <br><br>
+  </div>
+
+
+  <div class="ten wide column">
+
+    <div class="haigy-text-align-right">
+
+      <% if (signedIn) { %>
+
+        <a class="ui primary button cart-manage-user-checkout" href="#"><span class="haigy-padding-lr-30px">Checkout</span></a>
+
+      <% } else { %>
+
+        <div class="ui buttons">
+          <a class="ui purple button cart-manage-guest-checkout" href="#">Checkout As Guest</a>
+          <div class="or"></div>
+          <a href="<%= navigator.userSignupHash(JSON.stringify({redirectUrl: navigator.orderUsercheckoutHash, cancelUrl: navigator.cartManageHash})) %>" class="ui primary button">Sign Up & Checkout</a>
+        </div>
+
+      <% } %>
+
+      <br>
+
+      <h4 "ui header"><i>Total In Cart: $<span id="cart-manage-summary-top"></span></i></h4>
+
+      <br>
+
+    </div>
+
+
+    <% var specialRequestCount = specialRequestArray.length %>
+    <% var cartEntryCount = cart.length %>
+
+    <% if (cartEntryCount > 0 || specialRequestCount > 0) { %>
+
+      <div id="cart-manage-all-items" class="ui divided items">
+        <% for (var specialRequestIndex = specialRequestCount - 1; specialRequestIndex >= 0; --specialRequestIndex) { %>
+          <% var specialRequest = specialRequestArray[specialRequestIndex] %>
+          <div class="item cart-manage-item-container">
+            <div class="ui small image">
+              <img src="<%= utility.pathToUrl(precompiledAsset.image.SPECIAL_REQUEST) %>" alt="Special Request">
+            </div>
+            <div class="content">
+              <div class="header haigy-width-100-percent">
+                <span class="haigy-other-wordwrap-breakword"><%= specialRequest.summary %></span>
+              </div>
+              <div class="description">
+                Quantity: <span class="haigy-other-wordwrap-breakword"><%= specialRequest.quantity %></span>
+              </div>
+              <div class="meta">
+                <span class="haigy-other-wordwrap-breakword"><%= specialRequest.details %></span>
+              </div>
+              <div class="extra haigy-text-align-right">
+                <a href="#" class="haigy-padding-r-15px cart-manage-edit-special-request" data-special-request-id="<%= specialRequest.id %>">Edit</a>
+              </div>
+            </div>
+          </div>
+        <% } %>
+
+
+        <% for (var cartEntryIndex = 0; cartEntryIndex < cartEntryCount; ++cartEntryIndex) { %>
+
+          <% var cartEntry = cart[cartEntryIndex] %>
+          <% var itemId = cartEntry.itemId %>
+
+          <div id="cart-manage-item-<%= itemId %>" class="item cart-manage-item-container">
+            <a class="ui small image" href="<%= navigator.detailedinfoitemShowHash(itemId) %>">
+              <img src="<%= utility.imagePathToUrl(cartEntry.itemCoverImagePath) %>" alt="Item image">
+            </a>
+            <div class="content">
+              <a href="<%= navigator.detailedinfoitemShowHash(itemId) %>" class="header">
+                <%= cartEntry.itemName %>
+              </a>
+              <% var unitPrice = cartEntry.unitPrice %>
+              <% var inStock = (cartEntry.inStock === true) %>
+              <% if (inStock) { %>
+                <div class="meta">
+                  <span class="cinema">
+                    Price:
+                    <span id="cart-manage-item-unit-price-<%= itemId %>">
+                      <% if (unitPrice) { %>
+                        $<%= parseFloat(unitPrice).toFixed(2) %>
+                        <%= cartEntry.itemUnit %>
+                      <% } else { %>
+                        Unknown
+                      <% } %>
+                    </span>
+                  </span>
+                </div>
+              <% } else { %>
+                <div class="meta">
+                  <span class="cinema">
+                    <i class="haigy-font-bold haigy-font-color-red">Out of Stock</i>
+                  </span>
+                </div>
+              <% } %>
+
+              <% if (inStock) { %>
+                <div class="description">
+                  <div>
+                    Quantity: <span id="cart-manage-item-quantity-<%= itemId %>"><%= cartEntry.quantity %></span>
+                    <%= constant.item.QUANTITY_UNIT_DISPLAY[cartEntry.itemUnit] %>
+                  </div>
+                  <div>
+                    Total:
+                    <% var total = (parseFloat(unitPrice || 0.0) * parseFloat(cartEntry.quantity)) %>
+                    <span id="cart-manage-item-total-<%= itemId %>" class="cart-manage-item-total" data-total="<%= total %>">
+                      <% if (unitPrice) { %>
+                        <%= ["$", total.toFixed(2)].join("") %>
+                      <% } else { %>
+                        Unknown
+                      <% } %>
+                    </span>
+                  </div>
+                </div>
+              <% } else { %>
+                <div class="description">
+                  This item will be automatically removed at checkout.
+                </div>
+              <% } %>
+
+              <div class="extra">
+                <div class="ui right floated basic buttons">
+
+                  <% if (inStock) { %>
+                    <button class="ui animated fade button cart-manage-add-quantity" data-item-id="<%= itemId %>">
+                      <div class="visible content">Add</div>
+                      <div class="hidden content">
+                        <i class="plus icon"></i>
+                      </div>
+                    </button>
+                    <button class="ui animated fade button cart-manage-subtract-quantity" data-item-id="<%= itemId %>">
+                      <div class="visible content">Subtract</div>
+                      <div class="hidden content">
+                        <i class="minus icon"></i>
+                      </div>
+                    </button>
+                  <% } %>
+
+                  <button class="ui animated fade button cart-manage-remove-item" data-item-id="<%= itemId %>">
+                    <div class="visible content">Remove</div>
+                    <div class="hidden content">
+                      <i class="remove icon"></i>
+                    </div>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        <% } %>
+
+      </div>
+
+    <% } else { %>
+
+      <div id="cart-manage-all-items"></div>
+
+    <% } %>
+
+    <br>
+
+    <div class="haigy-text-align-right">
+
+      <h4 "ui header"><i>Total In Cart: $<span id="cart-manage-summary-bottom"></span></i></h4>
+
+      <br>
+
+      <% if (signedIn) { %>
+
+        <a class="ui primary button cart-manage-user-checkout" href="#"><span class="haigy-padding-lr-30px">Checkout</span></a>
+
+      <% } else { %>
+
+        <div class="ui buttons">
+          <a class="ui purple button cart-manage-guest-checkout" href="#">Checkout As Guest</a>
+          <div class="or"></div>
+          <a href="<%= navigator.userSignupHash(JSON.stringify({redirectUrl: navigator.orderUsercheckoutHash, cancelUrl: navigator.cartManageHash})) %>" class="ui primary button">Sign Up & Checkout</a>
+        </div>
+
+      <% } %>
+
+    </div>
+
+
+    <br><br>
+
+  </div>
+
+
+</div>

@@ -1,0 +1,38 @@
+<h3>Employee Profile</h3>
+
+<div>
+  <button class="ui basic button">
+    <a href="<%= navigator.employeeEditHash(employee.id) %>">Edit</a>
+  </button>
+
+  <button class="ui basic button">
+    <a href="<%= navigator.employeeIndexHash %>">View all</a>
+  </button>
+</div>
+
+
+<table class="ui definition table">
+  <tbody>
+    <tr>
+      <td class="three wide column">First Name</td>
+      <td><%= employee.get("first_name") %></td>
+    </tr>
+    <tr>
+      <td>Middle Name</td>
+      <td><%= employee.get("middle_name") %></td>
+    </tr>
+    <tr>
+      <td>Last Name</td>
+      <td><%= employee.get("last_name") %></td>
+    </tr>
+    <tr>
+      <td>Email</td>
+      <td><%= employee.get("email") %></td>
+    </tr>
+    <tr>
+      <td>Job Title</td>
+      <td><%= constant.employee.POSITION_DETAIL[employee.get("job_position_id").toString()].title %></td>
+    </tr>
+  </tbody>
+</table>
+

@@ -1,0 +1,107 @@
+@import 'haigy/theme';
+
+
+.haigy-font-family-serif {
+  font-family: serif;
+  font-size: 120%;
+  line-height: 110%;
+}
+
+
+.haigy-font-bold {
+  font-weight: bold;
+}
+
+
+.haigy-font-italic {
+  font-style: italic;
+}
+
+
+.haigy-font-small {
+  font-size: small;
+  line-height: 110%;
+}
+
+
+.haigy-font-large {
+  font-size: large;
+  line-height: 110%;
+}
+
+
+.haigy-font-size-120 {
+  font-size: 120%;
+  line-height: 110%;
+}
+
+
+.haigy-font-size-135 {
+  font-size: 135%;
+  line-height: 110%;
+}
+
+
+.haigy-font-size-150 {
+  font-size: 150%;
+  line-height: 110%;
+}
+
+
+.haigy-font-size-200 {
+  font-size: 200%;
+  line-height: 110%;
+}
+
+
+.haigy-font-color-required {
+  color: $haigy-color-red;
+}
+
+
+.haigy-font-color-optional {
+  color: $haigy-color-orange;
+}
+
+
+.haigy-font-color-notice {
+  color: $haigy-color-orange;
+}
+
+
+.haigy-font-color-red {
+  color: $haigy-color-red;
+}
+
+
+.haigy-font-color-purple {
+  color: $haigy-color-purple;
+}
+
+
+.haigy-font-color-blue {
+  color: $haigy-color-blue;
+}
+
+
+.haigy-font-color-gray {
+  color: $haigy-color-gray;
+}
+
+
+.haigy-font-color-green {
+  color: $haigy-color-green;
+}
+
+
+.haigy-font-color-wholefoods-green {
+  color: $haigy-color-wholefoods-green;
+}
+
+
+.haigy-font-embossed {
+  color: #f35626;
+  // text-shadow: -1px -1px 0px rgba(255,255,255,0.3), 1px 1px 0px rgba(0,0,0,0.8);
+  // color: #333;
+  // opacity: 0.4;
+}

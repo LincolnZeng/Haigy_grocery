@@ -1,0 +1,90 @@
+<div class="ui grid"><div class="two column stackable row">
+
+
+  <div class="five wide column">
+    <div id="order-ucheckout-address-container">
+      <%= addressTemplate({zipCode: zipCode, address: address}) %>
+    </div>
+
+    <br>
+    <div id="order-ucheckout-address-error" class="ui hidden negative message">
+      Please Add A Delivery Address.
+    </div>
+    <br>
+
+    <h4 class="ui dividing header">Payment Method:</h4>
+    <div id="order-ucheckout-payment" class="haigy-padding-lr-30px" data-ready="yes">
+      We temporarily only accept <b class="haigy-font-color-blue">cash or check</b>. We will support more payment methods in the future.
+    </div>
+
+    <br>
+    <div id="order-ucheckout-payment-error" class="ui hidden negative message">
+      Please Set A Payment Method.
+    </div>
+    <br>
+
+    <h4 class="ui dividing header">Delivery Time:</h4>
+    <div id="order-ucheckout-delivery-date" class="haigy-padding-lr-30px" data-ready="no">
+    </div>
+
+    <br>
+    <div id="order-ucheckout-delivery-date-error" class="ui hidden negative message">
+      Please Choose A Delivery Time.
+    </div>
+    <br>
+
+  </div>
+
+
+  <div class="eleven wide column">
+
+    <h4 class="ui dividing header">Order Summary:</h4>
+    <%= orderSummaryTableT({totalValueInCart: totalValueInCart, deliveryFee: constant.business.DELIVERY_FEE}) %>
+
+    <br>
+
+    <h4 class="ui dividing header">Contact Method:</h4>
+    <div class="ui stackable two column grid">
+      <div class="column">
+        <div><strong>Email</strong></div>
+        <div class="haigy-padding-tb-10px"><i><%= email %></i></div>
+        <div>
+          <button id="order-ucheckout-edit-email" class="ui circular icon button" data-user-id="<%= userId %>"><i class="edit icon"></i></button>
+        </div>
+      </div>
+      <div class="column">
+        <div><strong>Phone</strong></div>
+        <div class="haigy-padding-tb-10px">
+          <% if (phone && phone.trim().length > 0) { %>
+            <i id="order-ucheckout-phone" data-ready="yes"><%= phone %></i>
+          <% } else { %>
+            <i id="order-ucheckout-phone" data-ready="no">Not set yet</i>
+          <% } %>
+        </div>
+        <div>
+          <button id="order-ucheckout-edit-phone" class="ui circular icon button" data-user-id="<%= userId %>"><i class="edit icon"></i></button>
+        </div>
+        <div id="order-ucheckout-phone-error" class="ui hidden negative message">
+          Please add a phone number.
+        </div>
+      </div>
+    </div>
+
+    <br><br><br>
+
+    <div class="ui grid">
+      <div class="eleven wide column">
+        <button id="order-ucheckout-submit" class="ui fluid primary button">Continue & Review Order</button>
+      </div>
+      <div class="five wide column">
+        <a href="<%= navigator.cartManageHash %>" class="ui fluid button">Cancel</a>
+      </div>
+    </div>
+
+  </div>
+
+
+</div></div>
+
+
+<br><br><br>

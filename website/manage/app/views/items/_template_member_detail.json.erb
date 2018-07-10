@@ -1,0 +1,62 @@
+{
+  "id": <%= raw(item.id.to_json) %>,
+  "name": <%= raw(item.name.to_json) %>,
+  "item_keywords": <%= raw(item.item_keywords.to_json) %>,
+  "display_sequence": <%= raw(item.display_sequence.to_json) %>,
+  "cover_image_path": <%= raw(item.cover_image.url(:medium).to_json) %>,
+  "temporary_cover_image": <%= raw(item.temporary_cover_image.to_json) %>,
+  "is_category": <%= raw(item.is_category.to_json) %>,
+  "parent_category_item_id": <%= raw(item.parent_category_item_id.to_json) %>,
+  "unit": <%= raw(item.unit.to_json) %>,
+  "has_fixed_item_size": <%= item.has_fixed_item_size %>,
+  "item_size": <%= raw(item.item_size.to_json) %>,
+  "brand": <%= raw(item.brand.to_json) %>,
+  "manufacturer": <%= raw(item.manufacturer.to_json) %>,
+  "details": <%= raw(item.details.to_json) %>,
+  "ingredients": <%= raw(item.ingredients.to_json) %>,
+  "warnings": <%= raw(item.warnings.to_json) %>,
+  "directions": <%= raw(item.directions.to_json) %>,
+  "nutrition_facts": <%= raw(item.nutrition_facts.to_json) %>,
+
+  "is_organic": <%= raw(item.is_organic.to_json) %>,
+  "is_kosher": <%= raw(item.is_kosher.to_json) %>,
+  "is_vegan": <%= raw(item.is_vegan.to_json) %>,
+  "is_gluten_free": <%= raw(item.is_gluten_free.to_json) %>,
+  "is_dairy_free": <%= raw(item.is_dairy_free.to_json) %>,
+  "is_egg_free": <%= raw(item.is_egg_free.to_json) %>,
+  "is_lactose_free": <%= raw(item.is_lactose_free.to_json) %>,
+  "is_produce": <%= raw(item.is_produce.to_json) %>,
+  "is_seasonal": <%= raw(item.is_seasonal.to_json) %>,
+
+  "barcode": [
+    <% item.barcodes.each_with_index do |barcode, index| %>
+      <% if index != 0 %>,<% end %>
+      {
+        "id": <%= raw(barcode.id.to_json) %>,
+        "code": <%= raw(barcode.code.to_json) %>,
+        "type": <%= raw(barcode.code_type.to_json) %>
+      }
+    <% end %>
+  ],
+
+  "item_image": [
+	  <% item.item_images.each_with_index do |itemImage, index| %>
+	    <% if index != 0 %>,<% end %>
+      {
+        "id": <%= raw(itemImage.id.to_json) %>,
+        "customer_viewable": <%= itemImage.customer_viewable %>,
+        "path": <%= raw(itemImage.image.url(:medium).to_json) %>
+      }
+	  <% end %>
+  ],
+
+  "category_path": [
+    <% @categoryPath.each_with_index do |category, index| %>
+      <% if index != 0 %>,<% end %>
+      {
+        "id": <%= raw(category[:id].to_json) %>,
+        "name": <%= raw(category[:name].to_json) %>
+      }
+    <% end %>
+  ]
+}

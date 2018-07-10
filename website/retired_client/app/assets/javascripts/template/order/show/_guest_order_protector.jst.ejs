@@ -1,0 +1,21 @@
+<div class="ui centered grid"><div class="fourteen wide column">
+  <br><br>
+
+  <div class="haigy-text-align-center"><span class="haigy-display-inline-block haigy-width-100-percent haigy-width-max-400px">
+
+    <form id="order-show-guest-order-protector-form" class="ui form">
+      <div class="field">
+        <label>The email you used for this order:</label>
+        <input name="email" type="text" placeholder="Email for this order">
+      </div>
+      <div class="field haigy-padding-t-10px">
+        <button class="ui fluid primary button" type="submit">View the order</button>
+      </div>
+      <div class="ui error message"></div>
+    </form>
+
+    <br><br>
+    <div><i>For protecting your privacy, a guest order can only be viewed in <%= constant.order.GUEST_ORDER_VIEWABLE_LIFETIME_SINCE_DELIVERED_IN_DAYS %> days since delivered.</i></div>
+
+  </span></div>
+</div></div>

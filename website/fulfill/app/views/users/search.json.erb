@@ -1,0 +1,21 @@
+[
+  <% @users.each_with_index do |user, userIndex| %>
+    <% if userIndex != 0 %>,<% end %>
+    {
+      "id": <%= user.id.to_json %>,
+      "is_temporary": <%= user.is_temporary %>,
+      "nickname": <%= raw(user.nickname.to_json) %>,
+      "deflaut_zip_code": <%= raw(user.default_zip_code.to_json) %>,
+      "user_binded_accounts": [
+        <% user.user_binded_accounts.each_with_index do |bindedAccount, accountIndex| %>
+          <% if accountIndex != 0 %>,<% end %>
+          {
+            "account_id": <%= bindedAccount.id.to_json %>,
+            "account_type": <%= bindedAccount.account_type.to_json %>,
+            "account": <%= raw(bindedAccount.account.to_json) %>
+          }
+        <% end %>
+      ]
+    }
+  <% end %>
+]

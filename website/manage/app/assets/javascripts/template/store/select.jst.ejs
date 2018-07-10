@@ -1,0 +1,74 @@
+<% if (allStores.length > 0) { %>
+
+
+  <% if (currentSelectedStore && currentSelectedStore.id) { %>
+
+
+    <div>Currently Selected Retail Store For Management:</div>
+    <h3><%= currentSelectedStore.get("company_name") %></h3>
+    <div><%= currentSelectedStore.get("formatted_address") %></div>
+    <div><img src="<%= pathToUrlTool(currentSelectedStore.get('company_logo_path')) %>" alt="<%= currentSelectedStore.get('company_name') %> Logo"></div>
+    <br><hr><br><br>
+
+
+  <% } else { %>
+
+
+    <div>No Retail Store Is Selected For Management</div>
+    <br><br>
+
+
+  <% } %>
+
+
+  <div>
+
+    <% var currentSelectedStoreId = null; %>
+
+    <% if (currentSelectedStore && currentSelectedStore.id) { %>
+
+      <% var currentSelectedStoreId = currentSelectedStore.id; %>
+
+      <label for="store-select-id">If You Want To Change A Store To Manage, Please Select Here:</label>
+
+    <% } else { %>
+
+      <label for="store-select-id">Please Select A Retail Store To Manage:</label>
+
+    <% } %>
+
+    <select id="store-select-id">
+      <% allStores.each(function(store) { %>
+        <% if (store.id === currentSelectedStoreId) { %>
+          <option value="<%= store.id %>" selected><%= store.get("company_name") %> - <%= store.get("formatted_address") %></option>
+        <% } else { %>
+          <option value="<%= store.id %>"><%= store.get("company_name") %> - <%= store.get("formatted_address") %></option>
+        <% } %>
+      <% }); %>
+    </select>
+
+  </div>
+
+
+  <br>
+
+  <button id="store-select-submit">Submit</button>
+
+  <br><br><br><br>
+
+  <div>
+    <a href="<%= navigator.companySelectHash %>">Or, Add A New Store If You Cannot Find One Above</a>
+  </div>
+
+
+<% } else { %>
+
+
+  <h3>No Store Is Found.</h3>
+  <br>
+  <div><a href="<%= navigator.companySelectHash %>">Add A Store First</a></div>
+
+
+<% } %>
+
+<br>

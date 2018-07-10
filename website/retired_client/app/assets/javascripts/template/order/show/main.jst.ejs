@@ -1,0 +1,84 @@
+<h2 class="ui header">Order: <%= order.id %></h2>
+<br>
+
+
+<div class="ui grid"><div class="two column stackable row">
+
+
+  <div class="five wide column">
+    <h4 class="ui dividing header">Delivery Address:</h4>
+    <div class="haigy-padding-lr-30px">
+      <% var address = order.get("address") %>
+
+      <% if (address) { %>
+
+        <% if (address.is_business_address) { %>
+          <div><%= address.business_name %></div>
+          <br>
+        <% } %>
+
+        <div><%= address.street_address %></div>
+        <div><%= address.city %>, <%= address.state %> <%= address.zip_code %></div>
+
+        <% if (address.note && address.note.trim().length > 0) { %>
+          <br>
+          <div><i>Note: <%= address.note %></i></div>
+        <% } %>
+
+      <% } else { %>
+
+        <div class="ui negative message order-review-error">
+          Oops, something wrong here!
+        </div>
+
+      <% } %>
+    </div>
+
+    <br><br>
+
+    <h4 class="ui dividing header">Delivery Time:</h4>
+    <div class="haigy-padding-lr-30px">
+      <div><%= utility.getOrderDeliveryDate(order.get("delivery_date")) %></div>
+      <div><%= utility.getOrderDeliveryTimeSlotTime(order.get("delivery_time_slot_start_time")) %> - <%= utility.getOrderDeliveryTimeSlotTime(order.get("delivery_time_slot_end_time")) %></div>
+    </div>
+
+    <br><br>
+
+    <h4 class="ui dividing header">Order Time:</h4>
+    <div class="haigy-padding-lr-30px">
+      <% var orderTime = new Date(parseInt(order.get("created_at")) * 1000) %>
+      <div><%= orderTime.toDateString() %></div>
+      <div><%= orderTime.toLocaleTimeString() %></div>
+    </div>
+
+    <br><br>
+
+    <h4 class="ui dividing header">Order Status:</h4>
+    <div class="haigy-padding-lr-30px">
+      <%= utility.getOrderStatus(order.get("status")) %>
+    </div>
+
+    <br><br>
+  </div>
+
+
+  <div class="eleven wide column">
+
+    <h4 class="ui dividing header">Order Summary:</h4>
+    <%= orderSummaryTableT({totalValueInCart: totalValueInCart, deliveryFee: order.get("delivery_fee")}) %>
+    <br>
+
+    <% if (token && cart.length > 0) { %>
+      <div class="haigy-text-align-right"><button id="order-show-reorder" class="ui green button" title="Add all items to cart (not include special requests)"><i class="cart icon"></i> Add all items to cart</button></div>
+      <br>
+    <% } %>
+
+    <%= itemListT({cart: cart, specialRequestArray: specialRequestArray, precompiledAsset: precompiledAsset, utility: utility, navigator: navigator, constant: constant}) %>
+
+  </div>
+
+
+</div></div>
+
+
+<br><br>

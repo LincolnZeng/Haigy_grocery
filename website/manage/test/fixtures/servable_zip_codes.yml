@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  service_area_id:
+  zip_code: 1
+  city: MyString
+  state: MyString
+
+two:
+  service_area_id:
+  zip_code: 1
+  city: MyString
+  state: MyString

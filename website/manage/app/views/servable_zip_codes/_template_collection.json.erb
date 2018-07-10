@@ -1,0 +1,6 @@
+[
+  <% servableZipCodeCollection.each_with_index do |servableZipCode, index| %>
+    <% if index != 0 %>,<% end %>
+    <%= render partial: "template_member", locals: {servableZipCode: servableZipCode} %>
+  <% end %>
+]

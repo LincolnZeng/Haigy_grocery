@@ -1,0 +1,311 @@
+<% if (item.id) { %>
+
+
+  <div>
+    <%= categoryPathTemplate({categoryPath: item.get("category_path"), navigateHash: navigator.itemManageHash, itemAppended: item, linkLastCategory: false}) %>
+  </div>
+
+  <hr>
+
+  <h3>Item: <%= item.get("name") %></h3>
+  <button class="ui basic blue button">
+    <a href="<%= navigator.itemEdititemHash(item.id) %>">Edit Item</a>
+  </button>
+
+  <br><br>
+
+  <% var barcodes = item.get("barcode"); %>
+  <% var barcodesCount = barcodes.length; %>
+  <% var hasFixedSize = (item.get("has_fixed_item_size") === true) %>
+
+  <% if (barcodesCount > 0) { %>
+
+    <table class="ui celled unstackable collapsing table">
+      <thead>
+        <tr>
+          <th colspan="2">
+            All Barcodes For The Item
+          </th>
+        <tr>
+        <th>Barcode</th>
+        <th>Barcode Type</th>
+      </tr></thead>
+      <tbody>
+        <% for (var index = 0; index < barcodesCount; ++index) { %>
+          <tr>
+            <td><i><%= barcodes[index].code %></i></td>
+            <td><i><%= barcodes[index].type || "N/A" %></i></td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+
+  <% } else { %>
+    <div>No Barcode Is Found</div>
+  <% } %>
+
+  <br>
+
+  <table class="ui celled unstackable table">
+    <thead>
+      <tr><th colspan="2">
+        Item Info
+      </th>
+    </tr></thead>
+    <tbody>
+      <tr>
+        <td>Purchase Unit</td>
+        <td><%= item.get("unit") %></td>
+      </tr>
+      <tr>
+        <td>Item Size</td>
+        <td>
+          <% if (hasFixedSize) { %>
+            <%= item.get("item_size") %>
+          <% } else { %>
+            <i>varies at each store</i>
+          <% } %>
+        </td>
+      </tr>
+      <tr>
+        <td>Special Info</td>
+        <td>
+          <% if (item.get("is_organic")) { %>| Organic |<% } %>
+          <% if (item.get("is_kosher")) { %>| Kosher |<% } %>
+          <% if (item.get("is_vegan")) { %>| Vegan |<% } %>
+          <% if (item.get("is_gluten_free")) { %>| Gluten Free |<% } %>
+          <% if (item.get("is_dairy_free")) { %>| Dairy Free |<% } %>
+          <% if (item.get("is_egg_free")) { %>| Egg Free |<% } %>
+          <% if (item.get("is_lactose_free")) { %>| Lactose Free |<% } %>
+          <% if (item.get("is_produce")) { %>| Produce |<% } %>
+          <% if (item.get("is_seasonal")) { %>| Seasonal |<% } %>
+        </td>
+      </tr>
+      <tr>
+        <td>Brand</td>
+        <td><%= item.get("brand") %></td>
+      </tr>
+      <tr>
+        <td>Manufacturer</td>
+        <td><%= item.get("manufacturer") %></td>
+      </tr>
+      <tr>
+        <td>Details</td>
+        <td><%= item.get("details") %></td>
+      </tr>
+      <tr>
+        <td>Ingredients</td>
+        <td><%= item.get("ingredients") %></td>
+      </tr>
+      <tr>
+        <td>Warnings</td>
+        <td><%= item.get("warnings") %></td>
+      </tr>
+      <tr>
+        <td>Ingredients</td>
+        <td><%= item.get("directions") %></td>
+      </tr>
+      <tr>
+        <td>Nutrition Facts</td>
+        <td><%= item.get("nutrition_facts") %></td>
+      </tr>
+
+    </tbody>
+  </table>
+
+
+  <div><strong>Cover Image</strong></div>
+  <% if (item.get("temporary_cover_image")) { %>
+    <div><i><strong>This Is A Temporary Cover Image!</strong></i></div>
+  <% } %>
+  <div><img src="<%= pathToUrlTool(item.get('cover_image_path')) %>" alt="Category <%= item.get('name') %> Image"></div>
+
+
+  <% otherImages = item.get("item_image") %>
+  <% otherImagesCount = otherImages.length %>
+
+  <% if (otherImagesCount > 0) { %>
+    <div><strong>Other Images</strong></div>
+    <br>
+  <% } %>
+
+  <div class="ui four cards">
+    <% var index = 0 %>
+
+    <% for (index = 0; index < otherImagesCount; ++index) { %>
+      <% if (otherImages[index].customer_viewable !== true) { %>
+
+        <div class="ui card">
+          <div class="image">
+            <img src="<%= pathToUrlTool(otherImages[index].path) %>" alt="Other Item Image <%= index %>">
+          </div>
+          <div class="content">
+            <span class="haigy-font-color-orange" id="item-show-item-<%= otherImages[index].id %>-is-viewable">not viewable</span>
+            <span class="right floated edit icon">
+              <i class="edit icon item-show-edit-image-viewable" id="item-show-edit-image-<%= otherImages[index].id %>-viewable" data-image-id="<%= otherImages[index].id %>" ></i>
+            </span>
+
+          </div>
+          <div class="extra content haigy-display-none" id="item-show-edit-image-<%= otherImages[index].id %>-viewable-block" >
+
+            <div class="grouped fields">
+              <div class="field">
+                <div class="ui radio checkbox">
+                  <input type="radio" name="image-<%= otherImages[index].id %>-viewable" value="viewable">
+                  <label>viewable</label>
+                </div>
+              </div>
+              <div class="field">
+                <div class="ui radio checkbox">
+                  <input type="radio" name="image-<%= otherImages[index].id %>-viewable" value="not viewable" checked="checked">
+                  <label>not viewable</label>
+                </div>
+              </div>
+            </div>
+
+            <a class="item-show-edit-image-viewable-save" id="item-show-edit-image-"<%= otherImages[index].id %>"-viewable-save" data-image-id="<%= otherImages[index].id %>" >save</a>
+            <a class="item-show-edit-image-viewable-cancel right floated" id="item-show-edit-image-<%= otherImages[index].id %>-viewable-cancel" data-image-id="<%= otherImages[index].id %>" >cancel</a>
+
+          </div>
+
+        </div>
+      <% } %>
+    <% } %>
+    <% for (index = 0; index < otherImagesCount; ++index) { %>
+      <% if (otherImages[index].customer_viewable === true) { %>
+        <div class="ui card">
+          <div class="image">
+            <img src="<%= pathToUrlTool(otherImages[index].path) %>" alt="Other Item Image <%= index %>">
+          </div>
+          <div class="content">
+            <span class="haigy-font-color-green" id="item-show-item-<%= otherImages[index].id %>-is-viewable">viewable</span>
+            <span class="right floated edit icon">
+              <i class="edit icon item-show-edit-image-viewable" id="item-show-edit-image-<%= otherImages[index].id %>-viewable" data-image-id="<%= otherImages[index].id %>" ></i>
+            </span>
+
+          </div>
+
+          <div class="extra content haigy-display-none" id="item-show-edit-image-<%= otherImages[index].id %>-viewable-block" >
+
+            <div class="grouped fields">
+              <div class="field">
+                <div class="ui radio checkbox">
+                  <input type="radio" name="image-<%= otherImages[index].id %>-viewable" value="viewable" checked="checked">
+                  <label>viewable</label>
+                </div>
+              </div>
+              <div class="field">
+                <div class="ui radio checkbox">
+                  <input type="radio" name="image-<%= otherImages[index].id %>-viewable" value="not viewable">
+                  <label>not viewable</label>
+                </div>
+              </div>
+            </div>
+
+            <a class="item-show-edit-image-viewable-save" id="item-show-edit-image-"<%= otherImages[index].id %>"-viewable-save" data-image-id="<%= otherImages[index].id %>" >save</a>
+            <a class="item-show-edit-image-viewable-cancel right floated" id="item-show-edit-image-<%= otherImages[index].id %>-viewable-cancel" data-image-id="<%= otherImages[index].id %>" >cancel</a>
+
+          </div>
+
+        </div>
+      <% } %>
+    <% } %>
+
+
+  <div>
+
+  <br>
+
+
+  <% var hasSelectedStoreItemInfo = false %>
+
+  <% if (storeItemInfos.length > 0) { %>
+
+    <div><strong>Item Information In Stores</strong></div>
+
+    <%  %>
+    <% infoCount = storeItemInfos.length %>
+
+    <% for (var infoIndex = 0; infoIndex < infoCount; ++infoIndex) { %>
+      <% var info = storeItemInfos[infoIndex] %>
+
+      <table class="ui celled unstackable fixed table">
+        <thead>
+          <tr><th colspan="2">
+            <a href="<%= navigator.storeiteminfoEditHash(info.id) %>">Edit</a>
+            <% if (infoIndex === 0 && info.get("store_id").toString() === selectedStoreId) { %>
+              <% hasSelectedStoreItemInfo = true %>
+              <strong class="haigy-font-color-success haigy-padding-l-30px"><i>(Current Selected Store)</i></strong>
+            <% } %>
+          </th>
+        </tr></thead>
+        <tbody>
+          <tr>
+            <td>Store Name</td>
+            <td><i><%= info.get("store_name") %></i></td>
+          </tr>
+          <tr>
+            <td>Store Address</td>
+            <td><i><%= info.get("store_address") %></i></td>
+          </tr>
+          <tr>
+            <td>Price</td>
+            <td><i>$<%= info.get("price") %></i></td>
+          </tr>
+          <% if (info.get("on_sale")) { %>
+            <tr>
+              <td><strong>On Sale Price</strong></td>
+              <td><i>$<%= info.get("sale_price") %></i></td>
+            </tr>
+          <% } %>
+          <% if (!hasFixedSize) { %>
+            <tr>
+              <td>Estimated Weight</td>
+              <td><i><%= info.get("estimated_weight") %> lb</i></td>
+            </tr>
+          <% } %>
+          <% if (info.get("in_stock")) { %>
+            <% if (info.get("store_is_haigy_base")) { %>
+              <td>Quantity</td>
+              <td><i><%= info.get("quantity") %></i></td>
+            <% } %>
+          <% } else { %>
+            <td>stock info</td>
+            <td><strong>Out Of Stock!</strong></td>
+          <% } %>
+
+          <tr>
+            <td>Feed Mappings</td>
+            <td id="item-show-sii-<%= info.id %>-fm-container"><i>Loading ...</i></td>
+          </tr>
+
+          <tr>
+            <td>Notes</td>
+            <td><i><%= info.get("note") %></i></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <br>
+    <% } %>
+
+  <% } else { %>
+
+    <div>No Item Information Is Found In Any Stores</div>
+
+  <% } %>
+
+
+  <% if (!hasSelectedStoreItemInfo && selectedStoreId) { %>
+    <div>
+      <button class="ui button"><i class="plus icon"></i><a href="<%= navigator.storeiteminfoLookupHash(item.id) %>">Add Item To Selected Store</a></button>
+    </div>
+    <br>
+  <% } %>
+
+
+<% } else { %>
+
+  <div>Sorry, cannot find the item ...</div>
+
+<% } %>

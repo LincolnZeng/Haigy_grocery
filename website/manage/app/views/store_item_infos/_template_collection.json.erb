@@ -1,0 +1,6 @@
+[
+  <% infoCollection.each_with_index do |info, index| %>
+    <% if index != 0 %>,<% end %>
+    <%= render partial: "template_member", locals: {info: info, hasFeedMappingInfo: hasFeedMappingInfo} %>
+  <% end %>
+]

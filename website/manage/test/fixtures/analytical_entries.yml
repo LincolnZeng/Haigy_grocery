@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  source: MyString
+  keyword: MyString
+  user_id: 1
+  user_ip_address: MyString
+  user_local_time: MyString
+  details: MyText
+
+two:
+  source: MyString
+  keyword: MyString
+  user_id: 1
+  user_ip_address: MyString
+  user_local_time: MyString
+  details: MyText

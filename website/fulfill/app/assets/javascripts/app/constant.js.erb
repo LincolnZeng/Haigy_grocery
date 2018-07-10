@@ -1,0 +1,114 @@
+// To pick up new changes in Rails code, please run "rake tmp:clear" first.
+
+
+// ruby code
+<% def getDomain
+  require "yaml"
+  setting = YAML.load_file(Rails.root.join("config", "haigy_fulfill.yml"))
+  domain = setting["domain"] || ""
+  return domain.chomp("/")
+end %>
+
+<% def getImageServer
+  require "yaml"
+  setting = YAML.load_file(Rails.root.join("config", "haigy_fulfill.yml"))
+  imageServer = setting["image_server"] || ""
+  return imageServer.chomp("/")
+end %>
+
+
+// constants for this project
+modulejs.define("app/constant", ["window"], function(window) {
+  "use strict";
+
+
+  var constant = {
+    DOMAIN: "<%= getDomain %>",
+    IMAGE_SERVER: "<%= getImageServer %>",
+
+
+    IN_CORDOVA: !!(window.cordova),   // check if it's in Cordova (PhoneGap)
+
+    APP_LAYOUT_NOTICE_CONTAINER_HTML_ID: "main-layout-notice-container",
+
+
+    errorCode: {
+      ACTION_TOO_FREQUENTLY: <%= HaigyManageConstant::Error::ACTION_TOO_FREQUENTLY[:code] %>,
+      INVALID_TOKEN: <%= HaigyManageConstant::Error::INVALID_TOKEN[:code] %>
+    },
+
+
+    item: {
+      ROOT_PARENT_CATEGORY_ITEM_ID: <%= HaigyManageConstant::Item::ROOT_PARENT_CATEGORY_ITEM_ID %>,
+
+      CACHED_PRICE_LIFETIME_IN_MINUTE: 240,   // four hours
+      SUBSTITUTE_LOOKUP_LIFETIME_IN_MILLISECOND: 2592000000,   // 30 days
+
+      DEFAULT_QUANTITY_PER_CHANGE: 1,
+      UNIT_PER_LB: "<%= HaigyClientConstant::Item::UNIT_PER_LB %>",
+
+      QUANTITY_PER_CHANGE: {
+        <% HaigyClientConstant::Item::PURCHASE_UNIT.each do |unit, unitSettings| %>
+          "<%= unit %>": <%= unitSettings[:quantity_per_change] %>,
+        <% end %>
+      },
+
+      QUANTITY_UNIT_DISPLAY: {
+        <% HaigyClientConstant::Item::PURCHASE_UNIT.each do |unit, unitSettings| %>
+          "<%= unit %>": "<%= unitSettings[:quantity_unit_display] %>",
+        <% end %>
+      }
+    },
+
+
+    cookie: {
+      VERSION: "2016-05-05",
+
+      key: {
+        COOKIE_VERSION: "HaigyFulFill-CookieVersion",
+        COOKIE_TIMESTAMP: "HaigyFulFill-CookieTimestamp",
+        TOKEN: "HaigyFulFill-Token",
+        CART_ITEM_ID_LIST: "HaigyFulFill-Cart-ItemIdList",
+        CART_ID: "HaigyFulFill-Cart-Id",
+        CART_ENTRY_PREFIX: "HaigyFulFill-CartEntry-",
+        EMPLOYEE_ID: "HaigyFulFill-Employee-Id",
+        USER_ID: "HaigyFulFill-User-Id",
+        USER_ZIP_CODE: "HaigyFulFill-User-ZipCode",
+        USER_NICKNAME: "HaigyFulFill-User-Nickname"
+      }
+    },
+
+
+    session: {
+      LIFETIME_IN_MINUTE: <%= HaigyFulfillConstant::Session::LIFETIME_IN_SECOND * 0.9 / 60 %>,
+      REQUEST_HEADER_TOKEN_ATTRIBUTE: "<%= HaigyFulfillConstant::Session::REQUEST_HEADER_TOKEN_ATTRIBUTE %>",
+      RESPONSE_HEADER_TOKEN_ATTRIBUTE: "<%= HaigyFulfillConstant::Session::RESPONSE_HEADER_TOKEN_ATTRIBUTE %>"
+    },
+
+
+    user: {
+      BINDED_ACCOUNT_TYPE: {
+        phone: {name: "Phone Number", id: <%= HaigyFulfillConstant::User::BINDED_ACCOUNT_TYPE[:phone] %>},
+        email: {name: "Email Address", id: <%= HaigyFulfillConstant::User::BINDED_ACCOUNT_TYPE[:email] %>},
+        facebookMessager: {name: "Faceboock Messager Account", id: <%= HaigyFulfillConstant::User::BINDED_ACCOUNT_TYPE[:facebook_messager] %>}
+      }
+    },
+
+
+    semanticUi: {
+      dimmer: {
+        OPACITY: 0.4
+      }
+    },
+
+
+    text: {
+      NO_SERVICE_WARNING: "Sorry, we may not offer delivery service in your zip code now. However we may expand to your area soon! We hope you enjoy browsing through our website.",
+      SERVER_ERROR: "Unknown error in the server side. Please come back later to try it again.",
+      UNKNOWN_ERROR: "Unknown error. It might be caused by an incorrect formatted JSON response from the server. Please refresh the page to try it again."
+    }
+  };
+
+
+  return constant;
+});

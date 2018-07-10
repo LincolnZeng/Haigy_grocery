@@ -1,0 +1,35 @@
+<% if storeItemInfo.present? %>
+
+{
+  "item_id": <%= storeItemInfo.item_id.to_json %>,
+  "store_id": <%= storeItemInfo.store_id.to_json %>,
+
+  <% begin %>
+    <% store = storeHash[storeItemInfo.store_id] %>
+    "store_name": <%= raw(storeHash[storeItemInfo.store_id].company_name.to_json) %>,
+    "store_is_haigy_base": <%= storeHash[storeItemInfo.store_id].is_haigy_base %>
+  <% rescue %>
+    "store_name": "Unknown",
+    "store_is_haigy_base": false
+  <% end %>
+
+  <% unless storeItemInfo.is_category_item %>
+    ,
+    "estimated_weight": <%= storeItemInfo.estimated_weight_of_each_in_lb %>,
+
+    "price": <%= storeItemInfo.price %>,
+    "on_sale": <%= storeItemInfo.on_sale %>,
+    "sale_price": <%= storeItemInfo.sale_price %>,
+
+    "in_stock": <%= storeItemInfo.in_stock %>,
+    "quantity": <%= storeItemInfo.quantity %>,
+
+    "updated_at": <%= storeItemInfo.updated_at.to_i %>
+  <% end %>
+}
+
+<% else %>
+
+{}
+
+<% end %>

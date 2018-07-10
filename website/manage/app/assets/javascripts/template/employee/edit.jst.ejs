@@ -1,0 +1,189 @@
+<% if (employeeNew || employee.id) { %>
+
+
+  <% if (employeeNew) { %>
+
+    <h3>Add A New Employee</h3>
+
+  <% } else { %>
+
+    <h3>Edit The Employee <%= [employee.get("first_name"), " ", employee.get("last_name")].join("") %>'s Profile:</h3>
+
+  <% } %>
+
+
+  <br>
+
+  <form class="ui form">
+    <div class="required field">
+      <label for="employee-edit-first-name">First Name:</label>
+      <input
+        id="employee-edit-first-name"
+        type="text"
+        placeholder="first name"
+        data-validator="notEmpty"
+        data-invalid-info="#employee-edit-first-name-invalid"
+        data-submit="#employee-edit-submit"
+        value="<%= employee.get('first_name') %>"
+      >
+      <span id="employee-edit-first-name-invalid" class="haigy-display-none">(required)</span>
+    </div>
+    <br>
+
+    <div>
+      <label for="employee-edit-middle-name">Middle Name:</label>
+      <input
+        id="employee-edit-middle-name"
+        type="text"
+        placeholder="middle name"
+        data-validator="alwaysGood"
+        data-submit="#employee-edit-submit"
+        value="<%= employee.get('middle_name') %>"
+      >
+    </div>
+    <br>
+
+    <div class="required field">
+      <label for="employee-edit-last-name">Last Name:</label>
+      <input
+        id="employee-edit-last-name"
+        type="text"
+        placeholder="last name"
+        data-validator="notEmpty"
+        data-invalid-info="#employee-edit-last-name-invalid"
+        data-submit="#employee-edit-submit"
+        value="<%= employee.get('last_name') %>"
+      >
+      <span id="employee-edit-last-name-invalid" class="haigy-display-none">(required)</span>
+    </div>
+    <br>
+
+    <div class="required field">
+      <label for="employee-edit-email">Email:</label>
+      <input
+        id="employee-edit-email"
+        type="email"
+        placeholder="email"
+        data-validator="email"
+        data-invalid-info="#employee-edit-email-invalid"
+        data-submit="#employee-edit-submit"
+        value="<%= employee.get('email') %>"
+      >
+      <span id="employee-edit-email-invalid" class="haigy-display-none">(should be an email)</span>
+    </div>
+    <br>
+
+    <% if (employeeNew) { %>
+
+      <div class="required field">
+        <label for="employee-edit-password">Password:</label>
+        <input
+          id="employee-edit-password"
+          type="password"
+          placeholder="password"
+          data-validator="password|repeatPassword"
+          data-invalid-info="#employee-edit-password-invalid|#employee-edit-repeat-password-invalid"
+          data-submit="#employee-edit-submit"
+        >
+        <span id="employee-edit-password-invalid" class="haigy-display-none">(password should be 8 ~ 50 characters)</span>
+      </div>
+      <br>
+
+      <div class="required field">
+        <label for="employee-edit-repeat-password">Repeat Password:</label>
+        <input
+          id="employee-edit-repeat-password"
+          type="password"
+          placeholder="repeat password"
+          data-validator="repeatPassword"
+          data-invalid-info="#employee-edit-repeat-password-invalid"
+          data-submit="#employee-edit-submit"
+        >
+        <span id="employee-edit-repeat-password-invalid" class="haigy-display-none">(not the same as the password)</span>
+      </div>
+      <br>
+
+    <% } else { %>
+
+      <div>
+        <label for="employee-edit-password">Password:</label>
+        <input
+          id="employee-edit-password"
+          type="password"
+          placeholder="current password"
+          data-validator="emptyOrPassword|repeatPassword"
+          data-invalid-info="#employee-edit-password-invalid|#employee-edit-repeat-password-invalid"
+          data-submit="#employee-edit-submit"
+        >
+        <span id="employee-edit-password-invalid" class="haigy-display-none">(password should be 8 ~ 50 characters)</span>
+      </div>
+      <br>
+
+      <div>
+        <label for="employee-edit-repeat-password">Repeat Password:</label>
+        <input
+          id="employee-edit-repeat-password"
+          type="password"
+          placeholder="repeat password"
+          data-validator="repeatPassword"
+          data-invalid-info="#employee-edit-repeat-password-invalid"
+          data-submit="#employee-edit-submit"
+        >
+        <span id="employee-edit-repeat-password-invalid" class="haigy-display-none">(not the same as the password)</span>
+      </div>
+      <br>
+
+    <% } %>
+
+    <div>
+      <label for="employee-edit-position">Job Position:</label>
+      <select id="employee-edit-position" data-validator="alwaysGood" data-submit="#employee-edit-submit">
+        <% var employeeCurrentJobPositionId = employeeNew ? null : employee.get("job_position_id").toString() %>
+        <% var allPositionDetail = constant.employee.POSITION_DETAIL %>
+        <% for (var positionId in allPositionDetail) { %>
+          <% if (positionId.toString() === employeeCurrentJobPositionId) { %>
+            <option value="<%= positionId %>" selected><%= allPositionDetail[positionId].title %></option>
+          <% } else { %>
+            <option value="<%= positionId %>"><%= allPositionDetail[positionId].title %></option>
+          <% } %>
+        <% } %>
+      </select>
+    </div>
+
+    <br><br>
+
+    <% if (!employeeNew) { %>
+      <div class="required field">
+        <label for="employee-edit-current-password">Current Password:</label>
+        <input
+          id="employee-edit-current-password"
+          type="password"
+          placeholder="current password"
+          data-validator="notEmpty"
+          data-invalid-info="#employee-edit-current-password-invalid"
+          data-submit="#employee-edit-submit"
+        >
+        <span id="employee-edit-current-password-invalid" class="haigy-display-none">(required)</span>
+      </div>
+      <br>
+    <% } %>
+
+    <button class="ui button" id="employee-edit-submit" data-self-selector="#employee-edit-submit" disabled>Submit</button>
+    <span>(* fields are required)</span>
+  </form>
+
+
+  <% if (!employeeNew) { %>
+
+    <br><br><br>
+    <div><a id="employee-edit-delete" href="#">No longer a Haigy employee, remove his/her profile.</a></div>
+
+  <% } %>
+
+
+<% } else { %>
+
+  <div>Sorry, cannot find the employee ...</div>
+
+<% } %>
+<br><br>

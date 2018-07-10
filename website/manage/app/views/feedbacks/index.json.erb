@@ -1,0 +1,16 @@
+[
+  <% @feedbacks.each_with_index do |feedback, index| %>
+    <% if index != 0 %>,<% end %>
+    {
+      "id": <%= feedback.id.to_json %>,
+      "user_id": <%= raw(feedback.user_id.to_json) %>,
+      "user_ip_address": <%= raw(feedback.user_ip_address.to_json) %>,
+      "user_local_time": <%= raw(feedback.user_local_time.to_json) %>,
+      "user_email": <%= raw(feedback.user_email.to_json) %>,
+      "user_phone": <%= raw(feedback.user_phone.to_json) %>,
+      "content_type": <%= raw(feedback.content_type.to_json) %>,
+      "content": <%= raw(feedback.content.to_json) %>,
+      "created_at": <%= raw(feedback.created_at.to_formatted_s(:rfc822).to_json) %>
+    }
+  <% end %>
+]

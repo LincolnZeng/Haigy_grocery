@@ -1,0 +1,13 @@
+@import 'haigy/theme';
+
+
+.haigy-hover-gray:hover {
+  color: $haigy-color-gray !important;
+  cursor: pointer;
+}
+
+
+.haigy-hover-bg-lightgray:hover {
+  background-color: $haigy-color-lightgray !important;
+  cursor: pointer;
+}

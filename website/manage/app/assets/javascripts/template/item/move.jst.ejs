@@ -1,0 +1,81 @@
+<% categoryPath = allItemInCategory.categoryPath %>
+<% categoryPathLength = categoryPath.length %>
+
+
+<% if (categoryPathLength > 0) { %>
+
+	<h3>Move The <% if (item.get("is_category")) { %>Category<% } else { %>Item<% } %>:</h3>
+
+	<div class="ui card">
+		<div class="content">
+			<h4><%= item.get("name") %></h4>
+		</div>
+		<a class="image"><img src="<%= pathToUrlTool(item.get('cover_image_path')) %>" alt="<%= item.get('name') %> Cover Image"></a>
+	</div>
+
+	<br>
+
+	<h3>To Current Category:</h3>
+
+	<div class="ui card">
+		<div class="content">
+			<%= categoryPathTemplate({categoryPath: categoryPath, navigateHash: function(categoryId) {return navigator.itemMoveHash(item.id, categoryId);}, itemAppended: null, linkLastCategory: false}) %>
+		</div>
+		<div class="ui bottom attached button">
+      <i class="check circle icon"></i>
+      	<i class="item-move-to-category" data-to-category-id="<%= parentCategoryItemId %>">Move Here</i>
+    	</div>
+	</div>
+
+	<br><br>
+
+	<h3>Or, Select Another Category To Move In:</h3>
+
+	<br>
+
+	<% if (categoryPathLength > 1) { %>
+
+		<div class="ui basic button"><a href="<%= navigator.itemMoveHash(item.id, categoryPath[categoryPathLength - 2].id) %>">Upper Level</a></div>
+
+		<br><br><br>
+
+	<% } %>
+
+	<% var moreCategory = false; %>
+
+	<div class="ui four cards">
+		<% allItemInCategory.each(function(itemInCategory) { %>
+
+			<% if (itemInCategory.get("is_category") && itemInCategory.id !== item.id) { %>
+					<% moreCategory = true; %>
+					<div class="card">
+						<div class="content"><a href="<%= navigator.itemMoveHash(item.id, itemInCategory.id) %>"><%= itemInCategory.get("name") %></a></div>
+
+						<a class="image" href="<%= navigator.itemMoveHash(item.id, itemInCategory.id) %>">
+							<img src="<%= pathToUrlTool(itemInCategory.get('cover_image_path')) %>" alt="<%= itemInCategory.get('name') %> Cover Image">
+						</a>
+
+						<div class="ui bottom attached button">
+	      			<i class="check circle icon"></i>
+	      				<i class="item-move-to-category" data-to-category-id="<%= itemInCategory.id %>">Move Into This Category</i>
+	    			</div>
+					</div>
+				<% } %>
+
+		<% }); %>
+
+	</div>
+
+	<% if (!moreCategory) { %>
+
+		<div>Sorry, no more categories under this category ...</div>
+
+	<% } %>
+
+<% } else { %>
+
+	<div>Sorry, cannot find the category ...</div>
+
+<% } %>
+
+<br><br>

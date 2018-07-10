@@ -1,0 +1,30 @@
+<i class="close icon"></i>
+
+<div class="header">Edit the email</div>
+
+<div class="content">
+  <div class="haigy-padding-lr-25px">
+    <form id="user-m-edit-form" class="ui form">
+      <div class="field">
+        <label>Email</label>
+        <input name="email" type="text" placeholder="email" value="<%= email %>">
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <input name="password" type="password" placeholder="password">
+      </div>
+      <div class="ui error message"></div>
+    </form>
+  </div>
+</div>
+
+<div class="actions">
+  <div class="ui horizontally padded grid">
+    <div class="eight wide column">
+      <button id="user-m-edit-cancel" class="ui negative button">Cancel</button>
+    </div>
+    <div class="eight wide column">
+      <button id="user-m-edit-submit" class="ui positive fluid button">Save</button>
+    </div>
+  </div>
+</div>

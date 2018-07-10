@@ -1,0 +1,43 @@
+<% if (token) { %>
+
+  <% if (inStock) { %>
+
+    <% if (itemQuantity > 0) { %>
+      <div class="ui card">
+        <div class="content"><%= itemQuantity %> <%= itemUnit === "each" ? "" : itemUnit %> in cart</div>
+        <div class="extra content">
+          <div class="ui basic buttons">
+            <button id="diitem-show-add-quantity" class="ui animated fade button">
+              <div class="visible content">Add</div>
+              <div class="hidden content">
+                <i class="plus icon"></i>
+              </div>
+            </button>
+            <button id="diitem-show-subtract-quantity" class="ui animated fade button">
+              <div class="visible content">Subtract</div>
+              <div class="hidden content">
+                <i class="minus icon"></i>
+              </div>
+            </button>
+            <button id="diitem-show-remove-item" class="ui animated fade button">
+              <div class="visible content">Remove</div>
+              <div class="hidden content">
+                <i class="remove icon"></i>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    <% } else { %>
+      <button id="diitem-show-add-to-cart" class="ui green button">
+        Add to cart
+      </button>
+    <% } %>
+
+  <% } %>
+
+<% } else { %>
+  <button id="diitem-show-start-shopping" class="ui green button">
+    Click to start shopping!
+  </button>
+<% } %>

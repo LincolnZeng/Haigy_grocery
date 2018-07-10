@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  cart_id: 
+  item_id: 
+  quantity: 1.5
+  need_substitution: false
+  substitutional_items: MyString
+  real_price: 1.5
+  returned: false
+  additional_info: MyString
+
+two:
+  cart_id: 
+  item_id: 
+  quantity: 1.5
+  need_substitution: false
+  substitutional_items: MyString
+  real_price: 1.5
+  returned: false
+  additional_info: MyString

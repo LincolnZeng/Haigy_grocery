@@ -1,0 +1,5 @@
+{
+  "cart_id": <%= @cartId.to_json %>,
+  "special_requests": <%= raw(@specialRequests.to_json) %>,
+  "cart_entry": <%= render partial: "template_collection", locals: {cartEntryCollection: @cartEntries, cartItemStoreInfoHash: @realTimeStoreItemInfoHash, storeHash: @storeHash} %>
+}

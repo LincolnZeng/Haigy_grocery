@@ -1,0 +1,35 @@
+<h3>Analytical Entries</h3>
+
+<br>
+
+<table class="ui striped table">
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>Source</th>
+      <th>Keyword</th>
+      <th>User ID</th>
+      <th>IP Address</th>
+      <th>Local Time</th>
+      <th>Details</th>
+      <th>Created At (UTC Time)</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% allAnalyticalEntries.each(function(entry) { %>
+      <tr>
+        <td><%= entry.id %></td>
+        <td><%= entry.get("source") %></td>
+        <td><%= entry.get("keyword") %></td>
+        <td><%= entry.get("user_id") %></td>
+        <td><%= entry.get("user_ip_address") %></td>
+        <td><%= entry.get("user_local_time") %></td>
+        <td><%= entry.get("details") %></td>
+        <td><%= entry.get("created_at") %></td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
+
+<br>

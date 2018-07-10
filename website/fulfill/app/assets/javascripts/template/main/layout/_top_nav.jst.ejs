@@ -1,0 +1,76 @@
+<div class="ui container haigy-position-relative">
+
+  <div id="main-layout-top-nav-info">
+    <span id="main-layout-top-nav-info-content">
+      <i class="user icon"></i>
+      <a id="main-layout-top-nav-user-nickname" href="#" class="haigy-padding-r-5px">
+        <% var showWarning = false %>
+        <% if (userNicknameShort) { %>
+          <%= userNicknameShort %>
+        <% } else { %>
+          Unknown
+          <% showWarning = true %>
+        <% } %>
+      </a>
+      <i class="shipping icon"></i>
+      <a id="main-layout-top-nav-zip-code" href="#">
+        <% if (zipCode) { %>
+          <%= zipCode %>
+        <% } else { %>
+          Unknown
+          <% showWarning = true %>
+        <% } %>
+      </a>
+      <% if (showWarning) { %>
+        <i class="yellow warning sign icon"></i>
+      <% } %>
+    </span>
+
+    <div class="ui popup haigy-width-min-250px">
+      <% if (showWarning) { %>
+        <div>
+          <i class="yellow warning sign icon"></i>
+          <span class="haigy-font-color-red">Please select a user first.</span>
+        </div>
+      <% } else { %>
+        <div>Fulfill the order for <i><strong><%= userNickname %></strong></i></div>
+        <div>The delivery zip code for the user might be <i><strong><%= zipCode %></strong></i></div>
+      <% } %>
+    </div>
+  </div>
+
+
+  <div id="main-layout-small-screen-top-nav-buttons" class="main-layout-wide-screen-hidden">
+    <a class="circular ui icon button main-layout-shopping-cart-icon-link" href="<%= navigator.cartManageHash %>" title="Shopping Cart">
+      <i class="shop icon"></i>
+    </a>
+
+    <button id="main-layout-top-nav-search" class="circular ui icon button">
+      <i class="search icon"></i>
+    </button>
+
+    <button class="circular ui icon top right pointing dropdown button main-layout-dropdown">
+      <i class="sidebar icon"></i>
+      <div class="menu">
+        <div class="item main-layout-link" data-link="<%= navigator.mainFaqHash %>"><a href="#" class="main-layout-prevent-default">How Haigy Works</div>
+        <div class="item main-layout-link" data-link="<%= navigator.mainFaqHash %>"><a href="#" class="main-layout-prevent-default">About Us</a></div>
+      </div>
+    </button>
+  </div>
+
+
+  <div id="main-layout-wide-screen-top-menus" class="main-layout-small-screen-hidden">
+    <a href="<%= navigator.cartManageHash %>" class="haigy-padding-r-15px main-layout-shopping-cart-text-link">Shopping Cart</a>
+    <a href="#" class="haigy-padding-lr-15px main-layout-search">Search</a>
+    <div class="haigy-display-inline-block haigy-padding-l-15px haigy-padding-r-30px"><div class="ui dropdown main-layout-dropdown">
+      <div class="text">More</div>
+      <i class="dropdown icon"></i>
+      <div class="menu">
+        <div class="item main-layout-link" data-link="<%= navigator.mainFaqHash %>"><a href="#" class="main-layout-prevent-default">How Haigy Works</a></div>
+        <div class="item main-layout-link" data-link="<%= navigator.mainFaqHash %>"><a href="#" class="main-layout-prevent-default">About Us</a></div>
+      </div>
+    </div></div>
+    <a href="#" class="haigy-padding-l-15px main-layout-sign-out">Sign Out</a>
+  </div>
+
+</div>

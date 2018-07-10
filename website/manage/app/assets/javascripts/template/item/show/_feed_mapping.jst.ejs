@@ -1,0 +1,65 @@
+<% if (feedMappings) { %>
+  <% var mappingCount = feedMappings.length %>
+  <% if (mappingCount > 0) { %>
+    <% for (var mappingIndex = 0; mappingIndex < mappingCount; ++mappingIndex) { %>
+      <% var mapping = feedMappings[mappingIndex] %>
+      <% var mappingId = mapping.id %>
+      <% var instacartId = mapping.instacart_id || mapping.get("instacart_id") %>
+
+      <div id="item-show-sii-<%= storeItemInfoId %>-fm-<%= mappingId %>"><i>
+        <span class="haigy-font-color-success">Instacart ID:
+          <i class="haigy-padding-l-5px"><a href="<%= utility.getInstacartItemUrl(instacartId) %>" target="_blank"><%= instacartId %></a></i>
+        </span>
+        <a href="" class="haigy-padding-l-30px item-show-sii-fm-edit-start" data-store-item-info-id="<%= storeItemInfoId %>" data-feed-mapping-id="<%= mappingId %>">Modify</a>
+      </i></div>
+
+      <div id="item-show-sii-<%= storeItemInfoId %>-fm-<%= mappingId %>-edit-container" class="haigy-padding-tb-10px haigy-display-none">
+        <form id="item-show-sii-<%= storeItemInfoId %>-fm-<%= mappingId %>-edit-form" class="ui form item-show-sii-fm-edit-form">
+          <input type="hidden" name="id" value="<%= mappingId %>">
+          <input type="hidden" name="store_item_info_id" value="<%= storeItemInfoId %>">
+          <div class="required field">
+            <label>Instacart ID</label>
+            <input type="text" name="instacart_id" placeholder="Instacart ID" value="<%= instacartId %>">
+          </div>
+          <div>
+            <span class="haigy-display-inline-block haigy-padding-b-5px">
+              <button class="ui red button item-show-sii-fm-edit-delete" type="button" data-store-item-info-id="<%= storeItemInfoId %>" data-feed-mapping-id="<%= mappingId %>">Delete</button>
+            </span>
+            <span class="haigy-display-inline-block haigy-padding-b-5px">
+              <button class="ui primary button" type="submit">Save</button>
+            </span>
+            <span class="haigy-display-inline-block haigy-padding-b-5px">
+              <button class="ui button item-show-sii-fm-edit-cancel" type="button" data-store-item-info-id="<%= storeItemInfoId %>" data-feed-mapping-id="<%= mappingId %>">Cancel</button>
+            </span>
+          </div>
+          <div class="ui error message"></div>
+        </form>
+      </div>
+    <% } %>
+  <% } else { %>
+    <div id="item-show-sii-<%= storeItemInfoId %>-fm-none">
+      <i>Not Set <a href="" class="haigy-padding-l-30px item-show-sii-fm-edit-start" data-store-item-info-id="<%= storeItemInfoId %>" data-feed-mapping-id="none">Modify</a></i>
+    </div>
+
+    <div id="item-show-sii-<%= storeItemInfoId %>-fm-none-edit-container" class="haigy-padding-tb-10px haigy-display-none">
+      <form class="ui form item-show-sii-fm-edit-form">
+        <input type="hidden" name="store_item_info_id" value="<%= storeItemInfoId %>">
+        <div class="required field">
+          <label>Instacart ID</label>
+          <input type="text" name="instacart_id" placeholder="Instacart ID">
+        </div>
+        <div>
+          <span class="haigy-display-inline-block haigy-padding-b-5px">
+            <button class="ui primary button" type="submit">Save</button>
+          </span>
+          <span class="haigy-display-inline-block haigy-padding-b-5px">
+            <button class="ui button item-show-sii-fm-edit-cancel" type="button" data-store-item-info-id="<%= storeItemInfoId %>" data-feed-mapping-id="none">Cancel</button>
+          </span>
+        </div>
+        <div class="ui error message"></div>
+      </form>
+    </div>
+  <% } %>
+<% } else { %>
+  <i class="haigy-font-color-error">Unknown Error</i>
+<% } %>

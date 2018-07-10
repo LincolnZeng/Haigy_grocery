@@ -1,0 +1,107 @@
+<% var colors = ["red", "orange", "yellow", "olive", "green", "teal", "blue", "violet", "purple", "pink"] %>
+<% var colorCount = colors.length %>
+
+<% var itemCount = allItem.length %>
+<% for (var itemIndex = 0; itemIndex < itemCount; ++itemIndex) { %>
+  <% var item = allItem[itemIndex] %>
+
+  <div class="<%= colors[Math.floor((Math.random() * colorCount))] %> card biitem-small-screen-card-width biitem-wide-screen-card-width">
+
+    <% var storeItemInfo = item.get("store_item_info") %>
+
+    <% if (item.get("is_category")) { %>
+
+      <a class="image haigy-position-relative" href="<%= navigator.briefinfoitemBrowseHash(item.id) %>">
+        <img class="haigy-image-overlay" src="<%= imagePathToUrlTool(item.get('cover_image_path')) %>" alt="Category image">
+        <img class="haigy-image-loader" src="<%= precompiledAsset.image.IMAGE_LOADER %>" alt="Loading ...">
+      </a>
+
+      <div class="content">
+        <a href="<%= navigator.briefinfoitemBrowseHash(item.id) %>"><%= item.get("name") %></a>
+
+        <% if (storeItemInfo.store_is_haigy_base !== true) { %>
+          <i class="olive info circle icon link"></i>
+          <div class="ui popup haigy-width-100-percent">
+            <i>We will buy all items in this category from <strong class="haigy-font-color-wholefoods-green"><%= storeItemInfo.store_name %></strong>.</i>
+          </div>
+        <% } %>
+      </div>
+
+    <% } else { %>
+
+      <% var inStock = storeItemInfo.in_stock === true %>
+      <% var onSale = storeItemInfo.on_sale === true %>
+      <% var itemUnit= item.get("unit") %>
+
+      <a class="image haigy-position-relative" href="<%= navigator.detailedinfoitemShowHash(item.id) %>">
+        <img class="haigy-image-overlay" src="<%= imagePathToUrlTool(item.get('cover_image_path')) %>" alt="Item image">
+        <img class="haigy-image-loader" src="<%= precompiledAsset.image.IMAGE_LOADER %>" alt="Loading ...">
+      </a>
+
+
+      <div class="content">
+        <% var currentPrice = 0.0 %>
+        <% if (inStock) { %>
+          <div class="description">
+            <% if (onSale) { %>
+              <% currentPrice = parseFloat(storeItemInfo.sale_price) %>
+            <% } else { %>
+              <% currentPrice = parseFloat(storeItemInfo.price) %>
+            <% } %>
+
+            <% if (currentPrice > 0.0) { %>
+              <% if (onSale) { %>
+                <span class="biitem-on-sale-price haigy-padding-r-5px">$<%= currentPrice.toFixed(2) %></span>
+                <del>$<%= parseFloat(storeItemInfo.price).toFixed(2) %></del>
+              <% } else { %>
+                $<%= currentPrice.toFixed(2) %>
+              <% } %>
+              <%= itemUnit %>
+
+              <% if (storeItemInfo.store_is_haigy_base !== true) { %>
+                <i class="olive info circle icon link"></i>
+                <div class="ui popup haigy-width-100-percent">
+                  <i>We will buy this item from <strong class="haigy-font-color-wholefoods-green"><%= storeItemInfo.store_name %></strong>.</i>
+                </div>
+              <% } %>
+            <% } else { %>
+              <div class="description">Out Of Stock</div>
+            <% } %>
+          </div>
+        <% } else { %>
+          <div class="description">Out Of Stock</div>
+        <% } %>
+
+        <div class="meta"><i>
+          <% if (item.get("has_fixed_item_size") ===  true) { %>
+            <%= item.get("item_size") %>
+          <% } else if (itemUnit !== constant.item.UNIT_PER_LB && storeItemInfo.estimated_weight) { %>
+            <% var estimatedWeight = parseFloat(storeItemInfo.estimated_weight) %>
+            estimate <%= estimatedWeight.toFixed(2) %> lb each
+            <% if (inStock && estimatedWeight > 0.0 && currentPrice > 0.0) { %>
+              <br>~ $<%= (currentPrice / estimatedWeight).toFixed(2) %> per lb
+            <% } %>
+          <% } %>
+        </i></div>
+
+        <div class="description">
+          <a href="<%= navigator.detailedinfoitemShowHash(item.id) %>"><%= item.get("name") %></a>
+        </div>
+      </div>
+
+
+      <% if (inStock) { %>
+        <div class="extra content biitem-cbc-item-extra-content-<%= item.id %>">
+          <%= itemCartOperationT({itemId: item.id, itemUnit: item.get("unit"), cartHelper: cartHelper, constant: constant}) %>
+        </div>
+      <% } else { %>
+        <div class="extra content">
+          <button class="circular right floated ui disabled icon button"><i class="add to cart icon"></i></button>
+        </div>
+      <% } %>
+
+    <% } %>
+
+  </div>
+
+<% } %>

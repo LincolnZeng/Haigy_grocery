@@ -1,0 +1,18 @@
+{
+  "id": 1,
+
+  "user": {
+    <%= render partial: "users/user_attribute", locals: {user: @user} %>,
+
+    <% if @defaultAddress.present? %>
+      "default_address": {
+        <%= render partial: "user_addresses/address_attribute", locals: {address: @defaultAddress} %>
+      },
+    <% end %>
+
+    "shopping_zip_code": <%= raw(@shoppingZipCode.to_json) %>
+  },
+
+  "cart_id": <%= raw(@cart.secured_id.to_json) %>,
+  "cart_entry": <%= render partial: "cart_entries/template_collection", locals: {cartEntryCollection: @cartEntries, cartItemStoreInfoHash: @itemStoreInfoHash, storeHash: @storeHash} %>
+}

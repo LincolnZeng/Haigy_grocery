@@ -1,0 +1,10 @@
+# require "rake tmp:clear" and restarting the server to pick up the change.
+domain: "http://exampleDomain.haigy.com"
+
+
+# require "rake tmp:clear" and restarting the server to pick up the change.
+image_server: "http://exampleImageServer.haigy.com/"
+
+
+cordova_app_path: "/Example/Cordova/App/Path"   # absolute path
+cordova_app_title: "Example App Title"

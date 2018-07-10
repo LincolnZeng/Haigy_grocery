@@ -1,0 +1,6 @@
+{
+  <% if @shoppingZipCode.present? %>
+    "shopping_zip_code": <%= raw(@shoppingZipCode.to_json) %>,
+  <% end %>
+  <%= render partial: "address_attribute", locals: {address: address} %>
+}

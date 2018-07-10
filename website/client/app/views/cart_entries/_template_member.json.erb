@@ -1,0 +1,19 @@
+{
+  "id": <%= cartEntry.id.to_json %>,
+  "store_id": <%= cartEntry.store_id.to_json %>,
+  "added_by_user": <%= cartEntry.added_by_user %>,
+  "quantity": <%= cartEntry.quantity %>,
+  "unit_price": <%= cartEntry.unit_price.to_json %>,
+  "item_id": <%= item.id %>,
+  "item_name": <%= raw(item.name.to_json) %>,
+  "item_unit": <%= raw(item.unit.to_json) %>,
+  "item_cover_image_path": <%= raw(item.cover_image.url(:thumb).to_json) %>,
+  "item_substitute_lookup": <%= raw(item.substitute_lookup.to_json) %>,
+  "item_has_fixed_size": <%= item.has_fixed_item_size %>,
+  "item_size": <%= raw(item.item_size.to_json) %>
+
+  <% if storeItemInfo.present? %>
+    ,
+    "store_item_info": <%= render partial: "store_item_infos/template_member", locals: {storeItemInfo: storeItemInfo, storeHash: storeHash} %>
+  <% end %>
+}

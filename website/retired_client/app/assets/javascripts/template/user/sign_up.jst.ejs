@@ -1,0 +1,64 @@
+<div class="ui two column centered stackable grid">
+
+  <div class="column">
+
+    <h2 class="ui header">Sign Up</h2>
+
+    <br>
+
+    <form id="user-signup-form" class="ui form">
+      <div class="required field">
+        <label>Email</label>
+        <input type="email" name="email" placeholder="Email">
+      </div>
+      <div class="field">
+        <div class="ui toggle checkbox">
+          <input type="checkbox" name="subscribe_news" tabindex="0" class="hidden">
+          <label>Subscribe to newsletter</label>
+        </div>
+      </div>
+      <br>
+
+      <div class="required field">
+        <label>Password</label>
+        <input type="password" name="password" placeholder="Password">
+      </div>
+      <div class="required field">
+        <label>Repeat Password</label>
+        <input type="password" name="repeat_password" placeholder="Repeat Password">
+      </div>
+      <br>
+
+      <% if (!zipCode) { %>
+        <div class="required field">
+          <label>Delivery Zip Code</label>
+          <input type="text" name="zip_code" placeholder="Zip Code">
+        </div>
+        <br>
+      <% } %>
+
+      <br>
+
+      <div class="fields">
+        <div class="eleven wide field">
+          <button id="user-signup-submit" class="ui primary fluid button" type="submit">
+            <% if (redirectUrl) { %>
+              Sign Up And Continue
+            <% } else { %>
+              Sign Up
+            <% } %>
+          </button>
+        </div>
+        <div class="five wide field">
+          <button id="user-signup-cancel" class="ui basic fluid button" type="button">Cancel</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="ui error message"></div>
+      </div>
+    </form>
+
+  </div>
+
+</div>

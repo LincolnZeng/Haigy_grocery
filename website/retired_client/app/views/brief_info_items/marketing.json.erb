@@ -1,0 +1,6 @@
+[
+  <% @items.each_with_index do |item, index| %>
+    <% if index != 0 %>,<% end %>
+    <%= render partial: "template_member", locals: {item: item, storeItemInfo: item.store_item_infos.first} %>
+  <% end %>
+]

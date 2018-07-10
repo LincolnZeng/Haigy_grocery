@@ -1,0 +1,241 @@
+<% var isPaid = order.get("is_paid") %>
+
+
+<h3>order: <%= order.id %></h3>
+<a class="ui basic button" href="<%= navigator.orderIndexHash %>">view all</a>
+<br>
+<h4>order Status: <span id="order-show-order-status"><%= utility.getOrderStatus(order.get("status")) %></span></h4>
+<div class="ui button" id="order-show-edit-status-enable">Change Status</div>
+
+<div class="haigy-display-none" id="order-show-edit-status-section">
+  <div class="ui buttons">
+    <button class="ui button" id="order-show-edit-status-cancel">Cancel</button>
+    <div class="or"></div>
+    <button class="ui positive button" id="order-show-edit-status-submit">Save</button>
+  </div>
+  <br>
+  <br>
+  <div>
+    <form class="ui form">
+      <div>
+        <label for="order-show-get-order-status">Order status:</label>
+        <select id="order-show-get-order-status">
+          <option value=<%=constant.order.PLACED%> <% if (order.get("status") === constant.order.PLACED) { %>selected="selected"<% } %>>placed</option>
+          <option value=<%=constant.order.PREPARING%> <% if (order.get("status") === constant.order.PREPARING) { %>selected="selected"<% } %>>preparing</option>
+          <option value=<%=constant.order.DELIVERING%> <% if (order.get("status") === constant.order.DELIVERING) { %>selected="selected"<% } %>>delivering</option>
+          <option value=<%=constant.order.DELIVERED%> <% if (order.get("status") === constant.order.DELIVERED) { %>selected="selected"<% } %>>delivered</option>
+        </select>
+      </div>
+    </form>
+  </div>
+</div>
+<br>
+
+<table class="ui unstackable blue table">
+  <tbody>
+    <tr>
+      <td>Phone No.</td>
+      <td><div><%= order.get("phone") %></div></td>
+    </tr>
+    <tr>
+      <td>email address</td>
+      <td><div><%= order.get("email") %></div></td>
+    </tr>
+    <% if (order.get("is_business_address")) { %>
+      <tr>
+        <td>Business Name:</td>
+        <td><%= order.get("business_name") %></td>
+      </tr>
+    <% } %>
+    <tr>
+      <td>Delivery Address</td>
+      <td><div><%= order.get("street_address") %></div>
+      <div><%= order.get("city") %>, <%= order.get("state") %> <%= order.get("zip_code") %></div></td>
+    </tr>
+    <tr>
+      <td>Delivery Time</td>
+      <td>
+        <div><%= utility.getOrderDeliveryDate(order.get("delivery_date")) %></div>
+        <div><%= utility.getOrderDeliveryTimeSlotTime(order.get("delivery_time_slot_start_time")) %> - <%= utility.getOrderDeliveryTimeSlotTime(order.get("delivery_time_slot_end_time")) %></div>
+      </td>
+    </tr>
+    <tr>
+      <td>Order Time:</td>
+      <td>
+        <div><% var orderTime = new Date(parseInt(order.get("created_at")) * 1000) %>
+        <div><%= orderTime.toDateString() %></div>
+        <div><%= orderTime.toLocaleTimeString() %></div>
+      </td>
+    </tr>
+    <tr>
+      <td>Note:</td>
+      <% if (order.get("note") && order.get("note").trim().length > 0) { %>
+        <td><%= order.get("note") %></td>
+      <% } else { %>
+        <td>N/A</td>
+      <% } %>
+    </tr>
+
+</table>
+
+<% var totalValueInCart = 0.0 %>
+
+<% if (allEntry.length === 0) { %>
+
+  <h3>No item</h3>
+
+<% } else { %>
+
+  <h4>Items</h4>
+
+  <div class="ui divided items">
+
+    <% allEntry.each(function(entry) { %>
+      <% var id = entry.get("id") %>
+      <% var itemId = entry.get("item_id") %>
+      <% var itemUnit = entry.get("item_unit") %>
+
+      <div class="item">
+        <a class="ui small image" href="<%= navigator.itemShowHash(itemId) %>">
+          <img src="<%= utility.pathToUrl(entry.get('item_cover_image_path')) %> alt="Item image">
+        </a>
+        <div class="content">
+          <a class="header" href="<%= navigator.itemShowHash(itemId) %>">
+            <%= entry.get("item_name") %>
+          </a>
+          <% var unitPrice = parseFloat(entry.get("unit_price") || 0.0) %>
+          <div class="meta">
+            <span class="cinema">
+              Price:
+              <span id="order-show-item-<%= itemId %>-unit-price">
+                <% if (unitPrice) { %>
+                  $<%= parseFloat(unitPrice).toFixed(2) %> <%= itemUnit %>
+                <% } else { %>
+                  Unknown
+                <% } %>
+              <show>
+            </span>
+          </div>
+          <div class="description">
+            <div>
+              Quantity: <span id="order-show-item-<%= itemId %>-quantity" ><%= entry.get("quantity") %> <%= constant.item.QUANTITY_UNIT_DISPLAY[itemUnit] %></span>
+            </div>
+            <div>
+              <% var total = unitPrice * parseFloat(entry.get("quantity")) %>
+              <% totalValueInCart += total %>
+
+              Total:
+              <span class = "order-show-item-total" id="order-show-item-<%= itemId %>-total" data-total="<%= total %>">
+                <% if (unitPrice) { %>
+                  <%= ["$", total.toFixed(2)].join("") %>
+                <% } else { %>
+                  Unknown
+                <% } %>
+              </span>
+            </div>
+
+          </div>
+          <br>
+
+          <% if (!isPaid) { %>
+            <button class="mini ui button order-show-edit-item-quantity-enabled" id="order-show-edit-item-<%= itemId %>-quantity-enabled" data-item-id=<%=itemId%>>update Pirce and Quantity</button>
+
+            <div class="haigy-display-none" id="order-show-edit-item-<%= itemId %>-quantity-button">
+              <div class="mini ui buttons">
+                <button class="ui button order-show-edit-item-quantity-cancel" data-item-id=<%=itemId%>>Cancel</button>
+                <div class="or"></div>
+                <button class="ui positive button order-show-edit-item-quantity-save" data-item-id=<%=itemId%>  data-id=<%=id%>>Save</button>
+              </div>
+            </div>
+            <br>
+
+            <span id="order-show-edit-item-<%= itemId %>-quantity-warning"></span>
+            <div class="haigy-display-none" id="order-show-edit-item-<%= itemId %>-quantity-input">
+              <div class="ui mini labeled input">
+                <div class="ui label">
+                  Unit Price
+                </div>
+                <input type="number" id="order-show-get-item-<%= itemId %>-price" value=<%= entry.get("unit_price") || 0.0 %>>
+              </div>
+              <div class="ui mini labeled input">
+                <div class="ui label">
+                  Quantity
+                </div>
+                <input type="number" id="order-show-get-item-<%= itemId %>-quantity" value=<%= entry.get("quantity") %>>
+              </div>
+            </div>
+          <% } %>
+
+        </div>
+      </div>
+
+    <% }) %>
+
+  </div>
+
+<% } %>
+
+<% var deliveryFee = parseFloat(order.get("delivery_fee")) %>
+<% var totalValue = totalValueInCart + deliveryFee %>
+
+<table class="ui unstackable blue table">
+  <tbody>
+    <tr>
+      <td>Items in cart:</td>
+      <td class="right aligned">$<span id="order-show-item-in-cart"><%= totalValueInCart.toFixed(2) %></span></td>
+    </tr>
+    <tr>
+      <td>Delivery:</td>
+      <td id="order-show-delivery-fee" class="right aligned" data-delivery-fee="<%= deliveryFee %>">$<%= deliveryFee.toFixed(2) %></td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <th><strong>Order total:</strong></th>
+      <th class="right aligned"><strong>
+        $<span id="order-show-totalvalue" data-total-amount="<%= totalValue.toFixed(2) %>"><%= totalValue.toFixed(2) %></span>
+      </strong></th>
+    </tr>
+  </tfoot>
+</table>
+
+<% if (!isPaid) { %>
+  <br />
+  <div>
+    <div class="ui button" id="order-show-edit-change-delivery-fee">Change Delivery Fee</div>
+    <div class="haigy-display-none" id="order-show-edit-delivery-fee-change-section">
+      <h3>New Delivery Fee</h3>
+      <div>
+        <div class="ui icon input">
+          <input type="text" id="order-show-new-delivery-fee" value=<%= deliveryFee %>>
+          <i class="pointing left icon"></i>
+        </div>
+      </div>
+      <br />
+      <div class="ui buttons">
+        <button class="ui button" id="order-show-edit-cancel-delivery-fee-change">Cancel</button>
+        <div class="or"></div>
+        <button class="ui positive button" id="order-show-edit-save-new-delivery-fee">Save</button>
+      </div>
+    </div>
+  </div>
+<% } %>
+
+<br /><br />
+
+<div>
+  <% if (isPaid) { %>
+    <% if (order.get("is_stripe_payment")) { %>
+      <div>Paid online by Stripe (Stripe charge id: <%= order.get("stripe_charge_id") %>)</div>
+    <% } else { %>
+      <div>Paid Offline</div>
+    <% } %>
+    <div>Total amount paid: $<%= order.get("total_amount_paid") %></div>
+  <% } else { %>
+    <% if (order.get("is_stripe_payment")) { %>
+      <div><button class="ui button" id="order-show-collect-stripe-payment-button">Collect Stripe Payment</button>
+    <% } else { %>
+      <div><button class="ui button" id="order-show-mark-as-paid-button">Mark as Paid</button></div>
+    <% } %>
+  <% } %>
+</div>

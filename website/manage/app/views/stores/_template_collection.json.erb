@@ -1,0 +1,6 @@
+[
+  <% storeCollection.each_with_index do |store, index| %>
+    <% if index != 0 %>,<% end %>
+    <%= render partial: "template_member", locals: {store: store, company: store.company} %>
+  <% end %>
+]

@@ -1,0 +1,6 @@
+/*******************************
+     Global Variables
+*******************************/
+
+@fontName : 'Arial';
+@importGoogleFonts : false;

@@ -1,0 +1,10 @@
+{
+  <%= render partial: "user_attribute", locals: {user: @user} %>,
+
+  "password": "",
+  "repeat_password": "",
+
+  "session": {
+    <%= render partial: "sessions/session_attribute" %>
+  }
+}

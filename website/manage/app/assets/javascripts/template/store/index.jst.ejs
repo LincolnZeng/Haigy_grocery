@@ -1,0 +1,42 @@
+<h3>All Stores</h3>
+
+<div>
+  <a class="ui blue basic button" href="<%= navigator.companySelectHash %>">Add A New Store</a>
+  <br><br>
+</div>
+
+<% if (allStore.length === 0) { %>
+
+  <h3>No Store Is Found</h3>
+  <br>
+  <div><a href="<%= navigator.companySelectHash %>">Add A New Store</a></div>
+
+<% } else { %>
+
+  <div class="ui three stackable doubling cards">
+    <% allStore.each(function(store) { %>
+
+      <div class="card">
+
+        <a class="image" href="<%= navigator.storeShowHash(store.id) %>">
+          <img src="<%= pathToUrlTool(store.get('company_logo_path')) %>" alt="<%= store.get('compnay_name') %> Logo">
+        </a>
+
+        <div class="content">
+          <h4><%= store.get("company_name") %></h4>
+          <div>Store Name: <%= store.get("store_name") %></div>
+          <div>Store Address: <%= store.get("formatted_address") %></div>
+          <br>
+          <div>
+            <a href="<%= navigator.storeShowHash(store.id) %>">View Details</a> |
+            <a href="<%= navigator.storeEditHash(store.id) %>">Edit</a>
+          </div>
+        </div>
+
+      </div>
+
+    <% }) %>
+
+  </div>
+
+<% } %>
