@@ -1,3 +1,5 @@
+#show Item and search results
+
 class BriefInfoItemsController < ApplicationController
 
   def browse
